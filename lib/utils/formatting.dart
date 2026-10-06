@@ -34,9 +34,8 @@ class ThousandsSeparatorFormatter extends TextInputFormatter {
     final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
     if (digits.isEmpty) return const TextEditingValue();
 
-    final limited = digits.length > maxDigits
-        ? digits.substring(0, maxDigits)
-        : digits;
+    final limited =
+        digits.length > maxDigits ? digits.substring(0, maxDigits) : digits;
 
     final formatted = formatThousands(int.parse(limited));
 
@@ -45,4 +44,70 @@ class ThousandsSeparatorFormatter extends TextInputFormatter {
       selection: TextSelection.collapsed(offset: formatted.length),
     );
   }
+}
+
+/// Форматирует DateTime как дату без времени: yyyy-MM-dd.
+/// 2025-10-06 14:32:11 → '2025-10-06'
+String formatDateOnly(DateTime date) {
+  final y = date.year.toString().padLeft(4, '0');
+  final m = date.month.toString().padLeft(2, '0');
+  final d = date.day.toString().padLeft(2, '0');
+  return '$y-$m-$d';
+}
+
+/// Парсит дату из БД. Поддерживает оба формата:
+/// 'yyyy-MM-dd' и старый 'yyyy-MM-ddTHH:mm:ss.sss'.
+/// Всегда возвращает DateTime с обнулённым временем.
+DateTime? parseDateOnly(String? value) {
+  if (value == null || value.isEmpty) return null;
+  final parsed = DateTime.tryParse(value);
+  if (parsed == null) return null;
+  return DateTime(parsed.year, parsed.month, parsed.day);
+}
+
+/// Приводит DateTime к началу суток (локальное время).
+DateTime dateOnly(DateTime date) {
+  return DateTime(date.year, date.month, date.day);
+}
+
+/// Названия месяцев в именительном падеже — для формата «октябрь 2026».
+const List<String> monthNamesRu = [
+  'январь',
+  'февраль',
+  'март',
+  'апрель',
+  'май',
+  'июнь',
+  'июль',
+  'август',
+  'сентябрь',
+  'октябрь',
+  'ноябрь',
+  'декабрь',
+];
+
+/// Короткие названия месяцев — для формата «окт 2026».
+const List<String> monthNamesRuShort = [
+  'янв',
+  'фев',
+  'мар',
+  'апр',
+  'май',
+  'июн',
+  'июл',
+  'авг',
+  'сен',
+  'окт',
+  'ноя',
+  'дек',
+];
+
+/// Формат «октябрь 2026» — для карточек ТО и истории, где важен только месяц.
+String formatMonthYear(DateTime date) {
+  return '${monthNamesRu[date.month - 1]} ${date.year}';
+}
+
+/// Короткий формат «окт 2026» — для компактных подписей.
+String formatMonthYearShort(DateTime date) {
+  return '${monthNamesRuShort[date.month - 1]} ${date.year}';
 }

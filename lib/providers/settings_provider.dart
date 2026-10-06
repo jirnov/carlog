@@ -1,18 +1,19 @@
-﻿// lib/providers/settings_provider.dart
+// lib/providers/settings_provider.dart
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show ThemeMode;
 
 import 'package:carlog/data/database.dart';
 import 'package:carlog/data/models/settings.dart';
+import 'package:carlog/data/models/theme_mode_preference.dart';
 
 class SettingsProvider extends ChangeNotifier {
-  SettingsProvider(this._db) {
-    _load();
-  }
+  SettingsProvider(this._db);
 
   final AppDatabase _db;
 
   Settings _settings = Settings.defaults;
+  bool _disposed = false;
 
   Settings get settings => _settings;
 
@@ -23,52 +24,72 @@ class SettingsProvider extends ChangeNotifier {
   int get yellowMonths => _settings.yellowMonths;
   bool get onboardingDone => _settings.onboardingDone;
 
-  Future<void> _load() async {
+  ThemeModePreference get themeModePreference => _settings.themeMode;
+  ThemeMode get themeMode => _settings.themeMode.toFlutter();
+
+  Future<void> load() async {
     _settings = await _db.settings.get();
-    notifyListeners();
+    _notify();
   }
 
-  Future<void> reload() => _load();
+  Future<void> reload() => load();
 
   Future<void> setCarName(String value) async {
     if (_settings.carName == value) return;
     await _db.settings.setCarName(value);
     _settings = _settings.copyWith(carName: value);
-    notifyListeners();
+    _notify();
   }
 
   Future<void> setRemindEnabled(bool value) async {
     if (_settings.remindEnabled == value) return;
     await _db.settings.setRemindEnabled(value);
     _settings = _settings.copyWith(remindEnabled: value);
-    notifyListeners();
+    _notify();
   }
 
   Future<void> setRemindDays(int value) async {
     if (_settings.remindDays == value) return;
     await _db.settings.setRemindDays(value);
     _settings = _settings.copyWith(remindDays: value);
-    notifyListeners();
+    _notify();
   }
 
   Future<void> setYellowKm(int value) async {
     if (_settings.yellowKm == value) return;
     await _db.settings.setYellowKm(value);
     _settings = _settings.copyWith(yellowKm: value);
-    notifyListeners();
+    _notify();
   }
 
   Future<void> setYellowMonths(int value) async {
     if (_settings.yellowMonths == value) return;
     await _db.settings.setYellowMonths(value);
     _settings = _settings.copyWith(yellowMonths: value);
-    notifyListeners();
+    _notify();
   }
 
   Future<void> setOnboardingDone(bool value) async {
     if (_settings.onboardingDone == value) return;
     await _db.settings.setOnboardingDone(value);
     _settings = _settings.copyWith(onboardingDone: value);
-    notifyListeners();
+    _notify();
+  }
+
+  Future<void> setThemeMode(ThemeModePreference value) async {
+    if (_settings.themeMode == value) return;
+    await _db.settings.setThemeMode(value);
+    _settings = _settings.copyWith(themeMode: value);
+    _notify();
+  }
+
+  void _notify() {
+    if (!_disposed) notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 }

@@ -1,21 +1,36 @@
-﻿// lib/app.dart
+// lib/app.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
-import 'package:carlog/screens/app_root.dart';
+import 'package:carlog/providers/settings_provider.dart';
+import 'package:carlog/screens/splash/splash_screen.dart';
 
 class CarlogApp extends StatelessWidget {
   const CarlogApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.select<SettingsProvider, ThemeMode>(
+      (p) => p.themeMode,
+    );
+
     return MaterialApp(
-      title: 'CarLog',
+      title: 'Журнал ТО',
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
-      themeMode: ThemeMode.system,
-      home: const AppRoot(),
+      themeMode: themeMode,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ru'),
+      ],
+      home: const SplashScreen(),
     );
   }
 
@@ -48,6 +63,12 @@ class CarlogApp extends StatelessWidget {
         ),
         filled: true,
         fillColor: scheme.surfaceContainerLowest,
+        hintStyle: TextStyle(
+          color: scheme.onSurfaceVariant.withValues(alpha: 0.5),
+        ),
+        helperStyle: TextStyle(
+          color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+        ),
       ),
       cardTheme: CardThemeData(
         elevation: 0,
@@ -56,6 +77,13 @@ class CarlogApp extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         margin: EdgeInsets.zero,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: scheme.surfaceContainer,
+        indicatorColor: scheme.secondaryContainer,
+        labelTextStyle: WidgetStateProperty.all(
+          const TextStyle(fontSize: 12),
+        ),
       ),
     );
   }

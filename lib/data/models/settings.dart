@@ -1,4 +1,6 @@
-﻿// lib/data/models/settings.dart
+// lib/data/models/settings.dart
+
+import 'package:carlog/data/models/theme_mode_preference.dart';
 
 class Settings {
   const Settings({
@@ -8,6 +10,7 @@ class Settings {
     required this.yellowKm,
     required this.yellowMonths,
     required this.onboardingDone,
+    required this.themeMode,
   });
 
   final String carName;
@@ -16,24 +19,29 @@ class Settings {
   final int yellowKm;
   final int yellowMonths;
   final bool onboardingDone;
+  final ThemeModePreference themeMode;
 
   static const defaults = Settings(
     carName: '',
     remindEnabled: true,
-    remindDays: 7,
+    remindDays: 30,
     yellowKm: 500,
     yellowMonths: 1,
     onboardingDone: false,
+    themeMode: ThemeModePreference.system,
   );
 
   factory Settings.fromMap(Map<String, Object?> map) {
     return Settings(
       carName: (map['car_name'] as String?) ?? '',
       remindEnabled: (map['remind_enabled'] as int? ?? 1) == 1,
-      remindDays: (map['remind_days'] as int?) ?? 7,
+      remindDays: (map['remind_days'] as int?) ?? 30,
       yellowKm: (map['yellow_km'] as int?) ?? 500,
       yellowMonths: (map['yellow_months'] as int?) ?? 1,
       onboardingDone: (map['onboarding_done'] as int? ?? 0) == 1,
+      themeMode: ThemeModePreference.fromString(
+        (map['theme_mode'] as String?) ?? 'system',
+      ),
     );
   }
 
@@ -45,6 +53,7 @@ class Settings {
       'yellow_km': yellowKm,
       'yellow_months': yellowMonths,
       'onboarding_done': onboardingDone ? 1 : 0,
+      'theme_mode': themeMode.name,
     };
   }
 
@@ -55,6 +64,7 @@ class Settings {
     int? yellowKm,
     int? yellowMonths,
     bool? onboardingDone,
+    ThemeModePreference? themeMode,
   }) {
     return Settings(
       carName: carName ?? this.carName,
@@ -63,6 +73,7 @@ class Settings {
       yellowKm: yellowKm ?? this.yellowKm,
       yellowMonths: yellowMonths ?? this.yellowMonths,
       onboardingDone: onboardingDone ?? this.onboardingDone,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 
@@ -70,7 +81,7 @@ class Settings {
   String toString() => 'Settings(carName: $carName, '
       'remindEnabled: $remindEnabled, remindDays: $remindDays, '
       'yellowKm: $yellowKm, yellowMonths: $yellowMonths, '
-      'onboardingDone: $onboardingDone)';
+      'onboardingDone: $onboardingDone, themeMode: $themeMode)';
 
   @override
   bool operator ==(Object other) {
@@ -81,7 +92,8 @@ class Settings {
         other.remindDays == remindDays &&
         other.yellowKm == yellowKm &&
         other.yellowMonths == yellowMonths &&
-        other.onboardingDone == onboardingDone;
+        other.onboardingDone == onboardingDone &&
+        other.themeMode == themeMode;
   }
 
   @override
@@ -92,5 +104,6 @@ class Settings {
         yellowKm,
         yellowMonths,
         onboardingDone,
+        themeMode,
       );
 }

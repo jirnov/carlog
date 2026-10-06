@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Projects/carlog/windows"
+    "cmake.sourceDirectory": "C:/Projects/carlog/windows",
+    "dart.flutterSdkPath": ".fvm/flutter_sdk"
 }

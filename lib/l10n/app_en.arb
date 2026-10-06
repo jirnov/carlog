@@ -1,0 +1,8 @@
+﻿{
+  "@@locale": "en",
+  "appTitle": "CarLog",
+  "onboardingWelcome": "Welcome",
+  "@onboardingWelcome": {
+    "description": "Заголовок на экране онбординга"
+  }
+}

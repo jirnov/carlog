@@ -1,8 +1,10 @@
-﻿// lib/screens/onboarding/onboarding_screen.dart
+// lib/screens/onboarding/onboarding_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:carlog/data/models/theme_mode_preference.dart';
+import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/utils/formatting.dart';
 
@@ -48,10 +50,60 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   bool get _canContinue {
     final value = _mileage;
-    return value != null &&
-        value > 0 &&
-        value <= 10000000 &&
-        !_isSaving;
+    return value != null && value > 0 && value <= 10000000 && !_isSaving;
+  }
+
+  String _themeLabel(ThemeModePreference pref) {
+    switch (pref) {
+      case ThemeModePreference.system:
+        return 'Как в системе';
+      case ThemeModePreference.light:
+        return 'Светлая';
+      case ThemeModePreference.dark:
+        return 'Тёмная';
+    }
+  }
+
+  Future<void> _pickTheme(BuildContext context) async {
+    final provider = context.read<SettingsProvider>();
+    final current = provider.themeModePreference;
+
+    final result = await showDialog<ThemeModePreference>(
+      context: context,
+      builder: (dialogContext) {
+        var selected = current;
+        return StatefulBuilder(
+          builder: (context, setState) => SimpleDialog(
+            title: const Text('Тема оформления'),
+            children: [
+              RadioGroup<ThemeModePreference>(
+                groupValue: selected,
+                onChanged: (value) {
+                  if (value == null) return;
+                  setState(() => selected = value);
+                  Navigator.of(dialogContext).pop(value);
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final pref in ThemeModePreference.values)
+                      RadioListTile<ThemeModePreference>(
+                        value: pref,
+                        title: Text(_themeLabel(pref)),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (result != null && context.mounted) {
+      // Сохраняем и применяем сразу.
+      await provider.setThemeMode(result);
+    }
   }
 
   Future<void> _onContinue() async {
@@ -65,12 +117,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     try {
       final settingsProvider = context.read<SettingsProvider>();
+      final mileageProvider = context.read<MileageProvider>();
 
+      // 1. Название машины.
       final carName = _carNameController.text.trim();
       if (carName.isNotEmpty) {
         await settingsProvider.setCarName(carName);
       }
 
+      // 2. Первая запись в журнал пробега.
+      await mileageProvider.add(_mileage!);
+
+      // 3. Флаг онбординга — последним.
+      // Тема уже сохранена при выборе в _pickTheme.
       await settingsProvider.setOnboardingDone(true);
     } catch (e) {
       if (!mounted) return;
@@ -84,6 +143,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final currentTheme = context.select<SettingsProvider, ThemeModePreference>(
+      (p) => p.themeModePreference,
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -98,6 +160,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const Spacer(flex: 2),
+
+                      // Иконка
                       Center(
                         child: Icon(
                           Icons.directions_car_outlined,
@@ -106,6 +170,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
+
+                      // Заголовок
                       Text(
                         'Добро пожаловать',
                         textAlign: TextAlign.center,
@@ -114,6 +180,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 12),
+
+                      // Подзаголовок
                       Text(
                         'Пара вопросов, чтобы приложение\n'
                         'сразу считало сроки ТО',
@@ -123,18 +191,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 40),
+
+                      // Название машины
                       TextField(
                         controller: _carNameController,
                         textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.sentences,
                         decoration: const InputDecoration(
                           labelText: 'Название машины',
-                          hintText: 'Например, SEAT Altea Freetrack',
+                          hintText: 'Например, Моя ласточка',
                           helperText: 'Необязательно',
                         ),
                         onSubmitted: (_) => _mileageFocus.requestFocus(),
                       ),
                       const SizedBox(height: 20),
+
+                      // Пробег
                       TextField(
                         controller: _mileageController,
                         focusNode: _mileageFocus,
@@ -153,7 +225,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         style: theme.textTheme.headlineSmall,
                       ),
+                      const SizedBox(height: 24),
+
+                      // Тема оформления — как в настройках.
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.brightness_6_outlined),
+                        title: const Text('Тема'),
+                        subtitle: Text(_themeLabel(currentTheme)),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => _pickTheme(context),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4, top: 4),
+                        child: Text(
+                          'Можно изменить позже в настройках',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+
                       const Spacer(flex: 3),
+
+                      // Кнопка
                       FilledButton(
                         onPressed: _canContinue ? _onContinue : null,
                         child: _isSaving

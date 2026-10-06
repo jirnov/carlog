@@ -1,5 +1,5 @@
 name: carlog
-description: Дневник обслуживания автомобиля
+description: Журнал ТО — дневник обслуживания автомобиля
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -18,21 +18,43 @@ dependencies:
   # Состояние
   provider: ^6.1.0
 
-  # Уведомления
-  flutter_local_notifications: ^17.0.0
-
-  # Экспорт/импорт
-  file_picker: ^8.0.0
-  share_plus: ^10.0.0
-
   # Иконки Material Symbols (опционально)
   material_symbols_icons: ^4.2700.0
-  sqflite_common_ffi: ^2.4.3
+  url_launcher: ^6.3.3
+  share_plus: ^11.0.0
+  file_picker: ^11.0.3
+  flutter_local_notifications: ^19.5.0
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  sqflite_common_ffi: 2.4.0+3
+  timezone: ^0.10.0
+  workmanager: ^0.9.0
+  flutter_html: ^3.0.0
+  month_picker_dialog: ^6.7.2 # или актуальная версия
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
+  generate: true
+  assets:
+    - assets/help/
+    - assets/icon/
+
+flutter_launcher_icons:
+  android: "launcher_icon" # Имя иконки в Android-проекте
+  image_path: "assets/icon/app_icon.png" # Путь к вашей картинке
+  # Ключевые настройки для Android:
+  adaptive_icon_background: "#1565C0" # Цвет фона (hex). Можно взять из темы CarLog.
+  adaptive_icon_foreground: "assets/icon/app_icon.png" # Передний план — это ваш значок
+  min_sdk_android: 21
+
+dependency_overrides:
+  html: 0.15.6

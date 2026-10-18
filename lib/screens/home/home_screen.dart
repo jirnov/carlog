@@ -14,6 +14,7 @@ import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/postponements_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
+import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/screens/main/widgets/settings_action.dart';
 import 'package:carlog/screens/mark_done/mark_done_screen.dart';
 import 'package:carlog/services/history_service.dart';
@@ -47,6 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _notifications = context.read<NotificationService>();
     _notifications!.openMileageRequests.addListener(_onOpenMileageRequest);
+
+    // Холодный старт: приложение запущено нажатием «Обновить» в уведомлении.
+    if (_notifications!.pendingOpenMileage) {
+      _notifications!.pendingOpenMileage = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _onUpdateMileage();
+      });
+    }
   }
 
   @override
@@ -57,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onOpenMileageRequest() {
-    // Приложение могли только что открыть из уведомления —
-    // даём кадру построиться, потом показываем диалог.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _onUpdateMileage();
@@ -78,8 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!mounted) return;
 
     await mileageProvider.add(newMileage);
-
-    // Сбросить напоминание о пробеге — данные обновлены.
     await reminder.reset();
   }
 
@@ -89,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (result == null) return;
     if (!mounted) return;
 
-    // Сдвигаем правило и снимаем отложку до записи в историю.
     await context.read<RulesProvider>().advance(
           rule.id!,
           performedMileage: result.record.mileage,
@@ -108,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (!mounted) return;
 
-    // Обновляем пробег машины, если пользователь подтвердил в MarkDoneScreen.
     if (result.updatedMileage != null) {
       await context.read<MileageProvider>().add(result.updatedMileage!);
       if (!mounted) return;
@@ -116,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
     }
 
-    // Подсветить карточку с этим правилом.
     _highlightTimer?.cancel();
     setState(() => _highlightedRuleId = rule.id);
     _highlightTimer = Timer(_highlightDuration, () {
@@ -125,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
 
-    // SnackBar с данными из истории: пробег и дата выполнения.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
@@ -272,6 +274,18 @@ class _EmptyState extends StatelessWidget {
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
+            ),
+            const SizedBox(height: 16),
+            TextButton.icon(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const HelpScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.help_outline),
+              label: const Text('Как это работает?'),
             ),
           ],
         ),

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/dialogs/confirm_delete_dialog.dart';
 import 'package:carlog/providers/history_provider.dart';
+import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/screens/main/widgets/settings_action.dart';
 import 'package:carlog/screens/mark_done/mark_done_screen.dart';
 import 'package:carlog/screens/templates/template_picker_screen.dart';
@@ -163,6 +164,18 @@ class _EmptyState extends StatelessWidget {
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
+            ),
+            const SizedBox(height: 16),
+            TextButton.icon(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const HelpScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.help_outline),
+              label: const Text('Как это работает?'),
             ),
           ],
         ),

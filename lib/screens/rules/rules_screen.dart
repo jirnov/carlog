@@ -121,7 +121,7 @@ class _EmptyState extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.help_outline),
-              label: const Text('Как это работает?'),
+              label: const Text('С чего начать?'),
             ),
           ],
         ),

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -29,6 +30,18 @@ class _HelpScreenState extends State<HelpScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() => _error = e.toString());
+    }
+  }
+
+  Future<void> _onLinkTap(String? url) async {
+    if (url == null || url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri == null) return;
+
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint('Не удалось открыть ссылку: $url — $e');
     }
   }
 
@@ -85,6 +98,7 @@ class _HelpScreenState extends State<HelpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Html(
         data: _html!,
+        onLinkTap: (url, attributes, element) => _onLinkTap(url),
         style: {
           'body': Style(
             margin: Margins.symmetric(horizontal: 16),
@@ -123,6 +137,10 @@ class _HelpScreenState extends State<HelpScreen> {
             backgroundColor: theme.colorScheme.surfaceContainerHighest,
             color: theme.colorScheme.onSurface,
             fontSize: FontSize(13),
+          ),
+          'a': Style(
+            color: theme.colorScheme.primary,
+            textDecoration: TextDecoration.underline,
           ),
           '.note': Style(
             backgroundColor:

@@ -14,7 +14,7 @@ const String _channelName = 'Напоминание о пробеге';
 const String _channelDescription = 'Приложение просит обновить пробег машины';
 
 const String _actionUpdate = 'update';
-const String _actionClose = 'close';
+const String _actionLater = 'later';
 
 const String _payloadMileageReminder = 'mileage_reminder';
 
@@ -24,6 +24,7 @@ const String _notificationIcon = '@drawable/ic_notification';
 
 enum NotificationAction {
   openMileage,
+  postpone,
   openApp,
 }
 
@@ -211,8 +212,8 @@ class NotificationService {
             showsUserInterface: true,
           ),
           AndroidNotificationAction(
-            _actionClose,
-            'Закрыть',
+            _actionLater,
+            'Позже',
             showsUserInterface: false,
             cancelNotification: true,
           ),
@@ -259,7 +260,11 @@ class NotificationService {
       return;
     }
 
-    // Нажатие на само уведомление (не на кнопку) — открыть приложение.
+    if (actionId == _actionLater) {
+      onAction?.call(NotificationAction.postpone);
+      return;
+    }
+
     onAction?.call(NotificationAction.openApp);
   }
 

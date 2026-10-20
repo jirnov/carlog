@@ -33,10 +33,6 @@ Future<void> main() async {
   if (Platform.isAndroid || Platform.isIOS) {
     await notifications.init();
     await notifications.requestPermissions();
-  }
-
-  // WorkManager — только на мобильных платформах.
-  if (Platform.isAndroid || Platform.isIOS) {
     await Workmanager().initialize(callbackDispatcher);
     await registerMileageReminderTask();
   }
@@ -49,9 +45,6 @@ Future<void> main() async {
   final rules = RulesProvider(db);
   final history = HistoryProvider(db);
   final postponements = PostponementsProvider(db);
-
-  // ВАЖНО: load() НЕ вызываем здесь. Это сделает SplashScreen,
-  // чтобы splash реально ждал загрузку.
 
   final dueList = DueListProvider(
     db,

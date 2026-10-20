@@ -113,16 +113,15 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextButton.icon(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const HelpScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.help_outline),
-              label: const Text('Как это работает?'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const HelpScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.help_outline),
+                label: const Text('С чего начать?')),
           ],
         ),
       ),

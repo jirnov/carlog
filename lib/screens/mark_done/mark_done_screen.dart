@@ -423,7 +423,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 textCapitalization: TextCapitalization.sentences,
                 decoration: const InputDecoration(
                   labelText: 'Заметка',
-                  hintText: 'Например, масло Teboil',
+                  hintText: 'Например, синтетическое масло',
                 ),
               ),
               const SizedBox(height: 24),

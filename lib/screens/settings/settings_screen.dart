@@ -3,6 +3,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,8 +22,11 @@ import 'package:carlog/utils/formatting.dart';
 
 /// Ссылки приложения. Вынести сюда, чтобы менять в одном месте.
 const String kAppName = 'Журнал ТО';
-const String kPlayStoreUrl =
-    'https://play.google.com/store/apps/details?id=ru.blog2k.carlog';
+const String kPlayStoreUrl = String.fromEnvironment(
+  'STORE_URL',
+  defaultValue:
+      'https://play.google.com/store/apps/details?id=ru.blog2k.carlog',
+);
 const String kCoffeeUrl = 'https://pay.cloudtips.ru/p/31704978';
 
 class SettingsScreen extends StatelessWidget {
@@ -212,18 +216,10 @@ class _RemindDaysTile extends StatelessWidget {
     return ListTile(
       enabled: enabled,
       title: const Text('Как часто'),
-      subtitle: Text('$days ${_pluralDays(days)}'),
+      subtitle: Text('$days ${pluralWorks(days)}'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
-  }
-
-  String _pluralDays(int n) {
-    if (n % 10 == 1 && n % 100 != 11) return 'день';
-    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-      return 'дня';
-    }
-    return 'дней';
   }
 }
 
@@ -328,18 +324,10 @@ class _YellowMonthsTile extends StatelessWidget {
     );
     return ListTile(
       title: const Text('За сколько месяцев'),
-      subtitle: Text('$months ${_pluralMonths(months)}'),
+      subtitle: Text('$months ${pluralWorks(months)}'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
-  }
-
-  String _pluralMonths(int n) {
-    if (n % 10 == 1 && n % 100 != 11) return 'месяц';
-    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-      return 'месяца';
-    }
-    return 'месяцев';
   }
 }
 
@@ -366,8 +354,6 @@ class _ThemeModeTile extends StatelessWidget {
     final result = await showDialog<ThemeModePreference>(
       context: context,
       builder: (dialogContext) {
-        // Локальная переменная для RadioGroup: в момент выбора сразу
-        // закрываем диалог, но группе всё равно нужен groupValue.
         var selected = current;
         return StatefulBuilder(
           builder: (context, setState) => SimpleDialog(
@@ -587,7 +573,7 @@ class _ShareTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.share_outlined),
       title: const Text('Поделиться приложением'),
-      subtitle: const Text('Отправить ссылку на Google Play'),
+      subtitle: const Text('Отправить ссылку на магазин'),
       onTap: _share,
     );
   }
@@ -628,15 +614,36 @@ class _CoffeeTile extends StatelessWidget {
 
 // --- О приложении ---
 
-class _VersionTile extends StatelessWidget {
+class _VersionTile extends StatefulWidget {
   const _VersionTile();
 
   @override
+  State<_VersionTile> createState() => _VersionTileState();
+}
+
+class _VersionTileState extends State<_VersionTile> {
+  String? _version;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final info = await PackageInfo.fromPlatform();
+    if (!mounted) return;
+    setState(() {
+      _version = '${info.version}+${info.buildNumber}';
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      leading: Icon(Icons.info_outline),
-      title: Text('Версия'),
-      subtitle: Text('1.0.0'),
+    return ListTile(
+      leading: const Icon(Icons.info_outline),
+      title: const Text('Версия'),
+      subtitle: Text(_version ?? '…'),
     );
   }
 }

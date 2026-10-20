@@ -111,3 +111,22 @@ String formatMonthYear(DateTime date) {
 String formatMonthYearShort(DateTime date) {
   return '${monthNamesRuShort[date.month - 1]} ${date.year}';
 }
+
+/// Склонение слова «работа» после числительного (именительный падеж).
+String pluralWorks(int n) {
+  if (n % 10 == 1 && n % 100 != 11) return 'работа';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+    return 'работы';
+  }
+  return 'работ';
+}
+
+/// Склонение слова «работа» в винительном падеже
+/// (для конструкций «Выполнить N …»).
+String pluralWorksAccusative(int n) {
+  if (n % 10 == 1 && n % 100 != 11) return 'работу';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+    return 'работы';
+  }
+  return 'работ';
+}

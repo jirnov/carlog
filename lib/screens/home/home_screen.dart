@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/dialogs/postpone_dialog.dart';
 import 'package:carlog/dialogs/update_mileage_dialog.dart';
@@ -16,6 +17,7 @@ import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/screens/main/widgets/settings_action.dart';
+import 'package:carlog/screens/mark_done/mark_done_multi_screen.dart';
 import 'package:carlog/screens/mark_done/mark_done_screen.dart';
 import 'package:carlog/services/history_service.dart';
 import 'package:carlog/services/maintenance_service.dart';
@@ -39,9 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   NotificationService? _notifications;
 
-  /// id правила, которое только что выполнено — подсвечиваем его карточку.
   int? _highlightedRuleId;
   Timer? _highlightTimer;
+
+  /// Режим мультивыбора.
+  bool _selectionMode = false;
+  final Set<int> _selectedRuleIds = {};
 
   @override
   void initState() {
@@ -49,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _notifications = context.read<NotificationService>();
     _notifications!.openMileageRequests.addListener(_onOpenMileageRequest);
 
-    // Холодный старт: приложение запущено нажатием «Обновить» в уведомлении.
     if (_notifications!.pendingOpenMileage) {
       _notifications!.pendingOpenMileage = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -88,6 +92,103 @@ class _HomeScreenState extends State<HomeScreen> {
     await mileageProvider.add(newMileage);
     await reminder.reset();
   }
+
+  // --- Мультивыбор ---
+
+  void _enterSelectionMode(int ruleId) {
+    setState(() {
+      _selectionMode = true;
+      _selectedRuleIds
+        ..clear()
+        ..add(ruleId);
+    });
+  }
+
+  void _exitSelectionMode() {
+    setState(() {
+      _selectionMode = false;
+      _selectedRuleIds.clear();
+    });
+  }
+
+  void _toggleSelection(int ruleId) {
+    setState(() {
+      if (_selectedRuleIds.contains(ruleId)) {
+        _selectedRuleIds.remove(ruleId);
+        if (_selectedRuleIds.isEmpty) {
+          _selectionMode = false;
+        }
+      } else {
+        _selectedRuleIds.add(ruleId);
+      }
+    });
+  }
+
+  Future<void> _onMarkDoneSelected() async {
+    final selectedRules = context
+        .read<RulesProvider>()
+        .rules
+        .where((r) => _selectedRuleIds.contains(r.id))
+        .toList();
+
+    if (selectedRules.isEmpty) return;
+
+    final postponementsProvider = context.read<PostponementsProvider>();
+    final rulesProvider = context.read<RulesProvider>();
+    final historyProvider = context.read<HistoryProvider>();
+    final mileageProvider = context.read<MileageProvider>();
+
+    final result = await showMarkDoneMultiScreen(
+      context,
+      rules: selectedRules,
+    );
+    if (result == null) return;
+    if (!mounted) return;
+
+    // Для каждого правила: advance + removeForRule + history.
+    for (final rule in selectedRules) {
+      await rulesProvider.advance(
+        rule.id!,
+        performedMileage: result.mileage,
+        performedDate: result.performedAt,
+      );
+      await postponementsProvider.removeForRule(rule.id!);
+
+      await historyProvider.add(HistoryRecord(
+        title: rule.title,
+        note: result.note,
+        mileage: result.mileage,
+        performedAt: result.performedAt,
+        cost: null,
+      ));
+    }
+
+    if (!mounted) return;
+
+    // Пробег машины — один раз.
+    if (result.updatedMileage != null) {
+      await mileageProvider.add(result.updatedMileage!);
+      if (!mounted) return;
+      await context.read<ReminderService>().reset();
+      if (!mounted) return;
+    }
+
+    _exitSelectionMode();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 5),
+        content: Text(
+          'Выполнено ${selectedRules.length} '
+          '${pluralWorks(selectedRules.length)} — '
+          '${formatThousands(result.mileage)} км, '
+          '${formatMonthYear(result.performedAt)}',
+        ),
+      ),
+    );
+  }
+
+  // --- Одиночное выполнение ---
 
   Future<void> _onMarkDone(Rule rule) async {
     final postponementsProvider = context.read<PostponementsProvider>();
@@ -177,8 +278,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(carName.isEmpty ? 'Мой автомобиль' : carName),
-        actions: const [SettingsAction()],
+        leading: _selectionMode
+            ? IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: _exitSelectionMode,
+                tooltip: 'Отмена',
+              )
+            : null,
+        title: _selectionMode
+            ? Text('Выбрано: ${_selectedRuleIds.length}')
+            : Text(carName.isEmpty ? 'Мой автомобиль' : carName),
+        actions: _selectionMode ? null : const [SettingsAction()],
       ),
       body: Column(
         children: [
@@ -189,7 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
             remindDays: remindDays,
             onUpdate: _onUpdateMileage,
           ),
-          if (active.isNotEmpty) NearestDueLabel(due: active.first),
+          if (!_selectionMode && active.isNotEmpty)
+            NearestDueLabel(due: active.first),
           const SizedBox(height: 8),
           Expanded(
             child: dues.isEmpty
@@ -201,12 +312,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         DueCard(
                           due: due,
                           highlighted: due.rule.id == _highlightedRuleId,
+                          selectionMode: _selectionMode,
+                          selected: _selectedRuleIds.contains(due.rule.id),
+                          onLongPress: () => _enterSelectionMode(due.rule.id!),
+                          onTapInSelection: () =>
+                              _toggleSelection(due.rule.id!),
                           onMarkDone: () => _onMarkDone(due.rule),
                           onPostpone: () => _onPostpone(due),
                         ),
                         const SizedBox(height: 8),
                       ],
-                      if (postponed.isNotEmpty) ...[
+                      if (postponed.isNotEmpty && !_selectionMode) ...[
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -229,6 +345,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           DueCard(
                             due: due,
                             highlighted: due.rule.id == _highlightedRuleId,
+                            selectionMode: _selectionMode,
+                            selected: _selectedRuleIds.contains(due.rule.id),
+                            onLongPress: () =>
+                                _enterSelectionMode(due.rule.id!),
+                            onTapInSelection: () =>
+                                _toggleSelection(due.rule.id!),
                             onMarkDone: () => _onMarkDone(due.rule),
                             onPostpone: () => _onPostpone(due),
                           ),
@@ -240,6 +362,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      floatingActionButton: _selectionMode && _selectedRuleIds.isNotEmpty
+          ? FloatingActionButton.extended(
+              heroTag: 'fab_mark_done_selected',
+              onPressed: _onMarkDoneSelected,
+              icon: const Icon(Icons.done_all),
+              label: Text('Выполнить (${_selectedRuleIds.length})'),
+            )
+          : null,
     );
   }
 }

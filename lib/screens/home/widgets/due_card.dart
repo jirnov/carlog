@@ -13,6 +13,10 @@ class DueCard extends StatelessWidget {
     required this.onMarkDone,
     required this.onPostpone,
     this.highlighted = false,
+    this.selectionMode = false,
+    this.selected = false,
+    this.onLongPress,
+    this.onTapInSelection,
   });
 
   final DueInfo due;
@@ -21,6 +25,18 @@ class DueCard extends StatelessWidget {
 
   /// Подсветить карточку после выполнения работы.
   final bool highlighted;
+
+  /// Режим выбора (мультивыбор).
+  final bool selectionMode;
+
+  /// Выбрана ли карточка (в режиме выбора).
+  final bool selected;
+
+  /// Long-press — вход в режим выбора.
+  final VoidCallback? onLongPress;
+
+  /// Тап в режиме выбора — переключить выбор.
+  final VoidCallback? onTapInSelection;
 
   Color _statusColor(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -37,16 +53,11 @@ class DueCard extends StatelessWidget {
     }
   }
 
-  /// Формат для отложки: конкретный день, месяц, год.
   String _formatDayMonthYear(DateTime date) {
     return '${date.day.toString().padLeft(2, '0')}.'
         '${date.month.toString().padLeft(2, '0')}.${date.year}';
   }
 
-  /// Строка статуса.
-  ///
-  /// Если что-то просрочено — показываем **только просроченные параметры**
-  /// (км и/или дату). Если ничего не просрочено — показываем остатки.
   String _intervalText() {
     final kmOverdue = due.kmLeft != null && due.kmLeft! < 0;
     final dateOverdue = due.daysLeft != null && due.daysLeft! < 0;
@@ -59,14 +70,11 @@ class DueCard extends StatelessWidget {
         );
       }
       if (dateOverdue) {
-        parts.add(
-          'просрочено ${formatDaysLeftShort(-due.daysLeft!)}',
-        );
+        parts.add('просрочено ${formatDaysLeftShort(-due.daysLeft!)}');
       }
       return parts.join(' · ');
     }
 
-    // Ничего не просрочено — остатки.
     final parts = <String>[];
     if (due.kmLeft != null) {
       parts.add('${formatThousands(roundKmDown(due.kmLeft!))} км');
@@ -88,9 +96,6 @@ class DueCard extends StatelessWidget {
     return parts.join(' · ');
   }
 
-  /// Стоит ли показывать кнопку «Отложить».
-  /// Скрываем для отложенных (уже отложена) и для ok-карточек
-  /// (работа далеко, откладывать нечего).
   bool get _showPostpone => !due.isPostponed && due.status != DueStatus.ok;
 
   @override
@@ -105,100 +110,130 @@ class DueCard extends StatelessWidget {
     return Stack(
       children: [
         Card(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(color: color, width: 8),
-              ),
-            ),
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  due.rule.title,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color:
-                        isPostponed ? theme.colorScheme.onSurfaceVariant : null,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          child: InkWell(
+            onLongPress: onLongPress,
+            onTap: selectionMode ? onTapInSelection : null,
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(color: color, width: 8),
                 ),
-                const SizedBox(height: 4),
-                if (isPostponed) ...[
+              ),
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.schedule,
-                        size: 16,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Отложено до '
-                        '${_formatDayMonthYear(due.postponement!.untilDate)}',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                      if (selectionMode) ...[
+                        Checkbox(
+                          value: selected,
+                          onChanged: (_) => onTapInSelection?.call(),
+                        ),
+                        const SizedBox(width: 4),
+                      ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              due.rule.title,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: isPostponed
+                                    ? theme.colorScheme.onSurfaceVariant
+                                    : null,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            if (isPostponed) ...[
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.schedule,
+                                    size: 16,
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Отложено до '
+                                    '${_formatDayMonthYear(due.postponement!.untilDate)}',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                            Text(
+                              'Следующее: ${_nextText()}',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              hasAnyOverdue
+                                  ? _intervalText()
+                                  : 'Осталось: ${_intervalText()}',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: hasAnyOverdue && !isPostponed
+                                    ? color
+                                    : null,
+                                fontWeight: hasAnyOverdue && !isPostponed
+                                    ? FontWeight.w600
+                                    : null,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                ],
-                Text(
-                  'Следующее: ${_nextText()}',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  hasAnyOverdue
-                      ? _intervalText()
-                      : 'Осталось: ${_intervalText()}',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: hasAnyOverdue && !isPostponed ? color : null,
-                    fontWeight:
-                        hasAnyOverdue && !isPostponed ? FontWeight.w600 : null,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (_showPostpone) ...[
-                      _ActionButton(
-                        label: '[Отложить]',
-                        onPressed: onPostpone,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    _ActionButton(
-                      label: '[Выполнить]',
-                      onPressed: onMarkDone,
+                  if (!selectionMode) ...[
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (_showPostpone) ...[
+                          _ActionButton(
+                            label: '[Отложить]',
+                            onPressed: onPostpone,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        _ActionButton(
+                          label: '[Выполнить]',
+                          onPressed: onMarkDone,
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Подсветка после выполнения — зелёный слой поверх карточки.
-        Positioned.fill(
-          child: IgnorePointer(
-            child: AnimatedOpacity(
-              opacity: highlighted ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.green.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                ],
               ),
             ),
           ),
         ),
+        if (highlighted && !selectionMode)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: AnimatedOpacity(
+                opacity: highlighted ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

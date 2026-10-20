@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -29,6 +31,38 @@ class _HelpScreenState extends State<HelpScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() => _error = e.toString());
+    }
+  }
+
+  /// Обработка кликов по ссылкам в HTML.
+  ///
+  /// Для `mailto:` собираем URI заново — с русским subject
+  /// и текущей версией приложения. Это надёжнее, чем хардкодить
+  /// закодированную строку в HTML.
+  Future<void> _onLinkTap(String? url) async {
+    if (url == null || url.isEmpty) return;
+
+    Uri uri;
+    if (url.startsWith('mailto:')) {
+      final packageInfo = await PackageInfo.fromPlatform();
+      final version = '${packageInfo.version}+${packageInfo.buildNumber}';
+      final subject = 'Предложения по Журналу ТО (версия $version)';
+
+      uri = Uri(
+        scheme: 'mailto',
+        path: 'evgeny@blog2k.ru',
+        query: 'subject=${Uri.encodeComponent(subject)}',
+      );
+    } else {
+      final parsed = Uri.tryParse(url);
+      if (parsed == null) return;
+      uri = parsed;
+    }
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint('Не удалось открыть ссылку: $uri');
     }
   }
 
@@ -85,6 +119,7 @@ class _HelpScreenState extends State<HelpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Html(
         data: _html!,
+        onLinkTap: (url, attributes, element) => _onLinkTap(url),
         style: {
           'body': Style(
             margin: Margins.symmetric(horizontal: 16),
@@ -123,6 +158,10 @@ class _HelpScreenState extends State<HelpScreen> {
             backgroundColor: theme.colorScheme.surfaceContainerHighest,
             color: theme.colorScheme.onSurface,
             fontSize: FontSize(13),
+          ),
+          'a': Style(
+            color: theme.colorScheme.primary,
+            textDecoration: TextDecoration.underline,
           ),
           '.note': Style(
             backgroundColor:

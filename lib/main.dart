@@ -17,6 +17,7 @@ import 'package:carlog/providers/postponements_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/services/background_worker.dart';
+import 'package:carlog/services/backup_service.dart';
 import 'package:carlog/services/notification_service.dart';
 import 'package:carlog/services/reminder_service.dart';
 
@@ -28,11 +29,13 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
-  // Сервис уведомлений — только для мобильных платформ.
   final notifications = NotificationService();
   if (Platform.isAndroid || Platform.isIOS) {
     await notifications.init();
     await notifications.requestPermissions();
+  }
+
+  if (Platform.isAndroid || Platform.isIOS) {
     await Workmanager().initialize(callbackDispatcher);
     await registerMileageReminderTask();
   }
@@ -68,6 +71,7 @@ Future<void> main() async {
         Provider<AppDatabase>.value(value: db),
         Provider<NotificationService>.value(value: notifications),
         Provider<ReminderService>.value(value: reminder),
+        Provider<BackupService>(create: (_) => BackupService(db)),
         ChangeNotifierProvider<SettingsProvider>.value(value: settings),
         ChangeNotifierProvider<MileageProvider>.value(value: mileage),
         ChangeNotifierProvider<RulesProvider>.value(value: rules),

@@ -1,5 +1,7 @@
 // lib/screens/settings/settings_screen.dart
 
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +20,7 @@ import 'package:carlog/providers/postponements_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/screens/help/help_screen.dart';
+import 'package:carlog/services/backup_service.dart';
 import 'package:carlog/utils/formatting.dart';
 
 /// Ссылки приложения. Вынести сюда, чтобы менять в одном месте.
@@ -28,6 +31,22 @@ const String kPlayStoreUrl = String.fromEnvironment(
       'https://play.google.com/store/apps/details?id=ru.blog2k.carlog',
 );
 const String kCoffeeUrl = 'https://pay.cloudtips.ru/p/31704978';
+
+/// Перезагрузить все провайдеры после импорта.
+/// Используется и в «Импорт», и в «Восстановить из архива».
+Future<void> _reloadAllProviders(BuildContext context) async {
+  await context.read<SettingsProvider>().reload();
+  if (!context.mounted) return;
+  await context.read<MileageProvider>().reload();
+  if (!context.mounted) return;
+  await context.read<RulesProvider>().reload();
+  if (!context.mounted) return;
+  await context.read<HistoryProvider>().reload();
+  if (!context.mounted) return;
+  await context.read<PostponementsProvider>().reload();
+  if (!context.mounted) return;
+  await context.read<DueListProvider>().reload();
+}
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -54,6 +73,7 @@ class SettingsScreen extends StatelessWidget {
           _SectionHeader('Данные'),
           _ExportTile(),
           _ImportTile(),
+          _RestoreBackupTile(),
           _SectionHeader('Помощь и поддержка'),
           _HelpTile(),
           _ShareTile(),
@@ -495,26 +515,12 @@ class _ImportTile extends StatelessWidget {
     }
 
     if (!context.mounted) return;
-    await _reloadAll(context);
+    await _reloadAllProviders(context);
 
     if (!context.mounted) return;
     messenger.showSnackBar(
       const SnackBar(content: Text('Данные импортированы')),
     );
-  }
-
-  Future<void> _reloadAll(BuildContext context) async {
-    await context.read<SettingsProvider>().reload();
-    if (!context.mounted) return;
-    await context.read<MileageProvider>().reload();
-    if (!context.mounted) return;
-    await context.read<RulesProvider>().reload();
-    if (!context.mounted) return;
-    await context.read<HistoryProvider>().reload();
-    if (!context.mounted) return;
-    await context.read<PostponementsProvider>().reload();
-    if (!context.mounted) return;
-    await context.read<DueListProvider>().reload();
   }
 
   @override
@@ -529,6 +535,142 @@ class _ImportTile extends StatelessWidget {
       title: const Text('Импорт данных'),
       subtitle: const Text('Загрузить из JSON-файла'),
       onTap: () => _import(context),
+    );
+  }
+}
+
+/// Пункт «Восстановить из архива» — выбор из автоматических бэкапов.
+class _RestoreBackupTile extends StatelessWidget {
+  const _RestoreBackupTile();
+
+  Future<void> _open(BuildContext context) async {
+    final backupService = context.read<BackupService>();
+    final provider = context.read<ExportImportProvider>();
+    final messenger = ScaffoldMessenger.of(context);
+
+    final path = await showDialog<String>(
+      context: context,
+      builder: (_) => _BackupPickerDialog(backupService: backupService),
+    );
+    if (path == null) return;
+    if (!context.mounted) return;
+
+    final confirmed = await showConfirmDeleteDialog(
+      context,
+      title: 'Восстановить из архива?',
+      message: 'Все текущие данные будут заменены содержимым архива.',
+      confirmText: 'Восстановить',
+      cancelText: 'Отмена',
+    );
+    if (!confirmed) return;
+    if (!context.mounted) return;
+
+    final success = await provider.import(path);
+    if (!success) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Не удалось восстановить архив')),
+      );
+      return;
+    }
+
+    if (!context.mounted) return;
+    await _reloadAllProviders(context);
+
+    if (!context.mounted) return;
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Данные восстановлены из архива')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isBusy = context.select<ExportImportProvider, bool>(
+      (p) => p.isBusy,
+    );
+
+    return ListTile(
+      enabled: !isBusy,
+      leading: const Icon(Icons.restore_outlined),
+      title: const Text('Восстановить из архива'),
+      subtitle: const Text('Автоматические резервные копии'),
+      onTap: () => _open(context),
+    );
+  }
+}
+
+/// Диалог выбора файла бэкапа. Возвращает путь к выбранному файлу.
+class _BackupPickerDialog extends StatefulWidget {
+  const _BackupPickerDialog({required this.backupService});
+
+  final BackupService backupService;
+
+  @override
+  State<_BackupPickerDialog> createState() => _BackupPickerDialogState();
+}
+
+class _BackupPickerDialogState extends State<_BackupPickerDialog> {
+  late final Future<List<File>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = widget.backupService.listBackups();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Восстановить из архива'),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: FutureBuilder<List<File>>(
+          future: _future,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            final files = snapshot.data ?? const <File>[];
+            if (files.isEmpty) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Text('Архивных копий пока нет'),
+              );
+            }
+
+            return ListView.separated(
+              shrinkWrap: true,
+              itemCount: files.length,
+              separatorBuilder: (_, __) => const Divider(height: 1),
+              itemBuilder: (context, index) {
+                final file = files[index];
+                final name = file.uri.pathSegments.last;
+                final size = file.lengthSync();
+                final sizeText = size < 1024
+                    ? '$size Б'
+                    : '${(size / 1024).toStringAsFixed(1)} КБ';
+
+                return ListTile(
+                  dense: true,
+                  leading: const Icon(Icons.description_outlined),
+                  title: Text(name),
+                  subtitle: Text(sizeText),
+                  onTap: () => Navigator.of(context).pop(file.path),
+                );
+              },
+            );
+          },
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Отмена'),
+        ),
+      ],
     );
   }
 }
@@ -594,7 +736,6 @@ class _CoffeeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    // В тёмной теме — светлое (жёлтое) пиво, в светлой — тёмное.
     final beerColor = isDark ? Colors.amber.shade400 : Colors.brown.shade600;
 
     return ListTile(

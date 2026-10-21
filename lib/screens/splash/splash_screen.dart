@@ -9,6 +9,7 @@ import 'package:carlog/providers/postponements_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/screens/app_root.dart';
+import 'package:carlog/services/backup_service.dart';
 
 /// Минимальное время показа splash, чтобы он не мигал.
 const Duration _minSplashDuration = Duration(milliseconds: 1500);
@@ -37,6 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     try {
+      final backupService = context.read<BackupService>();
+
       await Future.wait([
         // Минимальное время показа splash.
         Future<void>.delayed(_minSplashDuration),
@@ -47,6 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
         context.read<HistoryProvider>().load(),
         context.read<PostponementsProvider>().load(),
       ]);
+
+      // Тихий бэкап после загрузки — не блокирует переход.
+      // Ошибки внутри createBackup() не пробрасываются.
+      await backupService.createBackupIfNeeded();
 
       if (!mounted) return;
       setState(() => _ready = true);

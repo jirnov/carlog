@@ -334,7 +334,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 8),
                       ],
-                      if (postponed.isNotEmpty && !_selectionMode) ...[
+                      if (postponed.isNotEmpty) ...[
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.only(

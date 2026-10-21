@@ -276,72 +276,47 @@ class _HomeScreenState extends State<HomeScreen> {
     final active = dues.where((d) => !d.isPostponed).toList();
     final postponed = dues.where((d) => d.isPostponed).toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: _selectionMode
-            ? IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: _exitSelectionMode,
-                tooltip: 'Отмена',
-              )
-            : null,
-        title: _selectionMode
-            ? Text('Выбрано: ${_selectedRuleIds.length}')
-            : Text(carName.isEmpty ? 'Мой автомобиль' : carName),
-        actions: _selectionMode ? null : const [SettingsAction()],
-      ),
-      body: Column(
-        children: [
-          MileageHeader(
-            mileage: mileage,
-            lastUpdatedAt: lastUpdated,
-            remindEnabled: remindEnabled,
-            remindDays: remindDays,
-            onUpdate: _onUpdateMileage,
-          ),
-          if (!_selectionMode && active.isNotEmpty)
-            NearestDueLabel(due: active.first),
-          const SizedBox(height: 8),
-          Expanded(
-            child: dues.isEmpty
-                ? const _EmptyState()
-                : ListView(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    children: [
-                      for (final due in active) ...[
-                        DueCard(
-                          due: due,
-                          highlighted: due.rule.id == _highlightedRuleId,
-                          selectionMode: _selectionMode,
-                          selected: _selectedRuleIds.contains(due.rule.id),
-                          onLongPress: () => _enterSelectionMode(due.rule.id!),
-                          onTapInSelection: () =>
-                              _toggleSelection(due.rule.id!),
-                          onMarkDone: () => _onMarkDone(due.rule),
-                          onPostpone: () => _onPostpone(due),
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                      if (postponed.isNotEmpty && !_selectionMode) ...[
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 4,
-                            bottom: 8,
-                          ),
-                          child: Text(
-                            'Отложенные',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
-                                ),
-                          ),
-                        ),
-                        for (final due in postponed) ...[
+    return PopScope(
+      canPop: !_selectionMode,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        if (_selectionMode) {
+          _exitSelectionMode();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: _selectionMode
+              ? IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: _exitSelectionMode,
+                  tooltip: 'Отмена',
+                )
+              : null,
+          title: _selectionMode
+              ? Text('Выбрано: ${_selectedRuleIds.length}')
+              : Text(carName.isEmpty ? 'Мой автомобиль' : carName),
+          actions: _selectionMode ? null : const [SettingsAction()],
+        ),
+        body: Column(
+          children: [
+            MileageHeader(
+              mileage: mileage,
+              lastUpdatedAt: lastUpdated,
+              remindEnabled: remindEnabled,
+              remindDays: remindDays,
+              onUpdate: _onUpdateMileage,
+            ),
+            if (!_selectionMode && active.isNotEmpty)
+              NearestDueLabel(due: active.first),
+            const SizedBox(height: 8),
+            Expanded(
+              child: dues.isEmpty
+                  ? const _EmptyState()
+                  : ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                      children: [
+                        for (final due in active) ...[
                           DueCard(
                             due: due,
                             highlighted: due.rule.id == _highlightedRuleId,
@@ -356,20 +331,55 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 8),
                         ],
+                        if (postponed.isNotEmpty && !_selectionMode) ...[
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 4,
+                              bottom: 8,
+                            ),
+                            child: Text(
+                              'Отложенные',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
+                            ),
+                          ),
+                          for (final due in postponed) ...[
+                            DueCard(
+                              due: due,
+                              highlighted: due.rule.id == _highlightedRuleId,
+                              selectionMode: _selectionMode,
+                              selected: _selectedRuleIds.contains(due.rule.id),
+                              onLongPress: () =>
+                                  _enterSelectionMode(due.rule.id!),
+                              onTapInSelection: () =>
+                                  _toggleSelection(due.rule.id!),
+                              onMarkDone: () => _onMarkDone(due.rule),
+                              onPostpone: () => _onPostpone(due),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                        ],
                       ],
-                    ],
-                  ),
-          ),
-        ],
+                    ),
+            ),
+          ],
+        ),
+        floatingActionButton: _selectionMode && _selectedRuleIds.isNotEmpty
+            ? FloatingActionButton.extended(
+                heroTag: 'fab_mark_done_selected',
+                onPressed: _onMarkDoneSelected,
+                icon: const Icon(Icons.done_all),
+                label: Text('Выполнить (${_selectedRuleIds.length})'),
+              )
+            : null,
       ),
-      floatingActionButton: _selectionMode && _selectedRuleIds.isNotEmpty
-          ? FloatingActionButton.extended(
-              heroTag: 'fab_mark_done_selected',
-              onPressed: _onMarkDoneSelected,
-              icon: const Icon(Icons.done_all),
-              label: Text('Выполнить (${_selectedRuleIds.length})'),
-            )
-          : null,
     );
   }
 }

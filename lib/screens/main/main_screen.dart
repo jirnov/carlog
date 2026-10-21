@@ -17,44 +17,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
+  /// Ключ к HomeScreen — чтобы управлять режимом выбора.
+  final GlobalKey<HomeScreenState> _homeKey = GlobalKey<HomeScreenState>();
+
   /// Время последнего нажатия Back (для двойного нажатия).
   DateTime? _lastBackPress;
 
   /// Окно, в течение которого второе нажатие считается «выходом».
   static const _exitWindow = Duration(seconds: 2);
 
-  static const List<Widget> _screens = [
-    HomeScreen(),
-    RulesScreen(),
-    HistoryScreen(),
-  ];
-
-  void _handleBack() {
-    final now = DateTime.now();
-
-    // Первое нажатие или прошло больше окна — показать подсказку.
-    if (_lastBackPress == null ||
-        now.difference(_lastBackPress!) > _exitWindow) {
-      _lastBackPress = now;
-
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(
-            content: Text('Нажмите ещё раз для выхода'),
-            duration: _exitWindow,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      return;
-    }
-
-    // Второе нажатие в течение окна — выход.
-    SystemNavigator.pop();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      HomeScreen(key: _homeKey),
+      const RulesScreen(),
+      const HistoryScreen(),
+    ];
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
@@ -64,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         body: IndexedStack(
           index: _currentIndex,
-          children: _screens,
+          children: screens,
         ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _currentIndex,
@@ -92,5 +71,35 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+  }
+
+  void _handleBack() {
+    // Если HomeScreen в режиме выбора — снять выделение.
+    final homeState = _homeKey.currentState;
+    if (homeState != null && homeState.isSelectionMode) {
+      homeState.exitSelectionMode();
+      return;
+    }
+
+    // Иначе — двойное нажатие для выхода.
+    final now = DateTime.now();
+
+    if (_lastBackPress == null ||
+        now.difference(_lastBackPress!) > _exitWindow) {
+      _lastBackPress = now;
+
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text('Нажмите ещё раз для выхода'),
+            duration: _exitWindow,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      return;
+    }
+
+    SystemNavigator.pop();
   }
 }

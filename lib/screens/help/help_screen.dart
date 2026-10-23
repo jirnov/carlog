@@ -45,7 +45,7 @@ class _HelpScreenState extends State<HelpScreen> {
     Uri uri;
     if (url.startsWith('mailto:')) {
       final packageInfo = await PackageInfo.fromPlatform();
-      final version = '${packageInfo.version}+${packageInfo.buildNumber}';
+      final version = packageInfo.version;
       final subject = 'Предложения по Журналу ТО (версия $version)';
 
       uri = Uri(

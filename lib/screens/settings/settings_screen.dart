@@ -23,13 +23,11 @@ import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/services/backup_service.dart';
 import 'package:carlog/utils/formatting.dart';
 
-/// Ссылки приложения. Вынести сюда, чтобы менять в одном месте.
+/// Ссылки приложения.
+/// `STORE_URL` передаётся при сборке через `--dart-define=STORE_URL=...`.
+/// Если не передан — ссылка на магазин пустая, пункт «Поделиться» скрыт.
 const String kAppName = 'Журнал ТО';
-const String kPlayStoreUrl = String.fromEnvironment(
-  'STORE_URL',
-  defaultValue:
-      'https://play.google.com/store/apps/details?id=ru.blog2k.carlog',
-);
+const String kPlayStoreUrl = String.fromEnvironment('STORE_URL');
 const String kCoffeeUrl = 'https://pay.cloudtips.ru/p/31704978';
 
 /// Перезагрузить все провайдеры после импорта.
@@ -59,27 +57,27 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 24),
-        children: const [
-          _SectionHeader('Автомобиль'),
-          _CarNameTile(),
-          _SectionHeader('Напоминания о пробеге'),
-          _RemindEnabledTile(),
-          _RemindDaysTile(),
-          _SectionHeader('Пороги предупреждения'),
-          _YellowKmTile(),
-          _YellowMonthsTile(),
-          _SectionHeader('Внешний вид'),
-          _ThemeModeTile(),
-          _SectionHeader('Данные'),
-          _ExportTile(),
-          _ImportTile(),
-          _RestoreBackupTile(),
-          _SectionHeader('Помощь и поддержка'),
-          _HelpTile(),
-          _ShareTile(),
-          _CoffeeTile(),
-          _SectionHeader('О приложении'),
-          _VersionTile(),
+        children: [
+          const _SectionHeader('Автомобиль'),
+          const _CarNameTile(),
+          const _SectionHeader('Напоминания о пробеге'),
+          const _RemindEnabledTile(),
+          const _RemindDaysTile(),
+          const _SectionHeader('Пороги предупреждения'),
+          const _YellowKmTile(),
+          const _YellowMonthsTile(),
+          const _SectionHeader('Внешний вид'),
+          const _ThemeModeTile(),
+          const _SectionHeader('Данные'),
+          const _ExportTile(),
+          const _ImportTile(),
+          const _RestoreBackupTile(),
+          const _SectionHeader('Помощь и поддержка'),
+          const _HelpTile(),
+          if (kPlayStoreUrl.isNotEmpty) const _ShareTile(),
+          const _CoffeeTile(),
+          const _SectionHeader('О приложении'),
+          const _VersionTile(),
         ],
       ),
     );
@@ -775,7 +773,7 @@ class _VersionTileState extends State<_VersionTile> {
     final info = await PackageInfo.fromPlatform();
     if (!mounted) return;
     setState(() {
-      _version = '${info.version}+${info.buildNumber}';
+      _version = info.version;
     });
   }
 

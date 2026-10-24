@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/postponements_provider.dart';
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: _error ? _buildError() : _buildLoading(),
+        child: _error ? _buildError(context) : _buildLoading(),
       ),
     );
   }
@@ -99,7 +100,9 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Widget _buildError() {
+  Widget _buildError(BuildContext context) {
+    final l10n = context.l10n;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -110,14 +113,14 @@ class _SplashScreenState extends State<SplashScreen> {
           fit: BoxFit.contain,
         ),
         const SizedBox(height: 24),
-        const Text(
-          'Не удалось загрузить данные',
-          style: TextStyle(fontSize: 16, color: Colors.black87),
+        Text(
+          l10n.splashLoadError,
+          style: const TextStyle(fontSize: 16, color: Colors.black87),
         ),
         const SizedBox(height: 16),
         FilledButton(
           onPressed: _load,
-          child: const Text('Повторить'),
+          child: Text(l10n.splashRetry),
         ),
       ],
     );

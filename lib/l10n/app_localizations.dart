@@ -245,37 +245,37 @@ abstract class AppLocalizations {
   /// No description provided for @templatePickerTitle.
   ///
   /// In ru, this message translates to:
-  /// **'Typical works'**
+  /// **'Типовые работы'**
   String get templatePickerTitle;
 
   /// No description provided for @templateCustom.
   ///
   /// In ru, this message translates to:
-  /// **'Custom'**
+  /// **'Своё'**
   String get templateCustom;
 
   /// No description provided for @templateIntervalNotSet.
   ///
   /// In ru, this message translates to:
-  /// **'interval not set'**
+  /// **'интервал не задан'**
   String get templateIntervalNotSet;
 
   /// No description provided for @templateIntervalEveryKm.
   ///
   /// In ru, this message translates to:
-  /// **'every {km} km'**
+  /// **'каждые {km} км'**
   String templateIntervalEveryKm({required String km});
 
   /// No description provided for @templateIntervalEveryMonths.
   ///
   /// In ru, this message translates to:
-  /// **'every {months} mo'**
+  /// **'каждые {months} мес'**
   String templateIntervalEveryMonths({required int months});
 
   /// No description provided for @templateIntervalEveryKmMonths.
   ///
   /// In ru, this message translates to:
-  /// **'every {km} km · {months} mo'**
+  /// **'каждые {km} км · {months} мес'**
   String templateIntervalEveryKmMonths(
       {required String km, required int months});
 
@@ -1650,6 +1650,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Версия'**
   String get settingsVersionTitle;
+
+  /// No description provided for @splashLoadError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось загрузить данные'**
+  String get splashLoadError;
+
+  /// No description provided for @splashRetry.
+  ///
+  /// In ru, this message translates to:
+  /// **'Повторить'**
+  String get splashRetry;
 }
 
 class _AppLocalizationsDelegate

@@ -31,25 +31,24 @@
 
   "workCabinFilterReplace": "Замена салонного фильтра",
 
-  "templatePickerTitle": "Typical works",
-  "templateCustom": "Custom",
-  "templateIntervalNotSet": "interval not set",
-  "templateIntervalEveryKm": "every {km} km",
+  "templatePickerTitle": "Типовые работы",
+  "templateCustom": "Своё",
+  "templateIntervalNotSet": "интервал не задан",
+  "templateIntervalEveryKm": "каждые {km} км",
   "@templateIntervalEveryKm": {
     "placeholders": { "km": { "type": "String" } }
   },
-  "templateIntervalEveryMonths": "every {months} mo",
+  "templateIntervalEveryMonths": "каждые {months} мес",
   "@templateIntervalEveryMonths": {
     "placeholders": { "months": { "type": "int" } }
   },
-  "templateIntervalEveryKmMonths": "every {km} km · {months} mo",
+  "templateIntervalEveryKmMonths": "каждые {km} км · {months} мес",
   "@templateIntervalEveryKmMonths": {
     "placeholders": {
       "km": { "type": "String" },
       "months": { "type": "int" }
     }
   },
-
   "confirmCancelTitle": "Отменить ТО?",
   "confirmCancelMessage": "Работа «{ruleTitle}» будет помечена как отменённая. Она попадёт в историю со значком отмены и не будет считаться выполненной. Следующее ТО сдвинется на текущий пробег.",
   "@confirmCancelMessage": {
@@ -481,5 +480,7 @@
   "settingsCoffeeTitle": "Угостить автора бокалом кофе",
   "settingsCoffeeSubtitle": "Поддержать разработку",
 
-  "settingsVersionTitle": "Версия"
+  "settingsVersionTitle": "Версия",
+  "splashLoadError": "Не удалось загрузить данные",
+  "splashRetry": "Повторить"
 }

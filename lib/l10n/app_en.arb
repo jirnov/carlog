@@ -482,5 +482,7 @@
   "settingsCoffeeTitle": "Buy the author a coffee",
   "settingsCoffeeSubtitle": "Support development",
 
-  "settingsVersionTitle": "Version"
+  "settingsVersionTitle": "Version",
+  "splashLoadError": "Failed to load data",
+  "splashRetry": "Retry"
 }

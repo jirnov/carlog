@@ -945,4 +945,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsVersionTitle => 'Version';
+
+  @override
+  String get splashLoadError => 'Failed to load data';
+
+  @override
+  String get splashRetry => 'Retry';
 }

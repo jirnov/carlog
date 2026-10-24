@@ -81,28 +81,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String get workCabinFilterReplace => 'Замена салонного фильтра';
 
   @override
-  String get templatePickerTitle => 'Typical works';
+  String get templatePickerTitle => 'Типовые работы';
 
   @override
-  String get templateCustom => 'Custom';
+  String get templateCustom => 'Своё';
 
   @override
-  String get templateIntervalNotSet => 'interval not set';
+  String get templateIntervalNotSet => 'интервал не задан';
 
   @override
   String templateIntervalEveryKm({required String km}) {
-    return 'every $km km';
+    return 'каждые $km км';
   }
 
   @override
   String templateIntervalEveryMonths({required int months}) {
-    return 'every $months mo';
+    return 'каждые $months мес';
   }
 
   @override
   String templateIntervalEveryKmMonths(
       {required String km, required int months}) {
-    return 'every $km km · $months mo';
+    return 'каждые $km км · $months мес';
   }
 
   @override
@@ -956,4 +956,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsVersionTitle => 'Версия';
+
+  @override
+  String get splashLoadError => 'Не удалось загрузить данные';
+
+  @override
+  String get splashRetry => 'Повторить';
 }

@@ -28,6 +28,8 @@ enum AppStore {
   googlePlay,
   rustore;
 
+  /// Разбирает имя flavor (`googleplay`, `rustore`, ...).
+  /// В непрофильных сборках `appFlavor` пустой — вернётся [AppStore.none].
   static AppStore fromName(String raw) {
     switch (raw.toLowerCase().trim()) {
       case 'googleplay':
@@ -54,8 +56,12 @@ enum AppStore {
 /// Ссылки приложения.
 const String kAppName = 'Журнал ТО';
 
-const String _kStoreNameRaw = String.fromEnvironment('STORE_NAME');
-final String? kStoreUrl = AppStore.fromName(_kStoreNameRaw).url;
+/// Текущий магазин определяется flavor-сборкой (`--flavor googleplay` / `--flavor rustore`).
+/// Значение `appFlavor` задаётся Flutter на этапе компиляции.
+final String _kFlavor = appFlavor ?? '';
+final AppStore kCurrentStore = AppStore.fromName(_kFlavor);
+final String? kStoreUrl = kCurrentStore.url;
+
 const String kCoffeeUrl = 'https://pay.cloudtips.ru/p/31704978';
 
 /// Перезагрузить все провайдеры после импорта.
@@ -80,9 +86,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Настройки'),
-      ),
+      appBar: AppBar(title: const Text('Настройки')),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 24),
         children: [
@@ -150,9 +154,7 @@ class _CarNameTile extends StatelessWidget {
           controller: controller,
           autofocus: true,
           textCapitalization: TextCapitalization.sentences,
-          decoration: const InputDecoration(
-            hintText: 'Например, Моя ласточка',
-          ),
+          decoration: const InputDecoration(hintText: 'Например, Моя ласточка'),
         ),
         actions: [
           TextButton(
@@ -174,9 +176,7 @@ class _CarNameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final carName = context.select<SettingsProvider, String>(
-      (p) => p.carName,
-    );
+    final carName = context.select<SettingsProvider, String>((p) => p.carName);
 
     return ListTile(
       title: const Text('Название'),
@@ -255,9 +255,7 @@ class _RemindDaysTile extends StatelessWidget {
     final enabled = context.select<SettingsProvider, bool>(
       (p) => p.remindEnabled,
     );
-    final days = context.select<SettingsProvider, int>(
-      (p) => p.remindDays,
-    );
+    final days = context.select<SettingsProvider, int>((p) => p.remindDays);
 
     return ListTile(
       enabled: enabled,
@@ -365,9 +363,7 @@ class _YellowMonthsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final months = context.select<SettingsProvider, int>(
-      (p) => p.yellowMonths,
-    );
+    final months = context.select<SettingsProvider, int>((p) => p.yellowMonths);
     return ListTile(
       title: const Text('За сколько месяцев'),
       subtitle: Text('$months ${pluralWorks(months)}'),
@@ -474,17 +470,13 @@ class _ExportTile extends StatelessWidget {
       );
       await SharePlus.instance.share(params);
     } catch (_) {
-      messenger.showSnackBar(
-        SnackBar(content: Text('Файл сохранён: $path')),
-      );
+      messenger.showSnackBar(SnackBar(content: Text('Файл сохранён: $path')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isBusy = context.select<ExportImportProvider, bool>(
-      (p) => p.isBusy,
-    );
+    final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
@@ -522,9 +514,7 @@ class _ImportTile extends StatelessWidget {
 
     if (!path.toLowerCase().endsWith('.json')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Выберите файл с расширением .json'),
-        ),
+        const SnackBar(content: Text('Выберите файл с расширением .json')),
       );
       return;
     }
@@ -551,9 +541,7 @@ class _ImportTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isBusy = context.select<ExportImportProvider, bool>(
-      (p) => p.isBusy,
-    );
+    final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
@@ -610,9 +598,7 @@ class _RestoreBackupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isBusy = context.select<ExportImportProvider, bool>(
-      (p) => p.isBusy,
-    );
+    final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
@@ -713,11 +699,9 @@ class _HelpTile extends StatelessWidget {
       title: const Text('Помощь'),
       subtitle: const Text('Как пользоваться приложением'),
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const HelpScreen(),
-          ),
-        );
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const HelpScreen()));
       },
     );
   }
@@ -768,10 +752,7 @@ class _CoffeeTile extends StatelessWidget {
     return ListTile(
       leading: Transform.flip(
         flipX: true,
-        child: Icon(
-          Icons.sports_bar,
-          color: beerColor,
-        ),
+        child: Icon(Icons.sports_bar, color: beerColor),
       ),
       title: const Text('Угостить автора бокалом кофе'),
       subtitle: const Text('Поддержать разработку'),

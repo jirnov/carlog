@@ -52,6 +52,16 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
+    flavorDimensions += "default"
+    productFlavors {
+        create("googleplay") {
+            dimension = "default"
+        }
+        create("rustore") {
+            dimension = "default"
+        }
+    }
 }
 
 flutter {

@@ -13,16 +13,18 @@
             "name": "carlog (RuStore)",
             "request": "launch",
             "type": "dart",
-            "toolArgs": [
-                "--dart-define=STORE_NAME=rustore"
+            "args": [
+                "--flavor",
+                "rustore"
             ]
         },
         {
             "name": "carlog (GooglePlay)",
             "request": "launch",
             "type": "dart",
-            "toolArgs": [
-                "--dart-define=STORE_NAME=googleplay"
+            "args": [
+                "--flavor",
+                "googleplay"
             ]
         },
         {

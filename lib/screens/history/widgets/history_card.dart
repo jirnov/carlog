@@ -22,6 +22,7 @@ class HistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final subtleColor = theme.colorScheme.onSurfaceVariant;
 
     return Card(
@@ -59,12 +60,12 @@ class HistoryCard extends StatelessWidget {
                       children: [
                         Text(
                           l10n.historyCardMileage(
-                            km: formatThousands(record.mileage),
+                            km: formatThousands(record.mileage, locale),
                           ),
                           style: theme.textTheme.bodyMedium,
                         ),
                         Text(
-                          ' · ${formatMonthYear(record.performedAt)}',
+                          ' · ${formatMonthYear(record.performedAt, locale)}',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: subtleColor,
                           ),
@@ -75,7 +76,10 @@ class HistoryCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         l10n.historyCardCost(
-                          amount: formatThousands(record.cost!.round()),
+                          amount: formatThousands(
+                            record.cost!.round(),
+                            locale,
+                          ),
                         ),
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.primary,

@@ -1,29 +1,27 @@
 ﻿// lib/utils/formatting.dart
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
-String formatThousands(int value) {
-  final isNegative = value < 0;
-  final digits = value.abs().toString();
-  final buf = StringBuffer();
-
-  for (int i = 0; i < digits.length; i++) {
-    if (i > 0 && (digits.length - i) % 3 == 0) buf.write(' ');
-    buf.write(digits[i]);
-  }
-
-  return isNegative ? '−${buf.toString()}' : buf.toString();
+String formatThousands(int value, String locale) {
+  return NumberFormat.decimalPattern(locale).format(value);
 }
 
+/// Разбирает число, игнорируя любые разделители разрядов:
+/// пробелы, неразрывные пробелы, запятые, точки.
 int? parseThousands(String text) {
-  final cleaned = text.replaceAll(RegExp(r'[\s\u00A0]'), '');
-  if (cleaned.isEmpty) return null;
+  final cleaned = text.replaceAll(RegExp(r'[^\d-]'), '');
+  if (cleaned.isEmpty || cleaned == '-') return null;
   return int.tryParse(cleaned);
 }
 
 class ThousandsSeparatorFormatter extends TextInputFormatter {
-  const ThousandsSeparatorFormatter({this.maxDigits = 8});
+  const ThousandsSeparatorFormatter({
+    required this.locale,
+    this.maxDigits = 8,
+  });
 
+  final String locale;
   final int maxDigits;
 
   @override
@@ -37,7 +35,7 @@ class ThousandsSeparatorFormatter extends TextInputFormatter {
     final limited =
         digits.length > maxDigits ? digits.substring(0, maxDigits) : digits;
 
-    final formatted = formatThousands(int.parse(limited));
+    final formatted = formatThousands(int.parse(limited), locale);
 
     return TextEditingValue(
       text: formatted,
@@ -70,63 +68,10 @@ DateTime dateOnly(DateTime date) {
   return DateTime(date.year, date.month, date.day);
 }
 
-/// Названия месяцев в именительном падеже — для формата «октябрь 2026».
-const List<String> monthNamesRu = [
-  'январь',
-  'февраль',
-  'март',
-  'апрель',
-  'май',
-  'июнь',
-  'июль',
-  'август',
-  'сентябрь',
-  'октябрь',
-  'ноябрь',
-  'декабрь',
-];
-
-/// Короткие названия месяцев — для формата «окт 2026».
-const List<String> monthNamesRuShort = [
-  'янв',
-  'фев',
-  'мар',
-  'апр',
-  'май',
-  'июн',
-  'июл',
-  'авг',
-  'сен',
-  'окт',
-  'ноя',
-  'дек',
-];
-
 /// Формат «октябрь 2026» — для карточек ТО и истории, где важен только месяц.
-String formatMonthYear(DateTime date) {
-  return '${monthNamesRu[date.month - 1]} ${date.year}';
-}
+String formatMonthYear(DateTime date, String locale) =>
+    DateFormat('LLLL y', locale).format(date);
 
 /// Короткий формат «окт 2026» — для компактных подписей.
-String formatMonthYearShort(DateTime date) {
-  return '${monthNamesRuShort[date.month - 1]} ${date.year}';
-}
-
-/// Склонение слова «работа» после числительного (именительный падеж).
-String pluralWorks(int n) {
-  if (n % 10 == 1 && n % 100 != 11) return 'работа';
-  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-    return 'работы';
-  }
-  return 'работ';
-}
-
-/// Склонение слова «работа» в винительном падеже
-/// (для конструкций «Выполнить N …»).
-String pluralWorksAccusative(int n) {
-  if (n % 10 == 1 && n % 100 != 11) return 'работу';
-  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-    return 'работы';
-  }
-  return 'работ';
-}
+String formatMonthYearShort(DateTime date, String locale) =>
+    DateFormat('LLL y', locale).format(date);

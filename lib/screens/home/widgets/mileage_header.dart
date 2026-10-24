@@ -41,6 +41,7 @@ class MileageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final isStale = _isStale;
 
     // Оранжевый — если пора обновить. Иначе серый, как было.
@@ -76,7 +77,7 @@ class MileageHeader extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                formatThousands(mileage),
+                formatThousands(mileage, locale),
                 style: theme.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),

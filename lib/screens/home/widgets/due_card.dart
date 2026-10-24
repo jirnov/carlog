@@ -66,7 +66,7 @@ class DueCard extends StatelessWidget {
     return l10n.dueMonthsShort(count: (abs / 30).round());
   }
 
-  String _intervalText(AppLocalizations l10n) {
+  String _intervalText(AppLocalizations l10n, String locale) {
     final kmOverdue = due.kmLeft != null && due.kmLeft! < 0;
     final dateOverdue = due.daysLeft != null && due.daysLeft! < 0;
 
@@ -75,7 +75,7 @@ class DueCard extends StatelessWidget {
       if (kmOverdue) {
         parts.add(
           l10n.dueCardOverdueKm(
-            km: formatThousands(roundKmDown(due.missedKm)),
+            km: formatThousands(roundKmDown(due.missedKm), locale),
           ),
         );
       }
@@ -90,7 +90,9 @@ class DueCard extends StatelessWidget {
     final parts = <String>[];
     if (due.kmLeft != null) {
       parts.add(
-        l10n.dueCardKmLeft(km: formatThousands(roundKmDown(due.kmLeft!))),
+        l10n.dueCardKmLeft(
+          km: formatThousands(roundKmDown(due.kmLeft!), locale),
+        ),
       );
     }
     if (due.daysLeft != null) {
@@ -99,13 +101,15 @@ class DueCard extends StatelessWidget {
     return parts.join(' · ');
   }
 
-  String _nextText(AppLocalizations l10n) {
+  String _nextText(AppLocalizations l10n, String locale) {
     final parts = <String>[];
     if (due.nextKm != null) {
-      parts.add(l10n.dueCardKmLeft(km: formatThousands(due.nextKm!)));
+      parts.add(
+        l10n.dueCardKmLeft(km: formatThousands(due.nextKm!, locale)),
+      );
     }
     if (due.nextDate != null) {
-      parts.add(formatMonthYear(due.nextDate!));
+      parts.add(formatMonthYear(due.nextDate!, locale));
     }
     return parts.join(' · ');
   }
@@ -116,6 +120,7 @@ class DueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final color = _statusColor(context);
 
     final isPostponed = due.isPostponed;
@@ -188,7 +193,9 @@ class DueCard extends StatelessWidget {
                               const SizedBox(height: 4),
                             ],
                             Text(
-                              l10n.dueCardNext(value: _nextText(l10n)),
+                              l10n.dueCardNext(
+                                value: _nextText(l10n, locale),
+                              ),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -196,9 +203,10 @@ class DueCard extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               hasAnyOverdue
-                                  ? _intervalText(l10n)
+                                  ? _intervalText(l10n, locale)
                                   : l10n.dueCardLeft(
-                                      value: _intervalText(l10n)),
+                                      value: _intervalText(l10n, locale),
+                                    ),
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: hasAnyOverdue && !isPostponed
                                     ? color

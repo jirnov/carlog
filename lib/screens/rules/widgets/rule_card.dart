@@ -20,9 +20,14 @@ class RuleCard extends StatelessWidget {
 
   String _intervalLabel(BuildContext context) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final parts = <String>[];
     if (rule.intervalKm != null && rule.intervalKm! > 0) {
-      parts.add(l10n.ruleCardIntervalKm(km: formatThousands(rule.intervalKm!)));
+      parts.add(
+        l10n.ruleCardIntervalKm(
+          km: formatThousands(rule.intervalKm!, locale),
+        ),
+      );
     }
     if (rule.intervalMonths != null && rule.intervalMonths! > 0) {
       parts.add(l10n.ruleCardIntervalMonths(months: rule.intervalMonths!));
@@ -34,13 +39,17 @@ class RuleCard extends StatelessWidget {
 
   String _nextLabel(BuildContext context) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
 
     final kmText = rule.nextKm != null
-        ? l10n.ruleCardIntervalKm(km: formatThousands(rule.nextKm!))
+        ? l10n.ruleCardIntervalKm(
+            km: formatThousands(rule.nextKm!, locale),
+          )
         : null;
 
-    final dateText =
-        rule.nextDate != null ? formatMonthYearShort(rule.nextDate!) : null;
+    final dateText = rule.nextDate != null
+        ? formatMonthYearShort(rule.nextDate!, locale)
+        : null;
 
     if (kmText != null && dateText == null) {
       return l10n.ruleCardNextOne(value: kmText);
@@ -58,7 +67,10 @@ class RuleCard extends StatelessWidget {
   String? _costLabel(BuildContext context) {
     final cost = rule.cost;
     if (cost == null || cost <= 0) return null;
-    return context.l10n.ruleCardCost(amount: formatThousands(cost.round()));
+    final locale = Localizations.localeOf(context).languageCode;
+    return context.l10n.ruleCardCost(
+      amount: formatThousands(cost.round(), locale),
+    );
   }
 
   @override

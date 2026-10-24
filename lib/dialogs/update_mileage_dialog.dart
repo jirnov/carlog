@@ -51,10 +51,13 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
 
   String? _validate(int? value) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     if (value == null) return l10n.mileageErrorRequired;
     if (value <= 0) return l10n.mileageErrorPositive;
     if (value < widget.previousMileage) {
-      return l10n.mileageErrorMin(km: formatThousands(widget.previousMileage));
+      return l10n.mileageErrorMin(
+        km: formatThousands(widget.previousMileage, locale),
+      );
     }
     if (value > _maxMileage) return l10n.mileageErrorTooLarge;
     return null;
@@ -76,15 +79,17 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
     if (diff <= _suspiciousJumpKm) return true;
 
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.mileageJumpTitle),
         content: Text(
           l10n.mileageJumpMessage(
-            previous: formatThousands(widget.previousMileage),
-            current: formatThousands(value),
-            diff: formatThousands(diff),
+            previous: formatThousands(widget.previousMileage, locale),
+            current: formatThousands(value, locale),
+            diff: formatThousands(diff, locale),
           ),
         ),
         actions: [
@@ -123,6 +128,7 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
 
     return AlertDialog(
       scrollable: true,
@@ -136,7 +142,9 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
             focusNode: _focusNode,
             autofocus: true,
             keyboardType: TextInputType.number,
-            inputFormatters: const [ThousandsSeparatorFormatter()],
+            inputFormatters: [
+              ThousandsSeparatorFormatter(locale: locale),
+            ],
             onChanged: _onChanged,
             onSubmitted: (_) {
               if (_canSave) _onSave();
@@ -151,7 +159,8 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
           const SizedBox(height: 12),
           Text(
             l10n.updateMileagePrevious(
-                km: formatThousands(widget.previousMileage)),
+              km: formatThousands(widget.previousMileage, locale),
+            ),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

@@ -1,5 +1,7 @@
 ﻿// lib/screens/edit_rule/edit_rule_screen.dart
 
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
@@ -90,20 +92,27 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
     super.initState();
 
     final rule = widget.rule;
+    // В initState нельзя надёжно использовать Localizations.localeOf(context),
+    // поэтому берём системную локаль напрямую.
+    final locale = PlatformDispatcher.instance.locale.languageCode;
 
     _titleController = TextEditingController(text: rule?.title ?? '');
     _noteController = TextEditingController(text: rule?.note ?? '');
     _nextKmController = TextEditingController(
-      text: rule?.nextKm != null ? formatThousands(rule!.nextKm!) : '',
+      text: rule?.nextKm != null ? formatThousands(rule!.nextKm!, locale) : '',
     );
     _intervalKmController = TextEditingController(
-      text: rule?.intervalKm != null ? formatThousands(rule!.intervalKm!) : '',
+      text: rule?.intervalKm != null
+          ? formatThousands(rule!.intervalKm!, locale)
+          : '',
     );
     _intervalMonthsController = TextEditingController(
       text: rule?.intervalMonths?.toString() ?? '',
     );
     _costController = TextEditingController(
-      text: rule?.cost != null ? formatThousands(rule!.cost!.round()) : '',
+      text: rule?.cost != null
+          ? formatThousands(rule!.cost!.round(), locale)
+          : '',
     );
 
     _nextDate = rule?.nextDate;
@@ -257,6 +266,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final title = _isEditing ? l10n.editRuleTitleEdit : l10n.editRuleTitleNew;
 
     return PopScope(
@@ -303,7 +313,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
               TextField(
                 controller: _nextKmController,
                 keyboardType: TextInputType.number,
-                inputFormatters: const [ThousandsSeparatorFormatter()],
+                inputFormatters: [
+                  ThousandsSeparatorFormatter(locale: locale),
+                ],
                 autofocus: _isFromTemplate,
                 onChanged: _onNextKmChanged,
                 decoration: InputDecoration(
@@ -317,7 +329,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                   padding: const EdgeInsets.only(top: 4, left: 12),
                   child: Text(
                     l10n.editRuleNextKmWarning(
-                      km: formatThousands(_currentMileage),
+                      km: formatThousands(_currentMileage, locale),
                     ),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.error,
@@ -336,8 +348,8 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                     child: TextField(
                       controller: _intervalKmController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: const [
-                        ThousandsSeparatorFormatter(),
+                      inputFormatters: [
+                        ThousandsSeparatorFormatter(locale: locale),
                       ],
                       decoration: InputDecoration(
                         labelText: l10n.editRuleIntervalKmLabel,
@@ -378,6 +390,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
               if (_showNextDateField) ...[
                 _NextDateField(
                   nextDate: _nextDate,
+                  locale: locale,
                   onTap: _pickNextDate,
                   onClear: _clearNextDate,
                 ),
@@ -388,7 +401,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
               TextField(
                 controller: _costController,
                 keyboardType: TextInputType.number,
-                inputFormatters: const [ThousandsSeparatorFormatter()],
+                inputFormatters: [
+                  ThousandsSeparatorFormatter(locale: locale),
+                ],
                 decoration: InputDecoration(
                   labelText: l10n.editRuleCostLabel,
                   hintText: l10n.editRuleCostHint,
@@ -432,11 +447,13 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
 class _NextDateField extends StatelessWidget {
   const _NextDateField({
     required this.nextDate,
+    required this.locale,
     required this.onTap,
     required this.onClear,
   });
 
   final DateTime? nextDate;
+  final String locale;
   final VoidCallback onTap;
   final VoidCallback onClear;
 
@@ -460,7 +477,7 @@ class _NextDateField extends StatelessWidget {
               ),
               child: Text(
                 hasDate
-                    ? formatMonthYear(nextDate!)
+                    ? formatMonthYear(nextDate!, locale)
                     : l10n.editRuleNextDateNone,
                 style: hasDate
                     ? null

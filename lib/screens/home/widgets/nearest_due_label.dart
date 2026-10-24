@@ -23,7 +23,7 @@ class NearestDueLabel extends StatelessWidget {
   ///
   /// Если что-то просрочено — показываем **только просроченные параметры**.
   /// Иначе — остатки.
-  String _formatInterval(AppLocalizations l10n) {
+  String _formatInterval(AppLocalizations l10n, String locale) {
     final kmOverdue = due.kmLeft != null && due.kmLeft! < 0;
     final dateOverdue = due.daysLeft != null && due.daysLeft! < 0;
 
@@ -31,7 +31,9 @@ class NearestDueLabel extends StatelessWidget {
       final parts = <String>[];
       if (kmOverdue) {
         parts.add(
-          l10n.nearestDueKm(km: formatThousands(roundKmDown(due.missedKm))),
+          l10n.nearestDueKm(
+            km: formatThousands(roundKmDown(due.missedKm), locale),
+          ),
         );
       }
       if (dateOverdue) {
@@ -43,7 +45,9 @@ class NearestDueLabel extends StatelessWidget {
     final parts = <String>[];
     if (due.kmLeft != null) {
       parts.add(
-        l10n.nearestDueKm(km: formatThousands(roundKmDown(due.kmLeft!))),
+        l10n.nearestDueKm(
+          km: formatThousands(roundKmDown(due.kmLeft!), locale),
+        ),
       );
     }
     if (due.daysLeft != null) {
@@ -56,13 +60,14 @@ class NearestDueLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final isOverdue = due.status == DueStatus.overdue;
 
     final color = isOverdue
         ? theme.colorScheme.error
         : theme.colorScheme.onSurfaceVariant;
 
-    final interval = _formatInterval(l10n);
+    final interval = _formatInterval(l10n, locale);
     final text = isOverdue
         ? l10n.nearestDueOverdue(value: interval)
         : l10n.nearestDueSoon(value: interval);

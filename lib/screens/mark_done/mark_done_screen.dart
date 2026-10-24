@@ -1,5 +1,7 @@
 ﻿// lib/screens/mark_done/mark_done_screen.dart
 
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
@@ -99,6 +101,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   void initState() {
     super.initState();
 
+    final locale = PlatformDispatcher.instance.locale.languageCode;
     final record = widget.record;
     final rule = widget.rule;
 
@@ -106,11 +109,13 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
       _titleController = TextEditingController(text: record.title);
       _noteController = TextEditingController(text: record.note);
       _mileageController = TextEditingController(
-        text: formatThousands(record.mileage),
+        text: formatThousands(record.mileage, locale),
       );
       _date = _day15(record.performedAt);
       _costController = TextEditingController(
-        text: record.cost != null ? formatThousands(record.cost!.round()) : '',
+        text: record.cost != null
+            ? formatThousands(record.cost!.round(), locale)
+            : '',
       );
     } else if (rule != null) {
       _titleController = TextEditingController(text: rule.title);
@@ -118,12 +123,12 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
 
       final currentMileage = context.read<MileageProvider>().currentMileage;
       _mileageController = TextEditingController(
-        text: formatThousands(currentMileage),
+        text: formatThousands(currentMileage, locale),
       );
       // Стоимость берём из правила, если она там задана.
       _costController = TextEditingController(
         text: (rule.cost != null && rule.cost! > 0)
-            ? formatThousands(rule.cost!.round())
+            ? formatThousands(rule.cost!.round(), locale)
             : '',
       );
     } else {
@@ -132,7 +137,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
 
       final currentMileage = context.read<MileageProvider>().currentMileage;
       _mileageController = TextEditingController(
-        text: formatThousands(currentMileage),
+        text: formatThousands(currentMileage, locale),
       );
       _costController = TextEditingController();
     }
@@ -220,7 +225,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     return showConfirmExitDialog(context);
   }
 
-  Future<bool> _confirmLargeJump(int value) async {
+  Future<bool> _confirmLargeJump(int value, String locale) async {
     if (!_strictMode) return true;
 
     final today = dateOnly(DateTime.now());
@@ -237,9 +242,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
         title: Text(l10n.markDoneJumpTitle),
         content: Text(
           l10n.markDoneJumpMessage(
-            current: formatThousands(currentMileage),
-            performed: formatThousands(value),
-            diff: formatThousands(diff),
+            current: formatThousands(currentMileage, locale),
+            performed: formatThousands(value, locale),
+            diff: formatThousands(diff, locale),
           ),
         ),
         actions: [
@@ -260,6 +265,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   Future<bool> _confirmUpdateMileage(
     int newMileage,
     int currentMileage,
+    String locale,
   ) async {
     final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
@@ -268,8 +274,8 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
         title: Text(l10n.markDoneUpdateMileageTitle),
         content: Text(
           l10n.markDoneUpdateMileageMessage(
-            current: formatThousands(currentMileage),
-            performed: formatThousands(newMileage),
+            current: formatThousands(currentMileage, locale),
+            performed: formatThousands(newMileage, locale),
           ),
         ),
         actions: [
@@ -291,8 +297,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     if (!_canSave) return;
 
     final mileage = _mileage!;
+    final locale = Localizations.localeOf(context).languageCode;
 
-    final confirmed = await _confirmLargeJump(mileage);
+    final confirmed = await _confirmLargeJump(mileage, locale);
     if (!confirmed) return;
     if (!context.mounted) return;
 
@@ -316,7 +323,11 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     if (_strictMode) {
       final currentMileage = context.read<MileageProvider>().currentMileage;
       if (mileage > currentMileage) {
-        final confirmed = await _confirmUpdateMileage(mileage, currentMileage);
+        final confirmed = await _confirmUpdateMileage(
+          mileage,
+          currentMileage,
+          locale,
+        );
         if (confirmed) {
           updatedMileage = mileage;
         }
@@ -333,6 +344,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
 
     return PopScope(
       canPop: false,
@@ -388,7 +400,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
               TextField(
                 controller: _mileageController,
                 keyboardType: TextInputType.number,
-                inputFormatters: const [ThousandsSeparatorFormatter()],
+                inputFormatters: [
+                  ThousandsSeparatorFormatter(locale: locale),
+                ],
                 onChanged: _onMileageChanged,
                 decoration: InputDecoration(
                   labelText: l10n.markDoneMileageLabel,
@@ -406,7 +420,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                     labelText: l10n.markDoneMonthLabel,
                     suffixIcon: const Icon(Icons.calendar_today),
                   ),
-                  child: Text(formatMonthYear(_date)),
+                  child: Text(formatMonthYear(_date, locale)),
                 ),
               ),
               const SizedBox(height: 16),
@@ -415,7 +429,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
               TextField(
                 controller: _costController,
                 keyboardType: TextInputType.number,
-                inputFormatters: const [ThousandsSeparatorFormatter()],
+                inputFormatters: [
+                  ThousandsSeparatorFormatter(locale: locale),
+                ],
                 decoration: InputDecoration(
                   labelText: l10n.markDoneCostLabel,
                   hintText: l10n.markDoneCostHint,

@@ -281,9 +281,10 @@ class _YellowKmTile extends StatelessWidget {
 
   Future<void> _edit(BuildContext context) async {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final provider = context.read<SettingsProvider>();
     final controller = TextEditingController(
-      text: formatThousands(provider.yellowKm),
+      text: formatThousands(provider.yellowKm, locale),
     );
 
     final result = await showDialog<int>(
@@ -294,7 +295,9 @@ class _YellowKmTile extends StatelessWidget {
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
-          inputFormatters: const [ThousandsSeparatorFormatter()],
+          inputFormatters: [
+            ThousandsSeparatorFormatter(locale: locale),
+          ],
           decoration: InputDecoration(suffixText: l10n.settingsYellowKmUnit),
         ),
         actions: [
@@ -319,11 +322,12 @@ class _YellowKmTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final km = context.select<SettingsProvider, int>((p) => p.yellowKm);
     return ListTile(
       title: Text(l10n.settingsYellowKmTitle),
       subtitle: Text(
-        l10n.settingsYellowKmValue(km: formatThousands(km)),
+        l10n.settingsYellowKmValue(km: formatThousands(km, locale)),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),

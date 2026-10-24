@@ -178,7 +178,7 @@ class _TemplateTile extends StatelessWidget {
   final VoidCallback onTap;
 
   /// «каждые 10 000 км · 12 мес», «каждые 30 000 км» или «интервал не задан».
-  String _intervalLabel(AppLocalizations l10n) {
+  String _intervalLabel(AppLocalizations l10n, String locale) {
     final km = template.intervalKm;
     final months = template.intervalMonths;
 
@@ -188,17 +188,23 @@ class _TemplateTile extends StatelessWidget {
     if (!hasKm && !hasMonths) return l10n.templateIntervalNotSet;
     if (hasKm && hasMonths) {
       return l10n.templateIntervalEveryKmMonths(
-        km: formatThousands(km),
+        km: formatThousands(km, locale),
         months: months,
       );
     }
-    if (hasKm) return l10n.templateIntervalEveryKm(km: formatThousands(km));
+    if (hasKm) {
+      return l10n.templateIntervalEveryKm(
+        km: formatThousands(km, locale),
+      );
+    }
     return l10n.templateIntervalEveryMonths(months: months!);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
 
     return InkWell(
       onTap: onTap,
@@ -225,7 +231,7 @@ class _TemplateTile extends StatelessWidget {
                   ],
                   const SizedBox(height: 2),
                   Text(
-                    _intervalLabel(context.l10n),
+                    _intervalLabel(l10n, locale),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

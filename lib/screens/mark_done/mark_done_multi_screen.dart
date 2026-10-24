@@ -1,5 +1,7 @@
 ﻿// lib/screens/mark_done/mark_done_multi_screen.dart
 
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
@@ -59,9 +61,10 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
   void initState() {
     super.initState();
 
+    final locale = PlatformDispatcher.instance.locale.languageCode;
     final currentMileage = context.read<MileageProvider>().currentMileage;
     _mileageController = TextEditingController(
-      text: formatThousands(currentMileage),
+      text: formatThousands(currentMileage, locale),
     );
     _noteController = TextEditingController();
   }
@@ -105,7 +108,11 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
     setState(() => _date = _day15(picked));
   }
 
-  Future<bool> _confirmUpdateMileage(int mileage, int currentMileage) async {
+  Future<bool> _confirmUpdateMileage(
+    int mileage,
+    int currentMileage,
+    String locale,
+  ) async {
     final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
@@ -113,8 +120,8 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
         title: Text(l10n.markDoneMultiUpdateMileageTitle),
         content: Text(
           l10n.markDoneMultiUpdateMileageMessage(
-            current: formatThousands(currentMileage),
-            performed: formatThousands(mileage),
+            current: formatThousands(currentMileage, locale),
+            performed: formatThousands(mileage, locale),
           ),
         ),
         actions: [
@@ -137,10 +144,12 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
 
     final mileage = _mileage!;
     final currentMileage = context.read<MileageProvider>().currentMileage;
+    final locale = Localizations.localeOf(context).languageCode;
 
     int? updatedMileage;
     if (mileage > currentMileage) {
-      final confirmed = await _confirmUpdateMileage(mileage, currentMileage);
+      final confirmed =
+          await _confirmUpdateMileage(mileage, currentMileage, locale);
       if (confirmed) {
         updatedMileage = mileage;
       }
@@ -159,6 +168,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Scaffold(
       appBar: AppBar(
@@ -199,7 +209,9 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
             TextField(
               controller: _mileageController,
               keyboardType: TextInputType.number,
-              inputFormatters: const [ThousandsSeparatorFormatter()],
+              inputFormatters: [
+                ThousandsSeparatorFormatter(locale: locale),
+              ],
               onChanged: _onMileageChanged,
               decoration: InputDecoration(
                 labelText: l10n.markDoneMultiMileageLabel,
@@ -215,7 +227,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
                   labelText: l10n.markDoneMultiMonthLabel,
                   suffixIcon: const Icon(Icons.calendar_today),
                 ),
-                child: Text(formatMonthYear(_date)),
+                child: Text(formatMonthYear(_date, locale)),
               ),
             ),
             const SizedBox(height: 16),

@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return value != null && value > 0 && value <= 10000000 && !_isSaving;
   }
 
-  String _themeLabel(ThemeModePreference pref) {
+  String _themeLabel(BuildContext context, ThemeModePreference pref) {
     final l10n = context.l10n;
     switch (pref) {
       case ThemeModePreference.system:
@@ -93,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     for (final pref in ThemeModePreference.values)
                       RadioListTile<ThemeModePreference>(
                         value: pref,
-                        title: Text(_themeLabel(pref)),
+                        title: Text(_themeLabel(context, pref)),
                       ),
                   ],
                 ),
@@ -140,8 +140,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       setState(() => _isSaving = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content:
-                Text(context.l10n.onboardingSaveError(error: e.toString()))),
+          content: Text(
+            context.l10n.onboardingSaveError(error: e.toString()),
+          ),
+        ),
       );
     }
   }
@@ -150,6 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     final currentTheme = context.select<SettingsProvider, ThemeModePreference>(
       (p) => p.themeModePreference,
     );
@@ -217,8 +220,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         controller: _mileageController,
                         focusNode: _mileageFocus,
                         keyboardType: TextInputType.number,
-                        inputFormatters: const [
-                          ThousandsSeparatorFormatter(),
+                        inputFormatters: [
+                          ThousandsSeparatorFormatter(locale: locale),
                         ],
                         onChanged: _onMileageChanged,
                         decoration: InputDecoration(
@@ -238,7 +241,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.brightness_6_outlined),
                         title: Text(l10n.onboardingThemeTitle),
-                        subtitle: Text(_themeLabel(currentTheme)),
+                        subtitle: Text(_themeLabel(context, currentTheme)),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => _pickTheme(context),
                       ),

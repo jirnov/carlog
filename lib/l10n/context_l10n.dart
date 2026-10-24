@@ -3,5 +3,5 @@
 import 'app_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
-  AppLocalizations get l10n => AppLocalizations.of(this)!;
+  AppLocalizations get l10n => AppLocalizations.of(this);
 }

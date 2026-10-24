@@ -188,14 +188,15 @@ class HomeScreenState extends State<HomeScreen> {
     _exitSelectionMode();
 
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
         content: Text(
           l10n.homeDoneSelectedSnack(
             count: selectedRules.length,
-            km: formatThousands(result.mileage),
-            date: formatMonthYear(result.performedAt),
+            km: formatThousands(result.mileage, locale),
+            date: formatMonthYear(result.performedAt, locale),
           ),
         ),
       ),
@@ -244,14 +245,15 @@ class HomeScreenState extends State<HomeScreen> {
     });
 
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).languageCode;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
         content: Text(
           l10n.homeDoneSingleSnack(
             title: rule.title,
-            km: formatThousands(result.record.mileage),
-            date: formatMonthYear(result.record.performedAt),
+            km: formatThousands(result.record.mileage, locale),
+            date: formatMonthYear(result.record.performedAt, locale),
           ),
         ),
       ),

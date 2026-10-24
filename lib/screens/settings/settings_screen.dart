@@ -23,11 +23,39 @@ import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/services/backup_service.dart';
 import 'package:carlog/utils/formatting.dart';
 
+enum AppStore {
+  none,
+  googlePlay,
+  rustore;
+
+  static AppStore fromName(String raw) {
+    switch (raw.toLowerCase().trim()) {
+      case 'googleplay':
+        return AppStore.googlePlay;
+      case 'rustore':
+        return AppStore.rustore;
+      default:
+        return AppStore.none;
+    }
+  }
+
+  String? get url {
+    switch (this) {
+      case AppStore.googlePlay:
+        return 'https://play.google.com/store/apps/details?id=ru.blog2k.carlog';
+      case AppStore.rustore:
+        return 'https://www.rustore.ru/catalog/app/ru.blog2k.carlog';
+      case AppStore.none:
+        return null;
+    }
+  }
+}
+
 /// Ссылки приложения.
-/// `STORE_URL` передаётся при сборке через `--dart-define=STORE_URL=...`.
-/// Если не передан — ссылка на магазин пустая, пункт «Поделиться» скрыт.
 const String kAppName = 'Журнал ТО';
-const String kPlayStoreUrl = String.fromEnvironment('STORE_URL');
+
+const String _kStoreNameRaw = String.fromEnvironment('STORE_NAME');
+final String? kStoreUrl = AppStore.fromName(_kStoreNameRaw).url;
 const String kCoffeeUrl = 'https://pay.cloudtips.ru/p/31704978';
 
 /// Перезагрузить все провайдеры после импорта.
@@ -74,7 +102,7 @@ class SettingsScreen extends StatelessWidget {
           const _RestoreBackupTile(),
           const _SectionHeader('Помощь и поддержка'),
           const _HelpTile(),
-          if (kPlayStoreUrl.isNotEmpty) const _ShareTile(),
+          if (kStoreUrl != null) _ShareTile(storeUrl: kStoreUrl!),
           const _CoffeeTile(),
           const _SectionHeader('О приложении'),
           const _VersionTile(),
@@ -696,13 +724,14 @@ class _HelpTile extends StatelessWidget {
 }
 
 class _ShareTile extends StatelessWidget {
-  const _ShareTile();
+  const _ShareTile({required this.storeUrl});
+  final String storeUrl;
 
   Future<void> _share() async {
     final params = ShareParams(
       text: 'Попробуй приложение «$kAppName» — дневник обслуживания '
           'автомобиля.\n\n'
-          '$kPlayStoreUrl',
+          '$storeUrl',
       subject: kAppName,
     );
     await SharePlus.instance.share(params);

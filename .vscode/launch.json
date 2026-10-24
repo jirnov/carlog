@@ -10,6 +10,22 @@
             "type": "dart"
         },
         {
+            "name": "carlog (RuStore)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define=STORE_NAME=rustore"
+            ]
+        },
+        {
+            "name": "carlog (GooglePlay)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define=STORE_NAME=googleplay"
+            ]
+        },
+        {
             "name": "carlog (profile mode)",
             "request": "launch",
             "type": "dart",

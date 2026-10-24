@@ -84,7 +84,7 @@ class MileageHeader extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                l10n.mileageHeaderUnitKm,
+                l10n.unitKm,
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -126,7 +126,7 @@ class MileageHeader extends StatelessWidget {
           FilledButton.tonalIcon(
             onPressed: onUpdate,
             icon: const Icon(Icons.refresh),
-            label: Text(l10n.mileageHeaderUpdateButton),
+            label: Text(l10n.actionUpdateMileage),
           ),
         ],
       ),

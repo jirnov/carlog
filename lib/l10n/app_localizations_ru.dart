@@ -87,7 +87,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get templateCustom => 'Своё';
 
   @override
-  String get templateIntervalNotSet => 'интервал не задан';
+  String get intervalNotSet => 'интервал не задан';
 
   @override
   String templateIntervalEveryKm({required String km}) {
@@ -106,14 +106,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get confirmCancelTitle => 'Отменить ТО?';
-
-  @override
-  String confirmCancelMessage({required String ruleTitle}) {
-    return 'Работа «$ruleTitle» будет помечена как отменённая. Она попадёт в историю со значком отмены и не будет считаться выполненной. Следующее ТО сдвинется на текущий пробег.';
-  }
-
-  @override
   String get actionCancel => 'Отмена';
 
   @override
@@ -121,6 +113,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get actionDelete => 'Удалить';
+
+  @override
+  String get actionEdit => 'Редактировать';
 
   @override
   String get confirmExitTitle => 'Выйти без сохранения?';
@@ -159,13 +154,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionPostpone => 'Отложить';
 
   @override
-  String get updateMileageTitle => 'Обновить пробег';
+  String get actionUpdateMileage => 'Обновить пробег';
 
   @override
   String get updateMileageFieldLabel => 'Новый пробег';
 
   @override
-  String get updateMileageUnitKm => 'км';
+  String get unitKm => 'км';
 
   @override
   String updateMileagePrevious({required String km}) {
@@ -176,7 +171,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get updateMileageDateToday => 'Дата: сегодня';
 
   @override
-  String get mileageErrorRequired => 'Обязательное поле';
+  String get requiredField => 'Обязательное поле';
 
   @override
   String get mileageErrorPositive => 'Пробег должен быть больше нуля';
@@ -198,6 +193,14 @@ class AppLocalizationsRu extends AppLocalizations {
       required String current,
       required String diff}) {
     return 'Прошлый пробег: $previous км.\nНовый: $current км.\n\nРазница: $diff км за один раз. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.';
+  }
+
+  @override
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
+      required String diff}) {
+    return 'Текущий пробег машины: $current км.\nВы отметили ТО на $performed км.\n\nРазница: $diff км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.';
   }
 
   @override
@@ -225,9 +228,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editRuleNextKmLabel => 'На каком пробеге делать следующее ТО';
 
   @override
-  String get editRuleNextKmUnit => 'км';
-
-  @override
   String editRuleNextKmWarning({required String km}) {
     return 'Меньше текущего пробега ($km км). Возможно, ТО уже выполнено.';
   }
@@ -239,13 +239,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editRuleIntervalKmLabel => 'По км';
 
   @override
-  String get editRuleIntervalKmUnit => 'км';
-
-  @override
   String get editRuleIntervalMonthsLabel => 'По месяцам';
 
   @override
-  String get editRuleIntervalMonthsUnit => 'мес';
+  String get unitMonths => 'мес';
 
   @override
   String get editRuleIntervalError => 'Заполните хотя бы один интервал';
@@ -258,10 +255,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Для статистики и планирования расходов (необязательно)';
 
   @override
-  String get editRuleCostUnit => '₽';
+  String get unitCurrency => '₽';
 
   @override
-  String get editRuleNoteLabel => 'Заметка';
+  String get noteLabel => 'Заметка';
 
   @override
   String get editRuleNoteHint => 'Например, синтетическое масло';
@@ -276,9 +273,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editRuleResetDate => 'Сбросить';
 
   @override
-  String get validationRequired => 'Обязательное поле';
-
-  @override
   String get helpTitle => 'Помощь';
 
   @override
@@ -288,9 +282,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String helpMailSubject({required String version}) {
     return 'Предложения по Журналу ТО (версия $version)';
   }
-
-  @override
-  String get historyTitle => 'Выполнено';
 
   @override
   String get historyAddTooltip => 'Добавить событие';
@@ -303,9 +294,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно';
 
   @override
-  String get historyHowItWorks => 'Как это работает?';
-
-  @override
   String historyDeleteTitle({required String title}) {
     return 'Удалить работу «$title»?';
   }
@@ -314,26 +302,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get historyDeleteMessage => 'Запись будет удалена из истории.';
 
   @override
-  String historyCardMileage({required String km}) {
-    return '$km км';
-  }
-
-  @override
   String historyCardCost({required String amount}) {
     return '$amount ₽';
   }
 
   @override
-  String get historyCardEditTooltip => 'Редактировать';
-
-  @override
-  String get historyCardDeleteTooltip => 'Удалить';
-
-  @override
   String get homeCarNameFallback => 'Мой автомобиль';
-
-  @override
-  String get homeSelectionCancel => 'Отмена';
 
   @override
   String homeSelectionCount({required int count}) {
@@ -356,7 +330,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Добавьте плановое ТО на вкладке «Планирование»';
 
   @override
-  String get homeHowItWorks => 'Как это работает?';
+  String get howItWorks => 'Как это работает?';
 
   @override
   String homeDoneSelectedSnack(
@@ -404,41 +378,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String dueCardKmLeft({required String km}) {
-    return '$km км';
-  }
-
-  @override
   String get dueCardActionPostpone => '[Отложить]';
 
   @override
   String get dueCardActionMarkDone => '[Выполнить]';
-
-  @override
-  String dueDaysShort({required int count}) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count дня',
-      many: '$count дней',
-      few: '$count дня',
-      one: '$count день',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String dueMonthsShort({required int count}) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count мес',
-      many: '$count мес',
-      few: '$count мес',
-      one: '$count мес',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get mileageHeaderNotSet => 'Пробег не задан';
@@ -466,12 +409,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mileageHeaderStaleSuffix => 'обновить';
 
   @override
-  String get mileageHeaderUnitKm => 'км';
-
-  @override
-  String get mileageHeaderUpdateButton => 'Обновить пробег';
-
-  @override
   String nearestDueOverdue({required String value}) {
     return 'Просрочено: $value';
   }
@@ -482,12 +419,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String nearestDueKm({required String km}) {
-    return '$km км';
-  }
-
-  @override
-  String nearestDueDays({required int count}) {
+  String dayShort({required int count}) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
@@ -497,11 +429,6 @@ class AppLocalizationsRu extends AppLocalizations {
       one: '$count день',
     );
     return '$_temp0';
-  }
-
-  @override
-  String nearestDueMonths({required int count}) {
-    return '$count мес';
   }
 
   @override
@@ -515,9 +442,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exitConfirmMessage => 'Нажмите ещё раз для выхода';
-
-  @override
-  String get settingsTooltip => 'Настройки';
 
   @override
   String markDoneMultiTitle({required int count}) {
@@ -536,18 +460,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get markDoneMultiWorksSection => 'Работы';
 
   @override
-  String get markDoneMultiMileageLabel => 'Пробег выполнения';
-
-  @override
-  String get markDoneMultiMileageUnit => 'км';
-
-  @override
-  String get markDoneMultiMonthLabel => 'Месяц выполнения';
-
-  @override
-  String get markDoneMultiNoteLabel => 'Заметка';
-
-  @override
   String get markDoneMultiNoteHint => 'Например, сервис на Ленина';
 
   @override
@@ -556,10 +468,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get markDoneMultiUpdateMileageTitle => 'Обновить пробег машины?';
-
-  @override
-  String markDoneMultiUpdateMileageMessage(
+  String markDoneUpdateMileageMessage(
       {required String current, required String performed}) {
     return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
   }
@@ -589,9 +498,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get markDoneMileageLabel => 'Пробег выполнения';
 
   @override
-  String get markDoneMileageUnit => 'км';
-
-  @override
   String get markDoneMonthLabel => 'Месяц выполнения';
 
   @override
@@ -601,43 +507,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get markDoneCostHint => 'Необязательно';
 
   @override
-  String get markDoneCostUnit => '₽';
-
-  @override
-  String get markDoneNoteLabel => 'Заметка';
-
-  @override
   String get markDoneNoteHint => 'Например, синтетическое масло';
 
   @override
   String get mileageErrorTooSmall =>
       'Пробег подозрительно мал — проверьте значение';
-
-  @override
-  String get markDoneJumpTitle => 'Пробег резко вырос';
-
-  @override
-  String markDoneJumpMessage(
-      {required String current,
-      required String performed,
-      required String diff}) {
-    return 'Текущий пробег машины: $current км.\nВы отметили ТО на $performed км.\n\nРазница: $diff км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.';
-  }
-
-  @override
-  String get markDoneJumpEdit => 'Изменить';
-
-  @override
-  String get markDoneJumpConfirm => 'Да, верно';
-
-  @override
-  String get markDoneUpdateMileageTitle => 'Обновить пробег машины?';
-
-  @override
-  String markDoneUpdateMileageMessage(
-      {required String current, required String performed}) {
-    return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
-  }
 
   @override
   String get onboardingWelcomeTitle => 'Добро пожаловать';
@@ -657,12 +531,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingMileageLabel => 'Текущий пробег';
-
-  @override
-  String get onboardingMileageUnit => 'км';
-
-  @override
-  String get onboardingMileageRequired => 'Обязательное поле';
 
   @override
   String get onboardingThemeTitle => 'Тема';
@@ -691,9 +559,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themeDialogTitle => 'Тема оформления';
 
   @override
-  String get rulesTitle => 'Планирование';
-
-  @override
   String get rulesAddTooltip => 'Добавить правило';
 
   @override
@@ -715,15 +580,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get rulesDeleteMessage => 'История выполненных работ не изменится.';
 
   @override
-  String get ruleCardIntervalNotSet => 'интервал не задан';
-
-  @override
-  String ruleCardIntervalKm({required String km}) {
+  String kmWithValue({required String km}) {
     return '$km км';
   }
 
   @override
-  String ruleCardIntervalMonths({required int months}) {
+  String monthsWithValue({required int months}) {
     return '$months мес';
   }
 
@@ -754,12 +616,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String ruleCardCost({required String amount}) {
     return '~$amount ₽';
   }
-
-  @override
-  String get ruleCardEditTooltip => 'Редактировать';
-
-  @override
-  String get ruleCardDeleteTooltip => 'Удалить';
 
   @override
   String get settingsTitle => 'Настройки';
@@ -829,26 +685,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsYellowKmDialogTitle => 'Порог предупреждения по км';
 
   @override
-  String get settingsYellowKmUnit => 'км';
-
-  @override
-  String settingsYellowKmValue({required String km}) {
-    return '$km км';
-  }
-
-  @override
   String get settingsYellowMonthsTitle => 'За сколько месяцев';
 
   @override
   String get settingsYellowMonthsDialogTitle => 'Порог предупреждения по сроку';
-
-  @override
-  String get settingsYellowMonthsUnit => 'мес';
-
-  @override
-  String settingsYellowMonthsValue({required int months}) {
-    return '$months мес';
-  }
 
   @override
   String get settingsThemeTitle => 'Тема';
@@ -932,9 +772,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get settingsHelpTitle => 'Помощь';
-
-  @override
   String get settingsHelpSubtitle => 'Как пользоваться приложением';
 
   @override
@@ -944,8 +781,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsShareSubtitle => 'Отправить ссылку на магазин';
 
   @override
-  String settingsShareText({required String appName, required String url}) {
-    return 'Попробуй приложение «$appName» — дневник обслуживания автомобиля.\n\n$url';
+  String settingsShareText({required String appTitle, required String url}) {
+    return 'Попробуй приложение «$appTitle» — дневник обслуживания автомобиля.\n\n$url';
   }
 
   @override

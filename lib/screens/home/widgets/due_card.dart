@@ -62,8 +62,8 @@ class DueCard extends StatelessWidget {
 
   String _daysShort(int value, AppLocalizations l10n) {
     final abs = value.abs();
-    if (abs < 30) return l10n.dueDaysShort(count: abs);
-    return l10n.dueMonthsShort(count: (abs / 30).round());
+    if (abs < 30) return l10n.dayShort(count: abs);
+    return l10n.dayShort(count: (abs / 30).round());
   }
 
   String _intervalText(AppLocalizations l10n, String locale) {
@@ -90,7 +90,7 @@ class DueCard extends StatelessWidget {
     final parts = <String>[];
     if (due.kmLeft != null) {
       parts.add(
-        l10n.dueCardKmLeft(
+        l10n.kmWithValue(
           km: formatThousands(roundKmDown(due.kmLeft!), locale),
         ),
       );
@@ -105,7 +105,7 @@ class DueCard extends StatelessWidget {
     final parts = <String>[];
     if (due.nextKm != null) {
       parts.add(
-        l10n.dueCardKmLeft(km: formatThousands(due.nextKm!, locale)),
+        l10n.kmWithValue(km: formatThousands(due.nextKm!, locale)),
       );
     }
     if (due.nextDate != null) {

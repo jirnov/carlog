@@ -24,15 +24,15 @@ class RuleCard extends StatelessWidget {
     final parts = <String>[];
     if (rule.intervalKm != null && rule.intervalKm! > 0) {
       parts.add(
-        l10n.ruleCardIntervalKm(
+        l10n.kmWithValue(
           km: formatThousands(rule.intervalKm!, locale),
         ),
       );
     }
     if (rule.intervalMonths != null && rule.intervalMonths! > 0) {
-      parts.add(l10n.ruleCardIntervalMonths(months: rule.intervalMonths!));
+      parts.add(l10n.monthsWithValue(months: rule.intervalMonths!));
     }
-    if (parts.isEmpty) return l10n.ruleCardIntervalNotSet;
+    if (parts.isEmpty) return l10n.intervalNotSet.toLowerCase();
     if (parts.length == 1) return l10n.ruleCardEveryOne(value: parts.first);
     return l10n.ruleCardEveryTwo(first: parts[0], second: parts[1]);
   }
@@ -42,7 +42,7 @@ class RuleCard extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
 
     final kmText = rule.nextKm != null
-        ? l10n.ruleCardIntervalKm(
+        ? l10n.kmWithValue(
             km: formatThousands(rule.nextKm!, locale),
           )
         : null;
@@ -125,13 +125,13 @@ class RuleCard extends StatelessWidget {
                 icon: const Icon(Icons.edit_outlined),
                 color: theme.colorScheme.primary,
                 onPressed: onTap,
-                tooltip: l10n.ruleCardEditTooltip,
+                tooltip: l10n.actionEdit,
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 color: theme.colorScheme.error,
                 onPressed: onDelete,
-                tooltip: l10n.ruleCardDeleteTooltip,
+                tooltip: l10n.actionDelete,
               ),
             ],
           ),

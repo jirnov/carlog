@@ -298,7 +298,7 @@ class _YellowKmTile extends StatelessWidget {
           inputFormatters: [
             ThousandsSeparatorFormatter(locale: locale),
           ],
-          decoration: InputDecoration(suffixText: l10n.settingsYellowKmUnit),
+          decoration: InputDecoration(suffixText: l10n.unitKm),
         ),
         actions: [
           TextButton(
@@ -327,7 +327,7 @@ class _YellowKmTile extends StatelessWidget {
     return ListTile(
       title: Text(l10n.settingsYellowKmTitle),
       subtitle: Text(
-        l10n.settingsYellowKmValue(km: formatThousands(km, locale)),
+        l10n.kmWithValue(km: formatThousands(km, locale)),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
@@ -355,7 +355,7 @@ class _YellowMonthsTile extends StatelessWidget {
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
-            suffixText: l10n.settingsYellowMonthsUnit,
+            suffixText: l10n.unitMonths,
           ),
         ),
         actions: [
@@ -386,7 +386,7 @@ class _YellowMonthsTile extends StatelessWidget {
     return ListTile(
       title: Text(l10n.settingsYellowMonthsTitle),
       subtitle: Text(
-        l10n.settingsYellowMonthsValue(months: months),
+        l10n.monthsWithValue(months: months),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
@@ -735,7 +735,7 @@ class _HelpTile extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Icons.help_outline),
-      title: Text(l10n.settingsHelpTitle),
+      title: Text(l10n.helpTitle),
       subtitle: Text(l10n.settingsHelpSubtitle),
       onTap: () {
         Navigator.of(
@@ -754,7 +754,7 @@ class _ShareTile extends StatelessWidget {
     final l10n = context.l10n;
     final params = ShareParams(
       text: l10n.settingsShareText(
-        appName: l10n.appTitle,
+        appTitle: l10n.appTitle,
         url: storeUrl,
       ),
       subject: l10n.appTitle,

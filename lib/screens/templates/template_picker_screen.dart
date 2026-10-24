@@ -185,7 +185,7 @@ class _TemplateTile extends StatelessWidget {
     final hasKm = km != null && km > 0;
     final hasMonths = months != null && months > 0;
 
-    if (!hasKm && !hasMonths) return l10n.templateIntervalNotSet;
+    if (!hasKm && !hasMonths) return l10n.intervalNotSet;
     if (hasKm && hasMonths) {
       return l10n.templateIntervalEveryKmMonths(
         km: formatThousands(km, locale),

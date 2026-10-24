@@ -303,7 +303,7 @@ class HomeScreenState extends State<HomeScreen> {
             ? IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: _exitSelectionMode,
-                tooltip: l10n.homeSelectionCancel,
+                tooltip: l10n.actionCancel,
               )
             : null,
         title: _selectionMode
@@ -441,7 +441,7 @@ class _EmptyState extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.help_outline),
-              label: Text(l10n.homeHowItWorks),
+              label: Text(l10n.howItWorks),
             ),
           ],
         ),

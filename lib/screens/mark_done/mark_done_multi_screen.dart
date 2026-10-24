@@ -81,7 +81,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
   String? _validateMileage() {
     final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return l10n.validationRequired;
+    if (value == null) return l10n.requiredField;
     if (value <= 0) return l10n.mileageErrorPositive;
     if (value > 10000000) return l10n.mileageErrorTooLarge;
     return null;
@@ -117,9 +117,9 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.markDoneMultiUpdateMileageTitle),
+        title: Text(l10n.actionUpdateMileage),
         content: Text(
-          l10n.markDoneMultiUpdateMileageMessage(
+          l10n.markDoneUpdateMileageMessage(
             current: formatThousands(currentMileage, locale),
             performed: formatThousands(mileage, locale),
           ),
@@ -214,8 +214,8 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
               ],
               onChanged: _onMileageChanged,
               decoration: InputDecoration(
-                labelText: l10n.markDoneMultiMileageLabel,
-                suffixText: l10n.markDoneMultiMileageUnit,
+                labelText: l10n.markDoneMileageLabel,
+                suffixText: l10n.unitKm,
                 errorText: _mileageError,
               ),
             ),
@@ -224,7 +224,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
               onTap: _pickDate,
               child: InputDecorator(
                 decoration: InputDecoration(
-                  labelText: l10n.markDoneMultiMonthLabel,
+                  labelText: l10n.markDoneMonthLabel,
                   suffixIcon: const Icon(Icons.calendar_today),
                 ),
                 child: Text(formatMonthYear(_date, locale)),
@@ -236,7 +236,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
               maxLines: 2,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: l10n.markDoneMultiNoteLabel,
+                labelText: l10n.noteLabel,
                 hintText: l10n.markDoneMultiNoteHint,
               ),
             ),

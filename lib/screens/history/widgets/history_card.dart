@@ -59,7 +59,7 @@ class HistoryCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          l10n.historyCardMileage(
+                          l10n.kmWithValue(
                             km: formatThousands(record.mileage, locale),
                           ),
                           style: theme.textTheme.bodyMedium,
@@ -93,13 +93,13 @@ class HistoryCard extends StatelessWidget {
                 icon: const Icon(Icons.edit_outlined),
                 color: theme.colorScheme.primary,
                 onPressed: onTap,
-                tooltip: l10n.historyCardEditTooltip,
+                tooltip: l10n.actionEdit,
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 color: theme.colorScheme.error,
                 onPressed: onDelete,
-                tooltip: l10n.historyCardDeleteTooltip,
+                tooltip: l10n.actionDelete,
               ),
             ],
           ),

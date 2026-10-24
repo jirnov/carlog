@@ -55,7 +55,7 @@ class RulesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.rulesTitle),
+        title: Text(l10n.navPlanning),
         actions: const [SettingsAction()],
       ),
       body: rules.isEmpty

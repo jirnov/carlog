@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   String? _validateMileage() {
     final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return l10n.validationRequired;
+    if (value == null) return l10n.requiredField;
     if (value <= 0) return l10n.mileageErrorPositive;
     if (value > 10000000) return l10n.mileageErrorTooLarge;
     return null;
@@ -226,11 +226,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onChanged: _onMileageChanged,
                         decoration: InputDecoration(
                           labelText: l10n.onboardingMileageLabel,
-                          suffixText: l10n.onboardingMileageUnit,
+                          suffixText: l10n.unitKm,
                           errorText: _mileageError,
-                          helperText: _mileageError == null
-                              ? l10n.onboardingMileageRequired
-                              : null,
+                          helperText:
+                              _mileageError == null ? l10n.requiredField : null,
                         ),
                         style: theme.textTheme.headlineSmall,
                       ),

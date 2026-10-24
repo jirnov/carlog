@@ -52,7 +52,7 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
   String? _validate(int? value) {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).languageCode;
-    if (value == null) return l10n.mileageErrorRequired;
+    if (value == null) return l10n.requiredField;
     if (value <= 0) return l10n.mileageErrorPositive;
     if (value < widget.previousMileage) {
       return l10n.mileageErrorMin(
@@ -132,7 +132,7 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
 
     return AlertDialog(
       scrollable: true,
-      title: Text(l10n.updateMileageTitle),
+      title: Text(l10n.actionUpdateMileage),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +151,7 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
             },
             decoration: InputDecoration(
               labelText: l10n.updateMileageFieldLabel,
-              suffixText: l10n.updateMileageUnitKm,
+              suffixText: l10n.unitKm,
               errorText: _errorText,
             ),
             style: theme.textTheme.headlineSmall,

@@ -172,10 +172,10 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
     final intervalKm = _intervalKm;
     final intervalMonths = _intervalMonths;
 
-    _titleError = title.isEmpty ? l10n.validationRequired : null;
+    _titleError = title.isEmpty ? l10n.requiredField : null;
 
     if (nextKm == null || nextKm <= 0) {
-      _nextKmError = l10n.validationRequired;
+      _nextKmError = l10n.requiredField;
     } else {
       _nextKmError = null;
     }
@@ -320,7 +320,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 onChanged: _onNextKmChanged,
                 decoration: InputDecoration(
                   labelText: l10n.editRuleNextKmLabel,
-                  suffixText: l10n.editRuleNextKmUnit,
+                  suffixText: l10n.unitKm,
                   errorText: _nextKmError,
                 ),
               ),
@@ -353,7 +353,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                       ],
                       decoration: InputDecoration(
                         labelText: l10n.editRuleIntervalKmLabel,
-                        suffixText: l10n.editRuleIntervalKmUnit,
+                        suffixText: l10n.unitKm,
                       ),
                     ),
                   ),
@@ -368,7 +368,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                       onChanged: _onIntervalMonthsChanged,
                       decoration: InputDecoration(
                         labelText: l10n.editRuleIntervalMonthsLabel,
-                        suffixText: l10n.editRuleIntervalMonthsUnit,
+                        suffixText: l10n.unitMonths,
                       ),
                     ),
                   ),
@@ -407,7 +407,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 decoration: InputDecoration(
                   labelText: l10n.editRuleCostLabel,
                   hintText: l10n.editRuleCostHint,
-                  suffixText: l10n.editRuleCostUnit,
+                  suffixText: l10n.unitCurrency,
                 ),
               ),
               const SizedBox(height: 24),
@@ -418,7 +418,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 maxLines: 2,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  labelText: l10n.editRuleNoteLabel,
+                  labelText: l10n.noteLabel,
                   hintText: l10n.editRuleNoteHint,
                 ),
               ),

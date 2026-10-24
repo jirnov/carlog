@@ -254,11 +254,11 @@ abstract class AppLocalizations {
   /// **'Своё'**
   String get templateCustom;
 
-  /// No description provided for @templateIntervalNotSet.
+  /// No description provided for @intervalNotSet.
   ///
   /// In ru, this message translates to:
   /// **'интервал не задан'**
-  String get templateIntervalNotSet;
+  String get intervalNotSet;
 
   /// No description provided for @templateIntervalEveryKm.
   ///
@@ -279,18 +279,6 @@ abstract class AppLocalizations {
   String templateIntervalEveryKmMonths(
       {required String km, required int months});
 
-  /// No description provided for @confirmCancelTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Отменить ТО?'**
-  String get confirmCancelTitle;
-
-  /// No description provided for @confirmCancelMessage.
-  ///
-  /// In ru, this message translates to:
-  /// **'Работа «{ruleTitle}» будет помечена как отменённая. Она попадёт в историю со значком отмены и не будет считаться выполненной. Следующее ТО сдвинется на текущий пробег.'**
-  String confirmCancelMessage({required String ruleTitle});
-
   /// No description provided for @actionCancel.
   ///
   /// In ru, this message translates to:
@@ -308,6 +296,12 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Удалить'**
   String get actionDelete;
+
+  /// No description provided for @actionEdit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Редактировать'**
+  String get actionEdit;
 
   /// No description provided for @confirmExitTitle.
   ///
@@ -381,11 +375,11 @@ abstract class AppLocalizations {
   /// **'Отложить'**
   String get actionPostpone;
 
-  /// No description provided for @updateMileageTitle.
+  /// No description provided for @actionUpdateMileage.
   ///
   /// In ru, this message translates to:
   /// **'Обновить пробег'**
-  String get updateMileageTitle;
+  String get actionUpdateMileage;
 
   /// No description provided for @updateMileageFieldLabel.
   ///
@@ -393,11 +387,11 @@ abstract class AppLocalizations {
   /// **'Новый пробег'**
   String get updateMileageFieldLabel;
 
-  /// No description provided for @updateMileageUnitKm.
+  /// No description provided for @unitKm.
   ///
   /// In ru, this message translates to:
   /// **'км'**
-  String get updateMileageUnitKm;
+  String get unitKm;
 
   /// No description provided for @updateMileagePrevious.
   ///
@@ -411,11 +405,11 @@ abstract class AppLocalizations {
   /// **'Дата: сегодня'**
   String get updateMileageDateToday;
 
-  /// No description provided for @mileageErrorRequired.
+  /// No description provided for @requiredField.
   ///
   /// In ru, this message translates to:
   /// **'Обязательное поле'**
-  String get mileageErrorRequired;
+  String get requiredField;
 
   /// No description provided for @mileageErrorPositive.
   ///
@@ -448,6 +442,15 @@ abstract class AppLocalizations {
   String mileageJumpMessage(
       {required String previous,
       required String current,
+      required String diff});
+
+  /// No description provided for @markDoneJumpMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.'**
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
       required String diff});
 
   /// No description provided for @mileageJumpEdit.
@@ -498,12 +501,6 @@ abstract class AppLocalizations {
   /// **'На каком пробеге делать следующее ТО'**
   String get editRuleNextKmLabel;
 
-  /// No description provided for @editRuleNextKmUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get editRuleNextKmUnit;
-
   /// No description provided for @editRuleNextKmWarning.
   ///
   /// In ru, this message translates to:
@@ -522,23 +519,17 @@ abstract class AppLocalizations {
   /// **'По км'**
   String get editRuleIntervalKmLabel;
 
-  /// No description provided for @editRuleIntervalKmUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get editRuleIntervalKmUnit;
-
   /// No description provided for @editRuleIntervalMonthsLabel.
   ///
   /// In ru, this message translates to:
   /// **'По месяцам'**
   String get editRuleIntervalMonthsLabel;
 
-  /// No description provided for @editRuleIntervalMonthsUnit.
+  /// No description provided for @unitMonths.
   ///
   /// In ru, this message translates to:
   /// **'мес'**
-  String get editRuleIntervalMonthsUnit;
+  String get unitMonths;
 
   /// No description provided for @editRuleIntervalError.
   ///
@@ -558,17 +549,17 @@ abstract class AppLocalizations {
   /// **'Для статистики и планирования расходов (необязательно)'**
   String get editRuleCostHint;
 
-  /// No description provided for @editRuleCostUnit.
+  /// No description provided for @unitCurrency.
   ///
   /// In ru, this message translates to:
   /// **'₽'**
-  String get editRuleCostUnit;
+  String get unitCurrency;
 
-  /// No description provided for @editRuleNoteLabel.
+  /// No description provided for @noteLabel.
   ///
   /// In ru, this message translates to:
   /// **'Заметка'**
-  String get editRuleNoteLabel;
+  String get noteLabel;
 
   /// No description provided for @editRuleNoteHint.
   ///
@@ -594,12 +585,6 @@ abstract class AppLocalizations {
   /// **'Сбросить'**
   String get editRuleResetDate;
 
-  /// No description provided for @validationRequired.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обязательное поле'**
-  String get validationRequired;
-
   /// No description provided for @helpTitle.
   ///
   /// In ru, this message translates to:
@@ -617,12 +602,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Предложения по Журналу ТО (версия {version})'**
   String helpMailSubject({required String version});
-
-  /// No description provided for @historyTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Выполнено'**
-  String get historyTitle;
 
   /// No description provided for @historyAddTooltip.
   ///
@@ -642,12 +621,6 @@ abstract class AppLocalizations {
   /// **'Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно'**
   String get historyEmptyMessage;
 
-  /// No description provided for @historyHowItWorks.
-  ///
-  /// In ru, this message translates to:
-  /// **'Как это работает?'**
-  String get historyHowItWorks;
-
   /// No description provided for @historyDeleteTitle.
   ///
   /// In ru, this message translates to:
@@ -660,41 +633,17 @@ abstract class AppLocalizations {
   /// **'Запись будет удалена из истории.'**
   String get historyDeleteMessage;
 
-  /// No description provided for @historyCardMileage.
-  ///
-  /// In ru, this message translates to:
-  /// **'{km} км'**
-  String historyCardMileage({required String km});
-
   /// No description provided for @historyCardCost.
   ///
   /// In ru, this message translates to:
   /// **'{amount} ₽'**
   String historyCardCost({required String amount});
 
-  /// No description provided for @historyCardEditTooltip.
-  ///
-  /// In ru, this message translates to:
-  /// **'Редактировать'**
-  String get historyCardEditTooltip;
-
-  /// No description provided for @historyCardDeleteTooltip.
-  ///
-  /// In ru, this message translates to:
-  /// **'Удалить'**
-  String get historyCardDeleteTooltip;
-
   /// No description provided for @homeCarNameFallback.
   ///
   /// In ru, this message translates to:
   /// **'Мой автомобиль'**
   String get homeCarNameFallback;
-
-  /// No description provided for @homeSelectionCancel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Отмена'**
-  String get homeSelectionCancel;
 
   /// No description provided for @homeSelectionCount.
   ///
@@ -726,11 +675,11 @@ abstract class AppLocalizations {
   /// **'Добавьте плановое ТО на вкладке «Планирование»'**
   String get homeEmptyMessage;
 
-  /// No description provided for @homeHowItWorks.
+  /// No description provided for @howItWorks.
   ///
   /// In ru, this message translates to:
   /// **'Как это работает?'**
-  String get homeHowItWorks;
+  String get howItWorks;
 
   /// No description provided for @homeDoneSelectedSnack.
   ///
@@ -776,12 +725,6 @@ abstract class AppLocalizations {
   /// **'просрочено {value}'**
   String dueCardOverdueDays({required String value});
 
-  /// No description provided for @dueCardKmLeft.
-  ///
-  /// In ru, this message translates to:
-  /// **'{km} км'**
-  String dueCardKmLeft({required String km});
-
   /// No description provided for @dueCardActionPostpone.
   ///
   /// In ru, this message translates to:
@@ -793,18 +736,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'[Выполнить]'**
   String get dueCardActionMarkDone;
-
-  /// No description provided for @dueDaysShort.
-  ///
-  /// In ru, this message translates to:
-  /// **'{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}'**
-  String dueDaysShort({required int count});
-
-  /// No description provided for @dueMonthsShort.
-  ///
-  /// In ru, this message translates to:
-  /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
-  String dueMonthsShort({required int count});
 
   /// No description provided for @mileageHeaderNotSet.
   ///
@@ -836,18 +767,6 @@ abstract class AppLocalizations {
   /// **'обновить'**
   String get mileageHeaderStaleSuffix;
 
-  /// No description provided for @mileageHeaderUnitKm.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get mileageHeaderUnitKm;
-
-  /// No description provided for @mileageHeaderUpdateButton.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновить пробег'**
-  String get mileageHeaderUpdateButton;
-
   /// No description provided for @nearestDueOverdue.
   ///
   /// In ru, this message translates to:
@@ -860,23 +779,11 @@ abstract class AppLocalizations {
   /// **'Ближайшее ТО через {value}'**
   String nearestDueSoon({required String value});
 
-  /// No description provided for @nearestDueKm.
-  ///
-  /// In ru, this message translates to:
-  /// **'{km} км'**
-  String nearestDueKm({required String km});
-
-  /// No description provided for @nearestDueDays.
+  /// No description provided for @dayShort.
   ///
   /// In ru, this message translates to:
   /// **'{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}'**
-  String nearestDueDays({required int count});
-
-  /// No description provided for @nearestDueMonths.
-  ///
-  /// In ru, this message translates to:
-  /// **'{count} мес'**
-  String nearestDueMonths({required int count});
+  String dayShort({required int count});
 
   /// No description provided for @navSchedule.
   ///
@@ -902,12 +809,6 @@ abstract class AppLocalizations {
   /// **'Нажмите ещё раз для выхода'**
   String get exitConfirmMessage;
 
-  /// No description provided for @settingsTooltip.
-  ///
-  /// In ru, this message translates to:
-  /// **'Настройки'**
-  String get settingsTooltip;
-
   /// No description provided for @markDoneMultiTitle.
   ///
   /// In ru, this message translates to:
@@ -919,30 +820,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Работы'**
   String get markDoneMultiWorksSection;
-
-  /// No description provided for @markDoneMultiMileageLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пробег выполнения'**
-  String get markDoneMultiMileageLabel;
-
-  /// No description provided for @markDoneMultiMileageUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get markDoneMultiMileageUnit;
-
-  /// No description provided for @markDoneMultiMonthLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Месяц выполнения'**
-  String get markDoneMultiMonthLabel;
-
-  /// No description provided for @markDoneMultiNoteLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заметка'**
-  String get markDoneMultiNoteLabel;
 
   /// No description provided for @markDoneMultiNoteHint.
   ///
@@ -956,17 +833,11 @@ abstract class AppLocalizations {
   /// **'Выполнить {count}'**
   String markDoneMultiSaveButton({required int count});
 
-  /// No description provided for @markDoneMultiUpdateMileageTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновить пробег машины?'**
-  String get markDoneMultiUpdateMileageTitle;
-
-  /// No description provided for @markDoneMultiUpdateMileageMessage.
+  /// No description provided for @markDoneUpdateMileageMessage.
   ///
   /// In ru, this message translates to:
   /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
-  String markDoneMultiUpdateMileageMessage(
+  String markDoneUpdateMileageMessage(
       {required String current, required String performed});
 
   /// No description provided for @actionNo.
@@ -1017,12 +888,6 @@ abstract class AppLocalizations {
   /// **'Пробег выполнения'**
   String get markDoneMileageLabel;
 
-  /// No description provided for @markDoneMileageUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get markDoneMileageUnit;
-
   /// No description provided for @markDoneMonthLabel.
   ///
   /// In ru, this message translates to:
@@ -1041,18 +906,6 @@ abstract class AppLocalizations {
   /// **'Необязательно'**
   String get markDoneCostHint;
 
-  /// No description provided for @markDoneCostUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'₽'**
-  String get markDoneCostUnit;
-
-  /// No description provided for @markDoneNoteLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заметка'**
-  String get markDoneNoteLabel;
-
   /// No description provided for @markDoneNoteHint.
   ///
   /// In ru, this message translates to:
@@ -1064,46 +917,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Пробег подозрительно мал — проверьте значение'**
   String get mileageErrorTooSmall;
-
-  /// No description provided for @markDoneJumpTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пробег резко вырос'**
-  String get markDoneJumpTitle;
-
-  /// No description provided for @markDoneJumpMessage.
-  ///
-  /// In ru, this message translates to:
-  /// **'Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.'**
-  String markDoneJumpMessage(
-      {required String current,
-      required String performed,
-      required String diff});
-
-  /// No description provided for @markDoneJumpEdit.
-  ///
-  /// In ru, this message translates to:
-  /// **'Изменить'**
-  String get markDoneJumpEdit;
-
-  /// No description provided for @markDoneJumpConfirm.
-  ///
-  /// In ru, this message translates to:
-  /// **'Да, верно'**
-  String get markDoneJumpConfirm;
-
-  /// No description provided for @markDoneUpdateMileageTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновить пробег машины?'**
-  String get markDoneUpdateMileageTitle;
-
-  /// No description provided for @markDoneUpdateMileageMessage.
-  ///
-  /// In ru, this message translates to:
-  /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
-  String markDoneUpdateMileageMessage(
-      {required String current, required String performed});
 
   /// No description provided for @onboardingWelcomeTitle.
   ///
@@ -1140,18 +953,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Текущий пробег'**
   String get onboardingMileageLabel;
-
-  /// No description provided for @onboardingMileageUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get onboardingMileageUnit;
-
-  /// No description provided for @onboardingMileageRequired.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обязательное поле'**
-  String get onboardingMileageRequired;
 
   /// No description provided for @onboardingThemeTitle.
   ///
@@ -1201,12 +1002,6 @@ abstract class AppLocalizations {
   /// **'Тема оформления'**
   String get themeDialogTitle;
 
-  /// No description provided for @rulesTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Планирование'**
-  String get rulesTitle;
-
   /// No description provided for @rulesAddTooltip.
   ///
   /// In ru, this message translates to:
@@ -1243,23 +1038,17 @@ abstract class AppLocalizations {
   /// **'История выполненных работ не изменится.'**
   String get rulesDeleteMessage;
 
-  /// No description provided for @ruleCardIntervalNotSet.
-  ///
-  /// In ru, this message translates to:
-  /// **'интервал не задан'**
-  String get ruleCardIntervalNotSet;
-
-  /// No description provided for @ruleCardIntervalKm.
+  /// No description provided for @kmWithValue.
   ///
   /// In ru, this message translates to:
   /// **'{km} км'**
-  String ruleCardIntervalKm({required String km});
+  String kmWithValue({required String km});
 
-  /// No description provided for @ruleCardIntervalMonths.
+  /// No description provided for @monthsWithValue.
   ///
   /// In ru, this message translates to:
   /// **'{months} мес'**
-  String ruleCardIntervalMonths({required int months});
+  String monthsWithValue({required int months});
 
   /// No description provided for @ruleCardEveryOne.
   ///
@@ -1296,18 +1085,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'~{amount} ₽'**
   String ruleCardCost({required String amount});
-
-  /// No description provided for @ruleCardEditTooltip.
-  ///
-  /// In ru, this message translates to:
-  /// **'Редактировать'**
-  String get ruleCardEditTooltip;
-
-  /// No description provided for @ruleCardDeleteTooltip.
-  ///
-  /// In ru, this message translates to:
-  /// **'Удалить'**
-  String get ruleCardDeleteTooltip;
 
   /// No description provided for @settingsTitle.
   ///
@@ -1423,18 +1200,6 @@ abstract class AppLocalizations {
   /// **'Порог предупреждения по км'**
   String get settingsYellowKmDialogTitle;
 
-  /// No description provided for @settingsYellowKmUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'км'**
-  String get settingsYellowKmUnit;
-
-  /// No description provided for @settingsYellowKmValue.
-  ///
-  /// In ru, this message translates to:
-  /// **'{km} км'**
-  String settingsYellowKmValue({required String km});
-
   /// No description provided for @settingsYellowMonthsTitle.
   ///
   /// In ru, this message translates to:
@@ -1446,18 +1211,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Порог предупреждения по сроку'**
   String get settingsYellowMonthsDialogTitle;
-
-  /// No description provided for @settingsYellowMonthsUnit.
-  ///
-  /// In ru, this message translates to:
-  /// **'мес'**
-  String get settingsYellowMonthsUnit;
-
-  /// No description provided for @settingsYellowMonthsValue.
-  ///
-  /// In ru, this message translates to:
-  /// **'{months} мес'**
-  String settingsYellowMonthsValue({required int months});
 
   /// No description provided for @settingsThemeTitle.
   ///
@@ -1603,12 +1356,6 @@ abstract class AppLocalizations {
   /// **'{size} КБ'**
   String settingsBackupSizeKb({required String size});
 
-  /// No description provided for @settingsHelpTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Помощь'**
-  String get settingsHelpTitle;
-
   /// No description provided for @settingsHelpSubtitle.
   ///
   /// In ru, this message translates to:
@@ -1630,8 +1377,8 @@ abstract class AppLocalizations {
   /// No description provided for @settingsShareText.
   ///
   /// In ru, this message translates to:
-  /// **'Попробуй приложение «{appName}» — дневник обслуживания автомобиля.\n\n{url}'**
-  String settingsShareText({required String appName, required String url});
+  /// **'Попробуй приложение «{appTitle}» — дневник обслуживания автомобиля.\n\n{url}'**
+  String settingsShareText({required String appTitle, required String url});
 
   /// No description provided for @settingsCoffeeTitle.
   ///

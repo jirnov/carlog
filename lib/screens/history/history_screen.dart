@@ -62,7 +62,7 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.historyTitle),
+        title: Text(l10n.navHistory),
         actions: const [SettingsAction()],
       ),
       body: records.isEmpty
@@ -179,7 +179,7 @@ class _EmptyState extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.help_outline),
-              label: Text(l10n.historyHowItWorks),
+              label: Text(l10n.howItWorks),
             ),
           ],
         ),

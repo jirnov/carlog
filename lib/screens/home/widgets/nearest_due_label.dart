@@ -15,8 +15,8 @@ class NearestDueLabel extends StatelessWidget {
 
   String _daysLabel(int value, AppLocalizations l10n) {
     final abs = value.abs();
-    if (abs < 30) return l10n.nearestDueDays(count: abs);
-    return l10n.nearestDueMonths(count: (abs / 30).round());
+    if (abs < 30) return l10n.dayShort(count: abs);
+    return l10n.monthsWithValue(months: (abs / 30).round());
   }
 
   /// Строка статуса.
@@ -31,7 +31,7 @@ class NearestDueLabel extends StatelessWidget {
       final parts = <String>[];
       if (kmOverdue) {
         parts.add(
-          l10n.nearestDueKm(
+          l10n.kmWithValue(
             km: formatThousands(roundKmDown(due.missedKm), locale),
           ),
         );
@@ -45,7 +45,7 @@ class NearestDueLabel extends StatelessWidget {
     final parts = <String>[];
     if (due.kmLeft != null) {
       parts.add(
-        l10n.nearestDueKm(
+        l10n.kmWithValue(
           km: formatThousands(roundKmDown(due.kmLeft!), locale),
         ),
       );

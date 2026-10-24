@@ -34,7 +34,7 @@
 
   "templatePickerTitle": "Typical works",
   "templateCustom": "Custom",
-  "templateIntervalNotSet": "interval not set",
+  "intervalNotSet": "interval not set",
   "templateIntervalEveryKm": "every {km} km",
   "@templateIntervalEveryKm": {
     "placeholders": { "km": { "type": "String" } }
@@ -51,7 +51,6 @@
     }
   },
 
-  "confirmCancelTitle": "Cancel maintenance?",
   "confirmCancelMessage": "Work “{ruleTitle}” will be marked as cancelled. It will appear in history with a cancellation icon and will not be counted as completed. The next maintenance will be shifted to the current mileage.",
   "@confirmCancelMessage": {
     "placeholders": {
@@ -61,6 +60,7 @@
   "actionCancel": "Cancel",
   "actionConfirmCancel": "Cancel it",
   "actionDelete": "Delete",
+  "actionEdit": "Edit",
   "confirmExitTitle": "Exit without saving?",
   "confirmExitMessage": "All changes will be lost",
   "actionExit": "Exit",
@@ -73,16 +73,15 @@
   "postponeDateLabel": "Date",
   "postponePickDate": "Pick a date",
   "actionPostpone": "Postpone",
-  "updateMileageTitle": "Update mileage",
+  "actionUpdateMileage": "Update mileage",
   "updateMileageFieldLabel": "New mileage",
-  "updateMileageUnitKm": "km",
+  "unitKm": "km",
   "updateMileagePrevious": "Previous: {km} km",
   "@updateMileagePrevious": {
     "placeholders": { "km": { "type": "String" } }
   },
   "updateMileageDateToday": "Date: today",
 
-  "mileageErrorRequired": "Required field",
   "mileageErrorPositive": "Mileage must be greater than zero",
   "mileageErrorMin": "Not less than {km} km",
   "@mileageErrorMin": {
@@ -99,6 +98,14 @@
       "diff": { "type": "String" }
     }
   },
+  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. Usually people don''t drive that much between updates. Check for an extra zero.",
+  "@markDoneJumpMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" },
+      "diff": { "type": "String" }
+    }
+  },
   "mileageJumpEdit": "Edit",
   "mileageJumpConfirm": "Yes, correct",
 
@@ -108,54 +115,43 @@
   "editRuleNameLabel": "Name of scheduled work",
   "editRuleNameHint": "For example, automatic transmission oil change",
   "editRuleNextKmLabel": "At what mileage to do the next maintenance",
-  "editRuleNextKmUnit": "km",
   "editRuleNextKmWarning": "Less than current mileage ({km} km). The maintenance may already be done.",
   "@editRuleNextKmWarning": {
     "placeholders": { "km": { "type": "String" } }
   },
   "editRuleIntervalSection": "Interval",
   "editRuleIntervalKmLabel": "By km",
-  "editRuleIntervalKmUnit": "km",
   "editRuleIntervalMonthsLabel": "By months",
-  "editRuleIntervalMonthsUnit": "mo",
+  "unitMonths": "mo",
   "editRuleIntervalError": "Fill in at least one interval",
   "editRuleCostLabel": "Estimated cost",
   "editRuleCostHint": "For statistics and expense planning (optional)",
-  "editRuleCostUnit": "₽",
-  "editRuleNoteLabel": "Note",
+  "unitCurrency": "₽",
+  "noteLabel": "Note",
   "editRuleNoteHint": "For example, synthetic oil",
   "editRuleNextDateLabel": "Next maintenance date",
   "editRuleNextDateNone": "Not set",
   "editRuleResetDate": "Reset",
-  "validationRequired": "Required field",
+  "requiredField": "Required field",
   "helpTitle": "Help",
   "helpLoadError": "Failed to load help",
   "helpMailSubject": "Suggestions for the Maintenance Log (version {version})",
   "@helpMailSubject": {
     "placeholders": { "version": { "type": "String" } }
   },
-  "historyTitle": "Completed",
   "historyAddTooltip": "Add event",
   "historyEmptyTitle": "History is empty",
   "historyEmptyMessage": "Completed works will appear here\nBut you can add them manually",
-  "historyHowItWorks": "How does it work?",
   "historyDeleteTitle": "Delete work “{title}”?",
   "@historyDeleteTitle": {
     "placeholders": { "title": { "type": "String" } }
   },
   "historyDeleteMessage": "The record will be deleted from history.",
-  "historyCardMileage": "{km} km",
-  "@historyCardMileage": {
-    "placeholders": { "km": { "type": "String" } }
-  },
   "historyCardCost": "{amount} ₽",
   "@historyCardCost": {
     "placeholders": { "amount": { "type": "String" } }
   },
-  "historyCardEditTooltip": "Edit",
-  "historyCardDeleteTooltip": "Delete",
   "homeCarNameFallback": "My car",
-  "homeSelectionCancel": "Cancel",
   "homeSelectionCount": "Selected: {count}",
   "@homeSelectionCount": {
     "placeholders": { "count": { "type": "int" } }
@@ -167,7 +163,7 @@
   },
   "homeEmptyTitle": "Work schedule is empty",
   "homeEmptyMessage": "Add scheduled maintenance on the “Schedule” tab",
-  "homeHowItWorks": "How does it work?",
+  "howItWorks": "How does it work?",
 
   "homeDoneSelectedSnack": "{count, plural, =1{1 work} other{{count} works}} completed — {km} km, {date}",
   "@homeDoneSelectedSnack": {
@@ -205,22 +201,10 @@
   "@dueCardOverdueDays": {
     "placeholders": { "value": { "type": "String" } }
   },
-  "dueCardKmLeft": "{km} km",
-  "@dueCardKmLeft": {
-    "placeholders": { "km": { "type": "String" } }
-  },
   "dueCardActionPostpone": "[Postpone]",
   "dueCardActionMarkDone": "[Complete]",
 
-  "dueDaysShort": "{count, plural, one{{count} day} other{{count} days}}",
-  "@dueDaysShort": {
-    "placeholders": { "count": { "type": "int" } }
-  },
-  "dueMonthsShort": "{count, plural, one{{count} mo} other{{count} mo}}",
-  "@dueMonthsShort": {
-    "placeholders": { "count": { "type": "int" } }
-  },
-    "mileageHeaderNotSet": "Mileage not set",
+  "mileageHeaderNotSet": "Mileage not set",
   "mileageHeaderUpdatedToday": "Updated today",
   "mileageHeaderUpdatedYesterday": "Updated yesterday",
   "mileageHeaderUpdatedDaysAgo": "Updated {days} {days, plural, one{day} other{days}} ago",
@@ -228,8 +212,6 @@
     "placeholders": { "days": { "type": "int" } }
   },
   "mileageHeaderStaleSuffix": "update",
-  "mileageHeaderUnitKm": "km",
-  "mileageHeaderUpdateButton": "Update mileage",
   "nearestDueOverdue": "Overdue: {value}",
   "@nearestDueOverdue": {
     "placeholders": { "value": { "type": "String" } }
@@ -238,32 +220,19 @@
   "@nearestDueSoon": {
     "placeholders": { "value": { "type": "String" } }
   },
-  "nearestDueKm": "{km} km",
-  "@nearestDueKm": {
-    "placeholders": { "km": { "type": "String" } }
-  },
-  "nearestDueDays": "{count, plural, one{{count} day} other{{count} days}}",
-  "@nearestDueDays": {
-    "placeholders": { "count": { "type": "int" } }
-  },
-  "nearestDueMonths": "{count} mo",
-  "@nearestDueMonths": {
+  "dayShort": "{count, plural, one{{count} day} other{{count} days}}",
+  "@dayShort": {
     "placeholders": { "count": { "type": "int" } }
   },
   "navSchedule": "Work schedule",
   "navPlanning": "Planning",
   "navHistory": "Completed",
   "exitConfirmMessage": "Press again to exit",
-  "settingsTooltip": "Settings",
   "markDoneMultiTitle": "Complete {count, plural, one{{count} work} other{{count} works}}",
   "@markDoneMultiTitle": {
     "placeholders": { "count": { "type": "int" } }
   },
   "markDoneMultiWorksSection": "Works",
-  "markDoneMultiMileageLabel": "Completion mileage",
-  "markDoneMultiMileageUnit": "km",
-  "markDoneMultiMonthLabel": "Completion month",
-  "markDoneMultiNoteLabel": "Note",
   "markDoneMultiNoteHint": "For example, service on Lenin St.",
   "markDoneMultiSaveButton": "Complete {count}",
   "@markDoneMultiSaveButton": {
@@ -286,27 +255,12 @@
   "markDoneWorkLabel": "Work",
   "markDoneWorkHint": "For example, replaced a bulb",
   "markDoneMileageLabel": "Completion mileage",
-  "markDoneMileageUnit": "km",
   "markDoneMonthLabel": "Completion month",
   "markDoneCostLabel": "Cost",
   "markDoneCostHint": "Optional",
-  "markDoneCostUnit": "₽",
-  "markDoneNoteLabel": "Note",
   "markDoneNoteHint": "For example, synthetic oil",
 
   "mileageErrorTooSmall": "Mileage looks suspiciously small — check the value",
-
-  "markDoneJumpTitle": "Mileage jumped sharply",
-  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. Usually people don''t drive that much between updates. Check for an extra zero.",
-  "@markDoneJumpMessage": {
-    "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" },
-      "diff": { "type": "String" }
-    }
-  },
-  "markDoneJumpEdit": "Edit",
-  "markDoneJumpConfirm": "Yes, correct",
 
   "markDoneUpdateMileageTitle": "Update car mileage?",
   "markDoneUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nUpdate the current car mileage to {performed} km?",
@@ -324,8 +278,6 @@
   "onboardingCarNameHelper": "Optional",
 
   "onboardingMileageLabel": "Current mileage",
-  "onboardingMileageUnit": "km",
-  "onboardingMileageRequired": "Required field",
 
   "onboardingThemeTitle": "Theme",
   "onboardingThemeHint": "You can change it later in settings",
@@ -340,7 +292,6 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "themeDialogTitle": "Appearance theme",
-  "rulesTitle": "Planning",
   "rulesAddTooltip": "Add rule",
   "rulesEmptyTitle": "No plans yet",
   "rulesEmptyMessage": "Add a scheduled maintenance with an interval\nand it will appear in the work schedule",
@@ -350,13 +301,12 @@
     "placeholders": { "title": { "type": "String" } }
   },
   "rulesDeleteMessage": "The history of completed works will not change.",
-  "ruleCardIntervalNotSet": "interval not set",
-  "ruleCardIntervalKm": "{km} km",
-  "@ruleCardIntervalKm": {
+  "kmWithValue": "{km} km",
+  "@kmWithValue": {
     "placeholders": { "km": { "type": "String" } }
   },
-  "ruleCardIntervalMonths": "{months} mo",
-  "@ruleCardIntervalMonths": {
+  "monthsWithValue": "{months} mo",
+  "@monthsWithValue": {
     "placeholders": { "months": { "type": "int" } }
   },
   "ruleCardEveryOne": "Every {value}",
@@ -386,8 +336,6 @@
   "@ruleCardCost": {
     "placeholders": { "amount": { "type": "String" } }
   },
-  "ruleCardEditTooltip": "Edit",
-  "ruleCardDeleteTooltip": "Delete",
   "settingsTitle": "Settings",
 
   "settingsSectionCar": "Car",
@@ -414,19 +362,9 @@
 
   "settingsYellowKmTitle": "How many km before",
   "settingsYellowKmDialogTitle": "Warning threshold by km",
-  "settingsYellowKmUnit": "km",
-  "settingsYellowKmValue": "{km} km",
-  "@settingsYellowKmValue": {
-    "placeholders": { "km": { "type": "String" } }
-  },
 
   "settingsYellowMonthsTitle": "How many months before",
   "settingsYellowMonthsDialogTitle": "Warning threshold by time",
-  "settingsYellowMonthsUnit": "mo",
-  "settingsYellowMonthsValue": "{months} mo",
-  "@settingsYellowMonthsValue": {
-    "placeholders": { "months": { "type": "int" } }
-  },
 
   "settingsThemeTitle": "Theme",
 
@@ -466,15 +404,14 @@
     "placeholders": { "size": { "type": "String" } }
   },
 
-  "settingsHelpTitle": "Help",
   "settingsHelpSubtitle": "How to use the app",
 
   "settingsShareTitle": "Share the app",
   "settingsShareSubtitle": "Send a store link",
-  "settingsShareText": "Try the “{appName}” app — a car maintenance diary.\n\n{url}",
+  "settingsShareText": "Try the “{appTitle}” app — a car maintenance diary.\n\n{url}",
   "@settingsShareText": {
     "placeholders": {
-      "appName": { "type": "String" },
+      "appTitle": { "type": "String" },
       "url": { "type": "String" }
     }
   },

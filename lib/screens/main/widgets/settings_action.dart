@@ -15,7 +15,7 @@ class SettingsAction extends StatelessWidget {
 
     return IconButton(
       icon: const Icon(Icons.settings),
-      tooltip: l10n.settingsTooltip,
+      tooltip: l10n.settingsTitle,
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(

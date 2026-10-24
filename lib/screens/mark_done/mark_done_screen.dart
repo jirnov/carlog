@@ -162,7 +162,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   String? _validateMileage() {
     final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return l10n.validationRequired;
+    if (value == null) return l10n.requiredField;
     if (value <= 0) return l10n.mileageErrorPositive;
     if (value > 10000000) return l10n.mileageErrorTooLarge;
 
@@ -203,7 +203,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   void _onTitleChanged(String _) {
     setState(() {
       _titleError = _titleController.text.trim().isEmpty
-          ? context.l10n.validationRequired
+          ? context.l10n.requiredField
           : null;
     });
   }
@@ -239,7 +239,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.markDoneJumpTitle),
+        title: Text(l10n.mileageJumpTitle),
         content: Text(
           l10n.markDoneJumpMessage(
             current: formatThousands(currentMileage, locale),
@@ -250,11 +250,11 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.markDoneJumpEdit),
+            child: Text(l10n.mileageJumpEdit),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.markDoneJumpConfirm),
+            child: Text(l10n.mileageJumpConfirm),
           ),
         ],
       ),
@@ -271,7 +271,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.markDoneUpdateMileageTitle),
+        title: Text(l10n.actionUpdateMileage),
         content: Text(
           l10n.markDoneUpdateMileageMessage(
             current: formatThousands(currentMileage, locale),
@@ -406,7 +406,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 onChanged: _onMileageChanged,
                 decoration: InputDecoration(
                   labelText: l10n.markDoneMileageLabel,
-                  suffixText: l10n.markDoneMileageUnit,
+                  suffixText: l10n.unitKm,
                   errorText: _mileageError,
                 ),
               ),
@@ -435,7 +435,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 decoration: InputDecoration(
                   labelText: l10n.markDoneCostLabel,
                   hintText: l10n.markDoneCostHint,
-                  suffixText: l10n.markDoneCostUnit,
+                  suffixText: l10n.unitCurrency,
                 ),
               ),
               const SizedBox(height: 16),
@@ -446,7 +446,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 maxLines: 3,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  labelText: l10n.markDoneNoteLabel,
+                  labelText: l10n.noteLabel,
                   hintText: l10n.markDoneNoteHint,
                 ),
               ),

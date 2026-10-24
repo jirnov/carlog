@@ -87,7 +87,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateCustom => 'Custom';
 
   @override
-  String get templateIntervalNotSet => 'interval not set';
+  String get intervalNotSet => 'interval not set';
 
   @override
   String templateIntervalEveryKm({required String km}) {
@@ -106,14 +106,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get confirmCancelTitle => 'Cancel maintenance?';
-
-  @override
-  String confirmCancelMessage({required String ruleTitle}) {
-    return 'Work “$ruleTitle” will be marked as cancelled. It will appear in history with a cancellation icon and will not be counted as completed. The next maintenance will be shifted to the current mileage.';
-  }
-
-  @override
   String get actionCancel => 'Cancel';
 
   @override
@@ -121,6 +113,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionDelete => 'Delete';
+
+  @override
+  String get actionEdit => 'Edit';
 
   @override
   String get confirmExitTitle => 'Exit without saving?';
@@ -159,13 +154,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionPostpone => 'Postpone';
 
   @override
-  String get updateMileageTitle => 'Update mileage';
+  String get actionUpdateMileage => 'Update mileage';
 
   @override
   String get updateMileageFieldLabel => 'New mileage';
 
   @override
-  String get updateMileageUnitKm => 'km';
+  String get unitKm => 'km';
 
   @override
   String updateMileagePrevious({required String km}) {
@@ -176,7 +171,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateMileageDateToday => 'Date: today';
 
   @override
-  String get mileageErrorRequired => 'Required field';
+  String get requiredField => 'Required field';
 
   @override
   String get mileageErrorPositive => 'Mileage must be greater than zero';
@@ -198,6 +193,14 @@ class AppLocalizationsEn extends AppLocalizations {
       required String current,
       required String diff}) {
     return 'Previous mileage: $previous km.\nNew: $current km.\n\nDifference: $diff km at once. Usually people don\'t drive that much between updates. Check for an extra zero.';
+  }
+
+  @override
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
+      required String diff}) {
+    return 'Current car mileage: $current km.\nYou marked maintenance at $performed km.\n\nDifference: $diff km. Usually people don\'t drive that much between updates. Check for an extra zero.';
   }
 
   @override
@@ -227,9 +230,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'At what mileage to do the next maintenance';
 
   @override
-  String get editRuleNextKmUnit => 'km';
-
-  @override
   String editRuleNextKmWarning({required String km}) {
     return 'Less than current mileage ($km km). The maintenance may already be done.';
   }
@@ -241,13 +241,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editRuleIntervalKmLabel => 'By km';
 
   @override
-  String get editRuleIntervalKmUnit => 'km';
-
-  @override
   String get editRuleIntervalMonthsLabel => 'By months';
 
   @override
-  String get editRuleIntervalMonthsUnit => 'mo';
+  String get unitMonths => 'mo';
 
   @override
   String get editRuleIntervalError => 'Fill in at least one interval';
@@ -260,10 +257,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'For statistics and expense planning (optional)';
 
   @override
-  String get editRuleCostUnit => '₽';
+  String get unitCurrency => '₽';
 
   @override
-  String get editRuleNoteLabel => 'Note';
+  String get noteLabel => 'Note';
 
   @override
   String get editRuleNoteHint => 'For example, synthetic oil';
@@ -278,9 +275,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editRuleResetDate => 'Reset';
 
   @override
-  String get validationRequired => 'Required field';
-
-  @override
   String get helpTitle => 'Help';
 
   @override
@@ -290,9 +284,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String helpMailSubject({required String version}) {
     return 'Suggestions for the Maintenance Log (version $version)';
   }
-
-  @override
-  String get historyTitle => 'Completed';
 
   @override
   String get historyAddTooltip => 'Add event';
@@ -305,9 +296,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Completed works will appear here\nBut you can add them manually';
 
   @override
-  String get historyHowItWorks => 'How does it work?';
-
-  @override
   String historyDeleteTitle({required String title}) {
     return 'Delete work “$title”?';
   }
@@ -316,26 +304,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get historyDeleteMessage => 'The record will be deleted from history.';
 
   @override
-  String historyCardMileage({required String km}) {
-    return '$km km';
-  }
-
-  @override
   String historyCardCost({required String amount}) {
     return '$amount ₽';
   }
 
   @override
-  String get historyCardEditTooltip => 'Edit';
-
-  @override
-  String get historyCardDeleteTooltip => 'Delete';
-
-  @override
   String get homeCarNameFallback => 'My car';
-
-  @override
-  String get homeSelectionCancel => 'Cancel';
 
   @override
   String homeSelectionCount({required int count}) {
@@ -358,7 +332,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add scheduled maintenance on the “Schedule” tab';
 
   @override
-  String get homeHowItWorks => 'How does it work?';
+  String get howItWorks => 'How does it work?';
 
   @override
   String homeDoneSelectedSnack(
@@ -404,37 +378,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String dueCardKmLeft({required String km}) {
-    return '$km km';
-  }
-
-  @override
   String get dueCardActionPostpone => '[Postpone]';
 
   @override
   String get dueCardActionMarkDone => '[Complete]';
-
-  @override
-  String dueDaysShort({required int count}) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count days',
-      one: '$count day',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String dueMonthsShort({required int count}) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count mo',
-      one: '$count mo',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get mileageHeaderNotSet => 'Mileage not set';
@@ -460,12 +407,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mileageHeaderStaleSuffix => 'update';
 
   @override
-  String get mileageHeaderUnitKm => 'km';
-
-  @override
-  String get mileageHeaderUpdateButton => 'Update mileage';
-
-  @override
   String nearestDueOverdue({required String value}) {
     return 'Overdue: $value';
   }
@@ -476,12 +417,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String nearestDueKm({required String km}) {
-    return '$km km';
-  }
-
-  @override
-  String nearestDueDays({required int count}) {
+  String dayShort({required int count}) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
@@ -489,11 +425,6 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '$count day',
     );
     return '$_temp0';
-  }
-
-  @override
-  String nearestDueMonths({required int count}) {
-    return '$count mo';
   }
 
   @override
@@ -507,9 +438,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exitConfirmMessage => 'Press again to exit';
-
-  @override
-  String get settingsTooltip => 'Settings';
 
   @override
   String markDoneMultiTitle({required int count}) {
@@ -526,18 +454,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get markDoneMultiWorksSection => 'Works';
 
   @override
-  String get markDoneMultiMileageLabel => 'Completion mileage';
-
-  @override
-  String get markDoneMultiMileageUnit => 'km';
-
-  @override
-  String get markDoneMultiMonthLabel => 'Completion month';
-
-  @override
-  String get markDoneMultiNoteLabel => 'Note';
-
-  @override
   String get markDoneMultiNoteHint => 'For example, service on Lenin St.';
 
   @override
@@ -546,10 +462,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get markDoneMultiUpdateMileageTitle => 'Update car mileage?';
-
-  @override
-  String markDoneMultiUpdateMileageMessage(
+  String markDoneUpdateMileageMessage(
       {required String current, required String performed}) {
     return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
   }
@@ -579,9 +492,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get markDoneMileageLabel => 'Completion mileage';
 
   @override
-  String get markDoneMileageUnit => 'km';
-
-  @override
   String get markDoneMonthLabel => 'Completion month';
 
   @override
@@ -591,43 +501,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get markDoneCostHint => 'Optional';
 
   @override
-  String get markDoneCostUnit => '₽';
-
-  @override
-  String get markDoneNoteLabel => 'Note';
-
-  @override
   String get markDoneNoteHint => 'For example, synthetic oil';
 
   @override
   String get mileageErrorTooSmall =>
       'Mileage looks suspiciously small — check the value';
-
-  @override
-  String get markDoneJumpTitle => 'Mileage jumped sharply';
-
-  @override
-  String markDoneJumpMessage(
-      {required String current,
-      required String performed,
-      required String diff}) {
-    return 'Current car mileage: $current km.\nYou marked maintenance at $performed km.\n\nDifference: $diff km. Usually people don\'t drive that much between updates. Check for an extra zero.';
-  }
-
-  @override
-  String get markDoneJumpEdit => 'Edit';
-
-  @override
-  String get markDoneJumpConfirm => 'Yes, correct';
-
-  @override
-  String get markDoneUpdateMileageTitle => 'Update car mileage?';
-
-  @override
-  String markDoneUpdateMileageMessage(
-      {required String current, required String performed}) {
-    return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
-  }
 
   @override
   String get onboardingWelcomeTitle => 'Welcome';
@@ -647,12 +525,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingMileageLabel => 'Current mileage';
-
-  @override
-  String get onboardingMileageUnit => 'km';
-
-  @override
-  String get onboardingMileageRequired => 'Required field';
 
   @override
   String get onboardingThemeTitle => 'Theme';
@@ -681,9 +553,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeDialogTitle => 'Appearance theme';
 
   @override
-  String get rulesTitle => 'Planning';
-
-  @override
   String get rulesAddTooltip => 'Add rule';
 
   @override
@@ -706,15 +575,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'The history of completed works will not change.';
 
   @override
-  String get ruleCardIntervalNotSet => 'interval not set';
-
-  @override
-  String ruleCardIntervalKm({required String km}) {
+  String kmWithValue({required String km}) {
     return '$km km';
   }
 
   @override
-  String ruleCardIntervalMonths({required int months}) {
+  String monthsWithValue({required int months}) {
     return '$months mo';
   }
 
@@ -745,12 +611,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String ruleCardCost({required String amount}) {
     return '~$amount ₽';
   }
-
-  @override
-  String get ruleCardEditTooltip => 'Edit';
-
-  @override
-  String get ruleCardDeleteTooltip => 'Delete';
 
   @override
   String get settingsTitle => 'Settings';
@@ -818,26 +678,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsYellowKmDialogTitle => 'Warning threshold by km';
 
   @override
-  String get settingsYellowKmUnit => 'km';
-
-  @override
-  String settingsYellowKmValue({required String km}) {
-    return '$km km';
-  }
-
-  @override
   String get settingsYellowMonthsTitle => 'How many months before';
 
   @override
   String get settingsYellowMonthsDialogTitle => 'Warning threshold by time';
-
-  @override
-  String get settingsYellowMonthsUnit => 'mo';
-
-  @override
-  String settingsYellowMonthsValue({required int months}) {
-    return '$months mo';
-  }
 
   @override
   String get settingsThemeTitle => 'Theme';
@@ -921,9 +765,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsHelpTitle => 'Help';
-
-  @override
   String get settingsHelpSubtitle => 'How to use the app';
 
   @override
@@ -933,8 +774,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsShareSubtitle => 'Send a store link';
 
   @override
-  String settingsShareText({required String appName, required String url}) {
-    return 'Try the “$appName” app — a car maintenance diary.\n\n$url';
+  String settingsShareText({required String appTitle, required String url}) {
+    return 'Try the “$appTitle” app — a car maintenance diary.\n\n$url';
   }
 
   @override

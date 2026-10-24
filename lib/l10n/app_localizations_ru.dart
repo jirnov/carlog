@@ -760,4 +760,200 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get ruleCardDeleteTooltip => 'Удалить';
+
+  @override
+  String get settingsTitle => 'Настройки';
+
+  @override
+  String get settingsSectionCar => 'Автомобиль';
+
+  @override
+  String get settingsSectionReminders => 'Напоминания о пробеге';
+
+  @override
+  String get settingsSectionThresholds => 'Пороги предупреждения';
+
+  @override
+  String get settingsSectionAppearance => 'Внешний вид';
+
+  @override
+  String get settingsSectionData => 'Данные';
+
+  @override
+  String get settingsSectionSupport => 'Помощь и поддержка';
+
+  @override
+  String get settingsSectionAbout => 'О приложении';
+
+  @override
+  String get settingsCarNameTitle => 'Название';
+
+  @override
+  String get settingsCarNameNotSet => 'Не задано';
+
+  @override
+  String get settingsCarNameDialogTitle => 'Название машины';
+
+  @override
+  String get settingsCarNameHint => 'Например, Моя ласточка';
+
+  @override
+  String get settingsRemindEnabled => 'Напоминать об обновлении пробега';
+
+  @override
+  String get settingsRemindDaysTitle => 'Как часто';
+
+  @override
+  String get settingsRemindDaysDialogTitle => 'Напоминать каждые';
+
+  @override
+  String get settingsRemindDaysUnit => 'дней';
+
+  @override
+  String settingsRemindDaysValue({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'дня',
+      many: 'дней',
+      few: 'дня',
+      one: 'день',
+    );
+    return '$days $_temp0';
+  }
+
+  @override
+  String get settingsYellowKmTitle => 'За сколько км';
+
+  @override
+  String get settingsYellowKmDialogTitle => 'Порог предупреждения по км';
+
+  @override
+  String get settingsYellowKmUnit => 'км';
+
+  @override
+  String settingsYellowKmValue({required String km}) {
+    return '$km км';
+  }
+
+  @override
+  String get settingsYellowMonthsTitle => 'За сколько месяцев';
+
+  @override
+  String get settingsYellowMonthsDialogTitle => 'Порог предупреждения по сроку';
+
+  @override
+  String get settingsYellowMonthsUnit => 'мес';
+
+  @override
+  String settingsYellowMonthsValue({required int months}) {
+    return '$months мес';
+  }
+
+  @override
+  String get settingsThemeTitle => 'Тема';
+
+  @override
+  String get settingsExportTitle => 'Экспорт данных';
+
+  @override
+  String get settingsExportSubtitle => 'Сохранить всё в JSON-файл';
+
+  @override
+  String get settingsExportSubject => 'Журнал ТО — резервная копия';
+
+  @override
+  String get settingsExportFailed => 'Не удалось сохранить файл';
+
+  @override
+  String settingsExportSaved({required String path}) {
+    return 'Файл сохранён: $path';
+  }
+
+  @override
+  String get settingsImportTitle => 'Импорт данных';
+
+  @override
+  String get settingsImportSubtitle => 'Загрузить из JSON-файла';
+
+  @override
+  String get settingsImportConfirmTitle => 'Импортировать данные?';
+
+  @override
+  String get settingsImportConfirmMessage =>
+      'Все текущие данные будут заменены содержимым файла.';
+
+  @override
+  String get settingsImportConfirmAction => 'Импортировать';
+
+  @override
+  String get settingsImportWrongExtension =>
+      'Выберите файл с расширением .json';
+
+  @override
+  String get settingsImportFailed => 'Не удалось импортировать файл';
+
+  @override
+  String get settingsImportSuccess => 'Данные импортированы';
+
+  @override
+  String get settingsRestoreTitle => 'Восстановить из архива';
+
+  @override
+  String get settingsRestoreSubtitle => 'Автоматические резервные копии';
+
+  @override
+  String get settingsRestoreConfirmTitle => 'Восстановить из архива?';
+
+  @override
+  String get settingsRestoreConfirmMessage =>
+      'Все текущие данные будут заменены содержимым архива.';
+
+  @override
+  String get settingsRestoreConfirmAction => 'Восстановить';
+
+  @override
+  String get settingsRestoreFailed => 'Не удалось восстановить архив';
+
+  @override
+  String get settingsRestoreSuccess => 'Данные восстановлены из архива';
+
+  @override
+  String get settingsRestoreEmpty => 'Архивных копий пока нет';
+
+  @override
+  String settingsBackupSizeBytes({required int size}) {
+    return '$size Б';
+  }
+
+  @override
+  String settingsBackupSizeKb({required String size}) {
+    return '$size КБ';
+  }
+
+  @override
+  String get settingsHelpTitle => 'Помощь';
+
+  @override
+  String get settingsHelpSubtitle => 'Как пользоваться приложением';
+
+  @override
+  String get settingsShareTitle => 'Поделиться приложением';
+
+  @override
+  String get settingsShareSubtitle => 'Отправить ссылку на магазин';
+
+  @override
+  String settingsShareText({required String appName, required String url}) {
+    return 'Попробуй приложение «$appName» — дневник обслуживания автомобиля.\n\n$url';
+  }
+
+  @override
+  String get settingsCoffeeTitle => 'Угостить автора бокалом кофе';
+
+  @override
+  String get settingsCoffeeSubtitle => 'Поддержать разработку';
+
+  @override
+  String get settingsVersionTitle => 'Версия';
 }

@@ -387,5 +387,100 @@
     "placeholders": { "amount": { "type": "String" } }
   },
   "ruleCardEditTooltip": "Edit",
-  "ruleCardDeleteTooltip": "Delete"
+  "ruleCardDeleteTooltip": "Delete",
+  "settingsTitle": "Settings",
+
+  "settingsSectionCar": "Car",
+  "settingsSectionReminders": "Mileage reminders",
+  "settingsSectionThresholds": "Warning thresholds",
+  "settingsSectionAppearance": "Appearance",
+  "settingsSectionData": "Data",
+  "settingsSectionSupport": "Help and support",
+  "settingsSectionAbout": "About",
+
+  "settingsCarNameTitle": "Name",
+  "settingsCarNameNotSet": "Not set",
+  "settingsCarNameDialogTitle": "Car name",
+  "settingsCarNameHint": "For example, My swallow",
+
+  "settingsRemindEnabled": "Remind to update mileage",
+  "settingsRemindDaysTitle": "How often",
+  "settingsRemindDaysDialogTitle": "Remind every",
+  "settingsRemindDaysUnit": "days",
+  "settingsRemindDaysValue": "{days} {days, plural, one{day} other{days}}",
+  "@settingsRemindDaysValue": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+
+  "settingsYellowKmTitle": "How many km before",
+  "settingsYellowKmDialogTitle": "Warning threshold by km",
+  "settingsYellowKmUnit": "km",
+  "settingsYellowKmValue": "{km} km",
+  "@settingsYellowKmValue": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+
+  "settingsYellowMonthsTitle": "How many months before",
+  "settingsYellowMonthsDialogTitle": "Warning threshold by time",
+  "settingsYellowMonthsUnit": "mo",
+  "settingsYellowMonthsValue": "{months} mo",
+  "@settingsYellowMonthsValue": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+
+  "settingsThemeTitle": "Theme",
+
+  "settingsExportTitle": "Export data",
+  "settingsExportSubtitle": "Save everything to a JSON file",
+  "settingsExportSubject": "Maintenance Log — backup",
+  "settingsExportFailed": "Failed to save file",
+  "settingsExportSaved": "File saved: {path}",
+  "@settingsExportSaved": {
+    "placeholders": { "path": { "type": "String" } }
+  },
+
+  "settingsImportTitle": "Import data",
+  "settingsImportSubtitle": "Load from a JSON file",
+  "settingsImportConfirmTitle": "Import data?",
+  "settingsImportConfirmMessage": "All current data will be replaced with the file contents.",
+  "settingsImportConfirmAction": "Import",
+  "settingsImportWrongExtension": "Choose a file with the .json extension",
+  "settingsImportFailed": "Failed to import file",
+  "settingsImportSuccess": "Data imported",
+
+  "settingsRestoreTitle": "Restore from backup",
+  "settingsRestoreSubtitle": "Automatic backups",
+  "settingsRestoreConfirmTitle": "Restore from backup?",
+  "settingsRestoreConfirmMessage": "All current data will be replaced with the backup contents.",
+  "settingsRestoreConfirmAction": "Restore",
+  "settingsRestoreFailed": "Failed to restore backup",
+  "settingsRestoreSuccess": "Data restored from backup",
+  "settingsRestoreEmpty": "No backups yet",
+
+  "settingsBackupSizeBytes": "{size} B",
+  "@settingsBackupSizeBytes": {
+    "placeholders": { "size": { "type": "int" } }
+  },
+  "settingsBackupSizeKb": "{size} KB",
+  "@settingsBackupSizeKb": {
+    "placeholders": { "size": { "type": "String" } }
+  },
+
+  "settingsHelpTitle": "Help",
+  "settingsHelpSubtitle": "How to use the app",
+
+  "settingsShareTitle": "Share the app",
+  "settingsShareSubtitle": "Send a store link",
+  "settingsShareText": "Try the “{appName}” app — a car maintenance diary.\n\n{url}",
+  "@settingsShareText": {
+    "placeholders": {
+      "appName": { "type": "String" },
+      "url": { "type": "String" }
+    }
+  },
+
+  "settingsCoffeeTitle": "Buy the author a coffee",
+  "settingsCoffeeSubtitle": "Support development",
+
+  "settingsVersionTitle": "Version"
 }

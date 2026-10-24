@@ -1308,6 +1308,348 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Удалить'**
   String get ruleCardDeleteTooltip;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Настройки'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSectionCar.
+  ///
+  /// In ru, this message translates to:
+  /// **'Автомобиль'**
+  String get settingsSectionCar;
+
+  /// No description provided for @settingsSectionReminders.
+  ///
+  /// In ru, this message translates to:
+  /// **'Напоминания о пробеге'**
+  String get settingsSectionReminders;
+
+  /// No description provided for @settingsSectionThresholds.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пороги предупреждения'**
+  String get settingsSectionThresholds;
+
+  /// No description provided for @settingsSectionAppearance.
+  ///
+  /// In ru, this message translates to:
+  /// **'Внешний вид'**
+  String get settingsSectionAppearance;
+
+  /// No description provided for @settingsSectionData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные'**
+  String get settingsSectionData;
+
+  /// No description provided for @settingsSectionSupport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Помощь и поддержка'**
+  String get settingsSectionSupport;
+
+  /// No description provided for @settingsSectionAbout.
+  ///
+  /// In ru, this message translates to:
+  /// **'О приложении'**
+  String get settingsSectionAbout;
+
+  /// No description provided for @settingsCarNameTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Название'**
+  String get settingsCarNameTitle;
+
+  /// No description provided for @settingsCarNameNotSet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не задано'**
+  String get settingsCarNameNotSet;
+
+  /// No description provided for @settingsCarNameDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Название машины'**
+  String get settingsCarNameDialogTitle;
+
+  /// No description provided for @settingsCarNameHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, Моя ласточка'**
+  String get settingsCarNameHint;
+
+  /// No description provided for @settingsRemindEnabled.
+  ///
+  /// In ru, this message translates to:
+  /// **'Напоминать об обновлении пробега'**
+  String get settingsRemindEnabled;
+
+  /// No description provided for @settingsRemindDaysTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как часто'**
+  String get settingsRemindDaysTitle;
+
+  /// No description provided for @settingsRemindDaysDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Напоминать каждые'**
+  String get settingsRemindDaysDialogTitle;
+
+  /// No description provided for @settingsRemindDaysUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'дней'**
+  String get settingsRemindDaysUnit;
+
+  /// No description provided for @settingsRemindDaysValue.
+  ///
+  /// In ru, this message translates to:
+  /// **'{days} {days, plural, one{день} few{дня} many{дней} other{дня}}'**
+  String settingsRemindDaysValue({required int days});
+
+  /// No description provided for @settingsYellowKmTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'За сколько км'**
+  String get settingsYellowKmTitle;
+
+  /// No description provided for @settingsYellowKmDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Порог предупреждения по км'**
+  String get settingsYellowKmDialogTitle;
+
+  /// No description provided for @settingsYellowKmUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get settingsYellowKmUnit;
+
+  /// No description provided for @settingsYellowKmValue.
+  ///
+  /// In ru, this message translates to:
+  /// **'{km} км'**
+  String settingsYellowKmValue({required String km});
+
+  /// No description provided for @settingsYellowMonthsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'За сколько месяцев'**
+  String get settingsYellowMonthsTitle;
+
+  /// No description provided for @settingsYellowMonthsDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Порог предупреждения по сроку'**
+  String get settingsYellowMonthsDialogTitle;
+
+  /// No description provided for @settingsYellowMonthsUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'мес'**
+  String get settingsYellowMonthsUnit;
+
+  /// No description provided for @settingsYellowMonthsValue.
+  ///
+  /// In ru, this message translates to:
+  /// **'{months} мес'**
+  String settingsYellowMonthsValue({required int months});
+
+  /// No description provided for @settingsThemeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тема'**
+  String get settingsThemeTitle;
+
+  /// No description provided for @settingsExportTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Экспорт данных'**
+  String get settingsExportTitle;
+
+  /// No description provided for @settingsExportSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить всё в JSON-файл'**
+  String get settingsExportSubtitle;
+
+  /// No description provided for @settingsExportSubject.
+  ///
+  /// In ru, this message translates to:
+  /// **'Журнал ТО — резервная копия'**
+  String get settingsExportSubject;
+
+  /// No description provided for @settingsExportFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось сохранить файл'**
+  String get settingsExportFailed;
+
+  /// No description provided for @settingsExportSaved.
+  ///
+  /// In ru, this message translates to:
+  /// **'Файл сохранён: {path}'**
+  String settingsExportSaved({required String path});
+
+  /// No description provided for @settingsImportTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Импорт данных'**
+  String get settingsImportTitle;
+
+  /// No description provided for @settingsImportSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Загрузить из JSON-файла'**
+  String get settingsImportSubtitle;
+
+  /// No description provided for @settingsImportConfirmTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Импортировать данные?'**
+  String get settingsImportConfirmTitle;
+
+  /// No description provided for @settingsImportConfirmMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все текущие данные будут заменены содержимым файла.'**
+  String get settingsImportConfirmMessage;
+
+  /// No description provided for @settingsImportConfirmAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Импортировать'**
+  String get settingsImportConfirmAction;
+
+  /// No description provided for @settingsImportWrongExtension.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите файл с расширением .json'**
+  String get settingsImportWrongExtension;
+
+  /// No description provided for @settingsImportFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось импортировать файл'**
+  String get settingsImportFailed;
+
+  /// No description provided for @settingsImportSuccess.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные импортированы'**
+  String get settingsImportSuccess;
+
+  /// No description provided for @settingsRestoreTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстановить из архива'**
+  String get settingsRestoreTitle;
+
+  /// No description provided for @settingsRestoreSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Автоматические резервные копии'**
+  String get settingsRestoreSubtitle;
+
+  /// No description provided for @settingsRestoreConfirmTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстановить из архива?'**
+  String get settingsRestoreConfirmTitle;
+
+  /// No description provided for @settingsRestoreConfirmMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все текущие данные будут заменены содержимым архива.'**
+  String get settingsRestoreConfirmMessage;
+
+  /// No description provided for @settingsRestoreConfirmAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстановить'**
+  String get settingsRestoreConfirmAction;
+
+  /// No description provided for @settingsRestoreFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось восстановить архив'**
+  String get settingsRestoreFailed;
+
+  /// No description provided for @settingsRestoreSuccess.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные восстановлены из архива'**
+  String get settingsRestoreSuccess;
+
+  /// No description provided for @settingsRestoreEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Архивных копий пока нет'**
+  String get settingsRestoreEmpty;
+
+  /// No description provided for @settingsBackupSizeBytes.
+  ///
+  /// In ru, this message translates to:
+  /// **'{size} Б'**
+  String settingsBackupSizeBytes({required int size});
+
+  /// No description provided for @settingsBackupSizeKb.
+  ///
+  /// In ru, this message translates to:
+  /// **'{size} КБ'**
+  String settingsBackupSizeKb({required String size});
+
+  /// No description provided for @settingsHelpTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Помощь'**
+  String get settingsHelpTitle;
+
+  /// No description provided for @settingsHelpSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как пользоваться приложением'**
+  String get settingsHelpSubtitle;
+
+  /// No description provided for @settingsShareTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поделиться приложением'**
+  String get settingsShareTitle;
+
+  /// No description provided for @settingsShareSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить ссылку на магазин'**
+  String get settingsShareSubtitle;
+
+  /// No description provided for @settingsShareText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Попробуй приложение «{appName}» — дневник обслуживания автомобиля.\n\n{url}'**
+  String settingsShareText({required String appName, required String url});
+
+  /// No description provided for @settingsCoffeeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Угостить автора бокалом кофе'**
+  String get settingsCoffeeTitle;
+
+  /// No description provided for @settingsCoffeeSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поддержать разработку'**
+  String get settingsCoffeeSubtitle;
+
+  /// No description provided for @settingsVersionTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Версия'**
+  String get settingsVersionTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -751,4 +751,198 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ruleCardDeleteTooltip => 'Delete';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsSectionCar => 'Car';
+
+  @override
+  String get settingsSectionReminders => 'Mileage reminders';
+
+  @override
+  String get settingsSectionThresholds => 'Warning thresholds';
+
+  @override
+  String get settingsSectionAppearance => 'Appearance';
+
+  @override
+  String get settingsSectionData => 'Data';
+
+  @override
+  String get settingsSectionSupport => 'Help and support';
+
+  @override
+  String get settingsSectionAbout => 'About';
+
+  @override
+  String get settingsCarNameTitle => 'Name';
+
+  @override
+  String get settingsCarNameNotSet => 'Not set';
+
+  @override
+  String get settingsCarNameDialogTitle => 'Car name';
+
+  @override
+  String get settingsCarNameHint => 'For example, My swallow';
+
+  @override
+  String get settingsRemindEnabled => 'Remind to update mileage';
+
+  @override
+  String get settingsRemindDaysTitle => 'How often';
+
+  @override
+  String get settingsRemindDaysDialogTitle => 'Remind every';
+
+  @override
+  String get settingsRemindDaysUnit => 'days';
+
+  @override
+  String settingsRemindDaysValue({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return '$days $_temp0';
+  }
+
+  @override
+  String get settingsYellowKmTitle => 'How many km before';
+
+  @override
+  String get settingsYellowKmDialogTitle => 'Warning threshold by km';
+
+  @override
+  String get settingsYellowKmUnit => 'km';
+
+  @override
+  String settingsYellowKmValue({required String km}) {
+    return '$km km';
+  }
+
+  @override
+  String get settingsYellowMonthsTitle => 'How many months before';
+
+  @override
+  String get settingsYellowMonthsDialogTitle => 'Warning threshold by time';
+
+  @override
+  String get settingsYellowMonthsUnit => 'mo';
+
+  @override
+  String settingsYellowMonthsValue({required int months}) {
+    return '$months mo';
+  }
+
+  @override
+  String get settingsThemeTitle => 'Theme';
+
+  @override
+  String get settingsExportTitle => 'Export data';
+
+  @override
+  String get settingsExportSubtitle => 'Save everything to a JSON file';
+
+  @override
+  String get settingsExportSubject => 'Maintenance Log — backup';
+
+  @override
+  String get settingsExportFailed => 'Failed to save file';
+
+  @override
+  String settingsExportSaved({required String path}) {
+    return 'File saved: $path';
+  }
+
+  @override
+  String get settingsImportTitle => 'Import data';
+
+  @override
+  String get settingsImportSubtitle => 'Load from a JSON file';
+
+  @override
+  String get settingsImportConfirmTitle => 'Import data?';
+
+  @override
+  String get settingsImportConfirmMessage =>
+      'All current data will be replaced with the file contents.';
+
+  @override
+  String get settingsImportConfirmAction => 'Import';
+
+  @override
+  String get settingsImportWrongExtension =>
+      'Choose a file with the .json extension';
+
+  @override
+  String get settingsImportFailed => 'Failed to import file';
+
+  @override
+  String get settingsImportSuccess => 'Data imported';
+
+  @override
+  String get settingsRestoreTitle => 'Restore from backup';
+
+  @override
+  String get settingsRestoreSubtitle => 'Automatic backups';
+
+  @override
+  String get settingsRestoreConfirmTitle => 'Restore from backup?';
+
+  @override
+  String get settingsRestoreConfirmMessage =>
+      'All current data will be replaced with the backup contents.';
+
+  @override
+  String get settingsRestoreConfirmAction => 'Restore';
+
+  @override
+  String get settingsRestoreFailed => 'Failed to restore backup';
+
+  @override
+  String get settingsRestoreSuccess => 'Data restored from backup';
+
+  @override
+  String get settingsRestoreEmpty => 'No backups yet';
+
+  @override
+  String settingsBackupSizeBytes({required int size}) {
+    return '$size B';
+  }
+
+  @override
+  String settingsBackupSizeKb({required String size}) {
+    return '$size KB';
+  }
+
+  @override
+  String get settingsHelpTitle => 'Help';
+
+  @override
+  String get settingsHelpSubtitle => 'How to use the app';
+
+  @override
+  String get settingsShareTitle => 'Share the app';
+
+  @override
+  String get settingsShareSubtitle => 'Send a store link';
+
+  @override
+  String settingsShareText({required String appName, required String url}) {
+    return 'Try the “$appName” app — a car maintenance diary.\n\n$url';
+  }
+
+  @override
+  String get settingsCoffeeTitle => 'Buy the author a coffee';
+
+  @override
+  String get settingsCoffeeSubtitle => 'Support development';
+
+  @override
+  String get settingsVersionTitle => 'Version';
 }

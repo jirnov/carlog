@@ -386,5 +386,100 @@
     "placeholders": { "amount": { "type": "String" } }
   },
   "ruleCardEditTooltip": "Редактировать",
-  "ruleCardDeleteTooltip": "Удалить"
+  "ruleCardDeleteTooltip": "Удалить",
+  "settingsTitle": "Настройки",
+
+  "settingsSectionCar": "Автомобиль",
+  "settingsSectionReminders": "Напоминания о пробеге",
+  "settingsSectionThresholds": "Пороги предупреждения",
+  "settingsSectionAppearance": "Внешний вид",
+  "settingsSectionData": "Данные",
+  "settingsSectionSupport": "Помощь и поддержка",
+  "settingsSectionAbout": "О приложении",
+
+  "settingsCarNameTitle": "Название",
+  "settingsCarNameNotSet": "Не задано",
+  "settingsCarNameDialogTitle": "Название машины",
+  "settingsCarNameHint": "Например, Моя ласточка",
+
+  "settingsRemindEnabled": "Напоминать об обновлении пробега",
+  "settingsRemindDaysTitle": "Как часто",
+  "settingsRemindDaysDialogTitle": "Напоминать каждые",
+  "settingsRemindDaysUnit": "дней",
+  "settingsRemindDaysValue": "{days} {days, plural, one{день} few{дня} many{дней} other{дня}}",
+  "@settingsRemindDaysValue": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+
+  "settingsYellowKmTitle": "За сколько км",
+  "settingsYellowKmDialogTitle": "Порог предупреждения по км",
+  "settingsYellowKmUnit": "км",
+  "settingsYellowKmValue": "{km} км",
+  "@settingsYellowKmValue": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+
+  "settingsYellowMonthsTitle": "За сколько месяцев",
+  "settingsYellowMonthsDialogTitle": "Порог предупреждения по сроку",
+  "settingsYellowMonthsUnit": "мес",
+  "settingsYellowMonthsValue": "{months} мес",
+  "@settingsYellowMonthsValue": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+
+  "settingsThemeTitle": "Тема",
+
+  "settingsExportTitle": "Экспорт данных",
+  "settingsExportSubtitle": "Сохранить всё в JSON-файл",
+  "settingsExportSubject": "Журнал ТО — резервная копия",
+  "settingsExportFailed": "Не удалось сохранить файл",
+  "settingsExportSaved": "Файл сохранён: {path}",
+  "@settingsExportSaved": {
+    "placeholders": { "path": { "type": "String" } }
+  },
+
+  "settingsImportTitle": "Импорт данных",
+  "settingsImportSubtitle": "Загрузить из JSON-файла",
+  "settingsImportConfirmTitle": "Импортировать данные?",
+  "settingsImportConfirmMessage": "Все текущие данные будут заменены содержимым файла.",
+  "settingsImportConfirmAction": "Импортировать",
+  "settingsImportWrongExtension": "Выберите файл с расширением .json",
+  "settingsImportFailed": "Не удалось импортировать файл",
+  "settingsImportSuccess": "Данные импортированы",
+
+  "settingsRestoreTitle": "Восстановить из архива",
+  "settingsRestoreSubtitle": "Автоматические резервные копии",
+  "settingsRestoreConfirmTitle": "Восстановить из архива?",
+  "settingsRestoreConfirmMessage": "Все текущие данные будут заменены содержимым архива.",
+  "settingsRestoreConfirmAction": "Восстановить",
+  "settingsRestoreFailed": "Не удалось восстановить архив",
+  "settingsRestoreSuccess": "Данные восстановлены из архива",
+  "settingsRestoreEmpty": "Архивных копий пока нет",
+
+  "settingsBackupSizeBytes": "{size} Б",
+  "@settingsBackupSizeBytes": {
+    "placeholders": { "size": { "type": "int" } }
+  },
+  "settingsBackupSizeKb": "{size} КБ",
+  "@settingsBackupSizeKb": {
+    "placeholders": { "size": { "type": "String" } }
+  },
+
+  "settingsHelpTitle": "Помощь",
+  "settingsHelpSubtitle": "Как пользоваться приложением",
+
+  "settingsShareTitle": "Поделиться приложением",
+  "settingsShareSubtitle": "Отправить ссылку на магазин",
+  "settingsShareText": "Попробуй приложение «{appName}» — дневник обслуживания автомобиля.\n\n{url}",
+  "@settingsShareText": {
+    "placeholders": {
+      "appName": { "type": "String" },
+      "url": { "type": "String" }
+    }
+  },
+
+  "settingsCoffeeTitle": "Угостить автора бокалом кофе",
+  "settingsCoffeeSubtitle": "Поддержать разработку",
+
+  "settingsVersionTitle": "Версия"
 }

@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:carlog/data/models/theme_mode_preference.dart';
 import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/due_list_provider.dart';
 import 'package:carlog/providers/export_import_provider.dart';
 import 'package:carlog/providers/history_provider.dart';
@@ -53,9 +54,6 @@ enum AppStore {
   }
 }
 
-/// Ссылки приложения.
-const String kAppName = 'Журнал ТО';
-
 /// Текущий магазин определяется flavor-сборкой (`--flavor googleplay` / `--flavor rustore`).
 /// Значение `appFlavor` задаётся Flutter на этапе компиляции.
 final String _kFlavor = appFlavor ?? '';
@@ -85,30 +83,32 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Настройки')),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 24),
         children: [
-          const _SectionHeader('Автомобиль'),
+          _SectionHeader(l10n.settingsSectionCar),
           const _CarNameTile(),
-          const _SectionHeader('Напоминания о пробеге'),
+          _SectionHeader(l10n.settingsSectionReminders),
           const _RemindEnabledTile(),
           const _RemindDaysTile(),
-          const _SectionHeader('Пороги предупреждения'),
+          _SectionHeader(l10n.settingsSectionThresholds),
           const _YellowKmTile(),
           const _YellowMonthsTile(),
-          const _SectionHeader('Внешний вид'),
+          _SectionHeader(l10n.settingsSectionAppearance),
           const _ThemeModeTile(),
-          const _SectionHeader('Данные'),
+          _SectionHeader(l10n.settingsSectionData),
           const _ExportTile(),
           const _ImportTile(),
           const _RestoreBackupTile(),
-          const _SectionHeader('Помощь и поддержка'),
+          _SectionHeader(l10n.settingsSectionSupport),
           const _HelpTile(),
           if (kStoreUrl != null) _ShareTile(storeUrl: kStoreUrl!),
           const _CoffeeTile(),
-          const _SectionHeader('О приложении'),
+          _SectionHeader(l10n.settingsSectionAbout),
           const _VersionTile(),
         ],
       ),
@@ -143,27 +143,28 @@ class _CarNameTile extends StatelessWidget {
   const _CarNameTile();
 
   Future<void> _edit(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<SettingsProvider>();
     final controller = TextEditingController(text: provider.carName);
 
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Название машины'),
+        title: Text(l10n.settingsCarNameDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
           textCapitalization: TextCapitalization.sentences,
-          decoration: const InputDecoration(hintText: 'Например, Моя ласточка'),
+          decoration: InputDecoration(hintText: l10n.settingsCarNameHint),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Отмена'),
+            child: Text(l10n.actionCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(controller.text.trim()),
-            child: const Text('Сохранить'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -176,11 +177,14 @@ class _CarNameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final carName = context.select<SettingsProvider, String>((p) => p.carName);
 
     return ListTile(
-      title: const Text('Название'),
-      subtitle: Text(carName.isEmpty ? 'Не задано' : carName),
+      title: Text(l10n.settingsCarNameTitle),
+      subtitle: Text(
+        carName.isEmpty ? l10n.settingsCarNameNotSet : carName,
+      ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
@@ -194,12 +198,13 @@ class _RemindEnabledTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final enabled = context.select<SettingsProvider, bool>(
       (p) => p.remindEnabled,
     );
 
     return SwitchListTile(
-      title: const Text('Напоминать об обновлении пробега'),
+      title: Text(l10n.settingsRemindEnabled),
       value: enabled,
       onChanged: (value) =>
           context.read<SettingsProvider>().setRemindEnabled(value),
@@ -211,6 +216,7 @@ class _RemindDaysTile extends StatelessWidget {
   const _RemindDaysTile();
 
   Future<void> _edit(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<SettingsProvider>();
     if (!provider.remindEnabled) return;
 
@@ -221,25 +227,25 @@ class _RemindDaysTile extends StatelessWidget {
     final result = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Напоминать каждые'),
+        title: Text(l10n.settingsRemindDaysDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          decoration: const InputDecoration(suffixText: 'дней'),
+          decoration: InputDecoration(suffixText: l10n.settingsRemindDaysUnit),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Отмена'),
+            child: Text(l10n.actionCancel),
           ),
           FilledButton(
             onPressed: () {
               final value = int.tryParse(controller.text.trim());
               Navigator.of(context).pop(value);
             },
-            child: const Text('Сохранить'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -252,6 +258,7 @@ class _RemindDaysTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final enabled = context.select<SettingsProvider, bool>(
       (p) => p.remindEnabled,
     );
@@ -259,8 +266,8 @@ class _RemindDaysTile extends StatelessWidget {
 
     return ListTile(
       enabled: enabled,
-      title: const Text('Как часто'),
-      subtitle: Text('$days ${pluralWorks(days)}'),
+      title: Text(l10n.settingsRemindDaysTitle),
+      subtitle: Text(l10n.settingsRemindDaysValue(days: days)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
@@ -273,6 +280,7 @@ class _YellowKmTile extends StatelessWidget {
   const _YellowKmTile();
 
   Future<void> _edit(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<SettingsProvider>();
     final controller = TextEditingController(
       text: formatThousands(provider.yellowKm),
@@ -281,23 +289,23 @@ class _YellowKmTile extends StatelessWidget {
     final result = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Порог предупреждения по км'),
+        title: Text(l10n.settingsYellowKmDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: const [ThousandsSeparatorFormatter()],
-          decoration: const InputDecoration(suffixText: 'км'),
+          decoration: InputDecoration(suffixText: l10n.settingsYellowKmUnit),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Отмена'),
+            child: Text(l10n.actionCancel),
           ),
           FilledButton(
             onPressed: () =>
                 Navigator.of(context).pop(parseThousands(controller.text)),
-            child: const Text('Сохранить'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -310,10 +318,13 @@ class _YellowKmTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final km = context.select<SettingsProvider, int>((p) => p.yellowKm);
     return ListTile(
-      title: const Text('За сколько км'),
-      subtitle: Text('${formatThousands(km)} км'),
+      title: Text(l10n.settingsYellowKmTitle),
+      subtitle: Text(
+        l10n.settingsYellowKmValue(km: formatThousands(km)),
+      ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
@@ -324,6 +335,7 @@ class _YellowMonthsTile extends StatelessWidget {
   const _YellowMonthsTile();
 
   Future<void> _edit(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<SettingsProvider>();
     final controller = TextEditingController(
       text: provider.yellowMonths.toString(),
@@ -332,25 +344,27 @@ class _YellowMonthsTile extends StatelessWidget {
     final result = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Порог предупреждения по сроку'),
+        title: Text(l10n.settingsYellowMonthsDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          decoration: const InputDecoration(suffixText: 'мес'),
+          decoration: InputDecoration(
+            suffixText: l10n.settingsYellowMonthsUnit,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Отмена'),
+            child: Text(l10n.actionCancel),
           ),
           FilledButton(
             onPressed: () {
               final value = int.tryParse(controller.text.trim());
               Navigator.of(context).pop(value);
             },
-            child: const Text('Сохранить'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -363,10 +377,13 @@ class _YellowMonthsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final months = context.select<SettingsProvider, int>((p) => p.yellowMonths);
     return ListTile(
-      title: const Text('За сколько месяцев'),
-      subtitle: Text('$months ${pluralWorks(months)}'),
+      title: Text(l10n.settingsYellowMonthsTitle),
+      subtitle: Text(
+        l10n.settingsYellowMonthsValue(months: months),
+      ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),
     );
@@ -378,18 +395,20 @@ class _YellowMonthsTile extends StatelessWidget {
 class _ThemeModeTile extends StatelessWidget {
   const _ThemeModeTile();
 
-  String _label(ThemeModePreference pref) {
+  String _label(BuildContext context, ThemeModePreference pref) {
+    final l10n = context.l10n;
     switch (pref) {
       case ThemeModePreference.system:
-        return 'Как в системе';
+        return l10n.themeSystem;
       case ThemeModePreference.light:
-        return 'Светлая';
+        return l10n.themeLight;
       case ThemeModePreference.dark:
-        return 'Тёмная';
+        return l10n.themeDark;
     }
   }
 
   Future<void> _pick(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<SettingsProvider>();
     final current = provider.themeModePreference;
 
@@ -399,7 +418,7 @@ class _ThemeModeTile extends StatelessWidget {
         var selected = current;
         return StatefulBuilder(
           builder: (context, setState) => SimpleDialog(
-            title: const Text('Тема оформления'),
+            title: Text(l10n.themeDialogTitle),
             children: [
               RadioGroup<ThemeModePreference>(
                 groupValue: selected,
@@ -414,7 +433,7 @@ class _ThemeModeTile extends StatelessWidget {
                     for (final pref in ThemeModePreference.values)
                       RadioListTile<ThemeModePreference>(
                         value: pref,
-                        title: Text(_label(pref)),
+                        title: Text(_label(context, pref)),
                       ),
                   ],
                 ),
@@ -432,14 +451,15 @@ class _ThemeModeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final pref = context.select<SettingsProvider, ThemeModePreference>(
       (p) => p.themeModePreference,
     );
 
     return ListTile(
       leading: const Icon(Icons.brightness_6_outlined),
-      title: const Text('Тема'),
-      subtitle: Text(_label(pref)),
+      title: Text(l10n.settingsThemeTitle),
+      subtitle: Text(_label(context, pref)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _pick(context),
     );
@@ -452,13 +472,14 @@ class _ExportTile extends StatelessWidget {
   const _ExportTile();
 
   Future<void> _export(BuildContext context) async {
+    final l10n = context.l10n;
     final provider = context.read<ExportImportProvider>();
     final messenger = ScaffoldMessenger.of(context);
 
     final path = await provider.export();
     if (path == null) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Не удалось сохранить файл')),
+        SnackBar(content: Text(l10n.settingsExportFailed)),
       );
       return;
     }
@@ -466,23 +487,26 @@ class _ExportTile extends StatelessWidget {
     try {
       final params = ShareParams(
         files: [XFile(path)],
-        subject: 'Журнал ТО — резервная копия',
+        subject: l10n.settingsExportSubject,
       );
       await SharePlus.instance.share(params);
     } catch (_) {
-      messenger.showSnackBar(SnackBar(content: Text('Файл сохранён: $path')));
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.settingsExportSaved(path: path))),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
       leading: const Icon(Icons.file_upload_outlined),
-      title: const Text('Экспорт данных'),
-      subtitle: const Text('Сохранить всё в JSON-файл'),
+      title: Text(l10n.settingsExportTitle),
+      subtitle: Text(l10n.settingsExportSubtitle),
       onTap: () => _export(context),
     );
   }
@@ -492,12 +516,14 @@ class _ImportTile extends StatelessWidget {
   const _ImportTile();
 
   Future<void> _import(BuildContext context) async {
+    final l10n = context.l10n;
+
     final confirmed = await showConfirmDeleteDialog(
       context,
-      title: 'Импортировать данные?',
-      message: 'Все текущие данные будут заменены содержимым файла.',
-      confirmText: 'Импортировать',
-      cancelText: 'Отмена',
+      title: l10n.settingsImportConfirmTitle,
+      message: l10n.settingsImportConfirmMessage,
+      confirmText: l10n.settingsImportConfirmAction,
+      cancelText: l10n.actionCancel,
     );
     if (!confirmed) return;
     if (!context.mounted) return;
@@ -514,7 +540,7 @@ class _ImportTile extends StatelessWidget {
 
     if (!path.toLowerCase().endsWith('.json')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Выберите файл с расширением .json')),
+        SnackBar(content: Text(l10n.settingsImportWrongExtension)),
       );
       return;
     }
@@ -525,7 +551,7 @@ class _ImportTile extends StatelessWidget {
     final success = await provider.import(path);
     if (!success) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Не удалось импортировать файл')),
+        SnackBar(content: Text(l10n.settingsImportFailed)),
       );
       return;
     }
@@ -535,19 +561,20 @@ class _ImportTile extends StatelessWidget {
 
     if (!context.mounted) return;
     messenger.showSnackBar(
-      const SnackBar(content: Text('Данные импортированы')),
+      SnackBar(content: Text(l10n.settingsImportSuccess)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
       leading: const Icon(Icons.file_download_outlined),
-      title: const Text('Импорт данных'),
-      subtitle: const Text('Загрузить из JSON-файла'),
+      title: Text(l10n.settingsImportTitle),
+      subtitle: Text(l10n.settingsImportSubtitle),
       onTap: () => _import(context),
     );
   }
@@ -558,6 +585,7 @@ class _RestoreBackupTile extends StatelessWidget {
   const _RestoreBackupTile();
 
   Future<void> _open(BuildContext context) async {
+    final l10n = context.l10n;
     final backupService = context.read<BackupService>();
     final provider = context.read<ExportImportProvider>();
     final messenger = ScaffoldMessenger.of(context);
@@ -571,10 +599,10 @@ class _RestoreBackupTile extends StatelessWidget {
 
     final confirmed = await showConfirmDeleteDialog(
       context,
-      title: 'Восстановить из архива?',
-      message: 'Все текущие данные будут заменены содержимым архива.',
-      confirmText: 'Восстановить',
-      cancelText: 'Отмена',
+      title: l10n.settingsRestoreConfirmTitle,
+      message: l10n.settingsRestoreConfirmMessage,
+      confirmText: l10n.settingsRestoreConfirmAction,
+      cancelText: l10n.actionCancel,
     );
     if (!confirmed) return;
     if (!context.mounted) return;
@@ -582,7 +610,7 @@ class _RestoreBackupTile extends StatelessWidget {
     final success = await provider.import(path);
     if (!success) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Не удалось восстановить архив')),
+        SnackBar(content: Text(l10n.settingsRestoreFailed)),
       );
       return;
     }
@@ -592,19 +620,20 @@ class _RestoreBackupTile extends StatelessWidget {
 
     if (!context.mounted) return;
     messenger.showSnackBar(
-      const SnackBar(content: Text('Данные восстановлены из архива')),
+      SnackBar(content: Text(l10n.settingsRestoreSuccess)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final isBusy = context.select<ExportImportProvider, bool>((p) => p.isBusy);
 
     return ListTile(
       enabled: !isBusy,
       leading: const Icon(Icons.restore_outlined),
-      title: const Text('Восстановить из архива'),
-      subtitle: const Text('Автоматические резервные копии'),
+      title: Text(l10n.settingsRestoreTitle),
+      subtitle: Text(l10n.settingsRestoreSubtitle),
       onTap: () => _open(context),
     );
   }
@@ -631,8 +660,10 @@ class _BackupPickerDialogState extends State<_BackupPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return AlertDialog(
-      title: const Text('Восстановить из архива'),
+      title: Text(l10n.settingsRestoreTitle),
       content: SizedBox(
         width: double.maxFinite,
         child: FutureBuilder<List<File>>(
@@ -647,9 +678,9 @@ class _BackupPickerDialogState extends State<_BackupPickerDialog> {
 
             final files = snapshot.data ?? const <File>[];
             if (files.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Text('Архивных копий пока нет'),
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(l10n.settingsRestoreEmpty),
               );
             }
 
@@ -662,8 +693,10 @@ class _BackupPickerDialogState extends State<_BackupPickerDialog> {
                 final name = file.uri.pathSegments.last;
                 final size = file.lengthSync();
                 final sizeText = size < 1024
-                    ? '$size Б'
-                    : '${(size / 1024).toStringAsFixed(1)} КБ';
+                    ? l10n.settingsBackupSizeBytes(size: size)
+                    : l10n.settingsBackupSizeKb(
+                        size: (size / 1024).toStringAsFixed(1),
+                      );
 
                 return ListTile(
                   dense: true,
@@ -680,7 +713,7 @@ class _BackupPickerDialogState extends State<_BackupPickerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Отмена'),
+          child: Text(l10n.actionCancel),
         ),
       ],
     );
@@ -694,10 +727,12 @@ class _HelpTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ListTile(
       leading: const Icon(Icons.help_outline),
-      title: const Text('Помощь'),
-      subtitle: const Text('Как пользоваться приложением'),
+      title: Text(l10n.settingsHelpTitle),
+      subtitle: Text(l10n.settingsHelpSubtitle),
       onTap: () {
         Navigator.of(
           context,
@@ -711,23 +746,27 @@ class _ShareTile extends StatelessWidget {
   const _ShareTile({required this.storeUrl});
   final String storeUrl;
 
-  Future<void> _share() async {
+  Future<void> _share(BuildContext context) async {
+    final l10n = context.l10n;
     final params = ShareParams(
-      text: 'Попробуй приложение «$kAppName» — дневник обслуживания '
-          'автомобиля.\n\n'
-          '$storeUrl',
-      subject: kAppName,
+      text: l10n.settingsShareText(
+        appName: l10n.appTitle,
+        url: storeUrl,
+      ),
+      subject: l10n.appTitle,
     );
     await SharePlus.instance.share(params);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ListTile(
       leading: const Icon(Icons.share_outlined),
-      title: const Text('Поделиться приложением'),
-      subtitle: const Text('Отправить ссылку на магазин'),
-      onTap: _share,
+      title: Text(l10n.settingsShareTitle),
+      subtitle: Text(l10n.settingsShareSubtitle),
+      onTap: () => _share(context),
     );
   }
 }
@@ -746,6 +785,7 @@ class _CoffeeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final beerColor = isDark ? Colors.amber.shade400 : Colors.brown.shade600;
 
@@ -754,8 +794,8 @@ class _CoffeeTile extends StatelessWidget {
         flipX: true,
         child: Icon(Icons.sports_bar, color: beerColor),
       ),
-      title: const Text('Угостить автора бокалом кофе'),
-      subtitle: const Text('Поддержать разработку'),
+      title: Text(l10n.settingsCoffeeTitle),
+      subtitle: Text(l10n.settingsCoffeeSubtitle),
       onTap: _openCoffee,
     );
   }
@@ -789,9 +829,11 @@ class _VersionTileState extends State<_VersionTile> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ListTile(
       leading: const Icon(Icons.info_outline),
-      title: const Text('Версия'),
+      title: Text(l10n.settingsVersionTitle),
       subtitle: Text(_version ?? '…'),
     );
   }

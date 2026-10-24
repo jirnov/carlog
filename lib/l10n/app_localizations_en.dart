@@ -467,4 +467,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mileageHeaderUpdateButton => 'Update mileage';
+
+  @override
+  String nearestDueOverdue({required String value}) {
+    return 'Overdue: $value';
+  }
+
+  @override
+  String nearestDueSoon({required String value}) {
+    return 'Next maintenance in $value';
+  }
+
+  @override
+  String nearestDueKm({required String km}) {
+    return '$km km';
+  }
+
+  @override
+  String nearestDueDays({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '$count day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nearestDueMonths({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mo',
+      one: '$count mo',
+    );
+    return '$_temp0';
+  }
 }

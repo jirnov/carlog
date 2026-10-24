@@ -853,6 +853,36 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Обновить пробег'**
   String get mileageHeaderUpdateButton;
+
+  /// No description provided for @nearestDueOverdue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Просрочено: {value}'**
+  String nearestDueOverdue({required String value});
+
+  /// No description provided for @nearestDueSoon.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ближайшее ТО через {value}'**
+  String nearestDueSoon({required String value});
+
+  /// No description provided for @nearestDueKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'{km} км'**
+  String nearestDueKm({required String km});
+
+  /// No description provided for @nearestDueDays.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}'**
+  String nearestDueDays({required int count});
+
+  /// No description provided for @nearestDueMonths.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
+  String nearestDueMonths({required int count});
 }
 
 class _AppLocalizationsDelegate

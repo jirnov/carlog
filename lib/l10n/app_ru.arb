@@ -229,5 +229,25 @@
   },
   "mileageHeaderStaleSuffix": "обновить",
   "mileageHeaderUnitKm": "км",
-  "mileageHeaderUpdateButton": "Обновить пробег"
+  "mileageHeaderUpdateButton": "Обновить пробег",
+    "nearestDueOverdue": "Просрочено: {value}",
+  "@nearestDueOverdue": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "nearestDueSoon": "Ближайшее ТО через {value}",
+  "@nearestDueSoon": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "nearestDueKm": "{km} км",
+  "@nearestDueKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "nearestDueDays": "{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}",
+  "@nearestDueDays": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "nearestDueMonths": "{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}",
+  "@nearestDueMonths": {
+    "placeholders": { "count": { "type": "int" } }
+  }
 }

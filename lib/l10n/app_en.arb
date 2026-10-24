@@ -229,5 +229,25 @@
   },
   "mileageHeaderStaleSuffix": "update",
   "mileageHeaderUnitKm": "km",
-  "mileageHeaderUpdateButton": "Update mileage"
+  "mileageHeaderUpdateButton": "Update mileage",
+  "nearestDueOverdue": "Overdue: {value}",
+  "@nearestDueOverdue": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "nearestDueSoon": "Next maintenance in {value}",
+  "@nearestDueSoon": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "nearestDueKm": "{km} km",
+  "@nearestDueKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "nearestDueDays": "{count, plural, one{{count} day} other{{count} days}}",
+  "@nearestDueDays": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "nearestDueMonths": "{count, plural, one{{count} mo} other{{count} mo}}",
+  "@nearestDueMonths": {
+    "placeholders": { "count": { "type": "int" } }
+  }
 }

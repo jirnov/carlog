@@ -473,4 +473,45 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mileageHeaderUpdateButton => 'Обновить пробег';
+
+  @override
+  String nearestDueOverdue({required String value}) {
+    return 'Просрочено: $value';
+  }
+
+  @override
+  String nearestDueSoon({required String value}) {
+    return 'Ближайшее ТО через $value';
+  }
+
+  @override
+  String nearestDueKm({required String km}) {
+    return '$km км';
+  }
+
+  @override
+  String nearestDueDays({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count дня',
+      many: '$count дней',
+      few: '$count дня',
+      one: '$count день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nearestDueMonths({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count мес',
+      many: '$count мес',
+      few: '$count мес',
+      one: '$count мес',
+    );
+    return '$_temp0';
+  }
 }

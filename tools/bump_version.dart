@@ -57,6 +57,11 @@ Future<void> main() async {
   await _runGit(['tag', tagName], pubspecFile.parent.path);
 
   print('Готово. Создан тег: $tagName');
+
+  // 7. Пушим коммит и тег в origin
+  print('Пуш в origin...');
+  await _runGit(['push', 'origin', 'HEAD'], pubspecFile.parent.path);
+  await _runGit(['push', 'origin', tagName], pubspecFile.parent.path);
 }
 
 /// Ищет pubspec.yaml в текущей директории и выше по дереву.

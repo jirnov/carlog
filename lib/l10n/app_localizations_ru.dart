@@ -514,4 +514,16 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get navSchedule => 'График работ';
+
+  @override
+  String get navPlanning => 'Планирование';
+
+  @override
+  String get navHistory => 'Выполнено';
+
+  @override
+  String get exitConfirmMessage => 'Нажмите ещё раз для выхода';
 }

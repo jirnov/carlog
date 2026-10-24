@@ -504,4 +504,16 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get navSchedule => 'Work schedule';
+
+  @override
+  String get navPlanning => 'Planning';
+
+  @override
+  String get navHistory => 'Completed';
+
+  @override
+  String get exitConfirmMessage => 'Press again to exit';
 }

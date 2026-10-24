@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/screens/history/history_screen.dart';
 import 'package:carlog/screens/home/home_screen.dart';
 import 'package:carlog/screens/rules/rules_screen.dart';
@@ -28,6 +29,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final screens = [
       HomeScreen(key: _homeKey),
       const RulesScreen(),
@@ -51,21 +54,21 @@ class _MainScreenState extends State<MainScreen> {
             if (i == _currentIndex) return;
             setState(() => _currentIndex = i);
           },
-          destinations: const [
+          destinations: [
             NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
-              label: 'График работ',
+              icon: const Icon(Icons.home_outlined),
+              selectedIcon: const Icon(Icons.home),
+              label: l10n.navSchedule,
             ),
             NavigationDestination(
-              icon: Icon(Icons.build_outlined),
-              selectedIcon: Icon(Icons.build),
-              label: 'Планирование',
+              icon: const Icon(Icons.build_outlined),
+              selectedIcon: const Icon(Icons.build),
+              label: l10n.navPlanning,
             ),
             NavigationDestination(
-              icon: Icon(Icons.history_outlined),
-              selectedIcon: Icon(Icons.history),
-              label: 'Выполнено',
+              icon: const Icon(Icons.history_outlined),
+              selectedIcon: const Icon(Icons.history),
+              label: l10n.navHistory,
             ),
           ],
         ),
@@ -88,11 +91,12 @@ class _MainScreenState extends State<MainScreen> {
         now.difference(_lastBackPress!) > _exitWindow) {
       _lastBackPress = now;
 
+      final l10n = context.l10n;
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
-          const SnackBar(
-            content: Text('Нажмите ещё раз для выхода'),
+          SnackBar(
+            content: Text(l10n.exitConfirmMessage),
             duration: _exitWindow,
             behavior: SnackBarBehavior.floating,
           ),

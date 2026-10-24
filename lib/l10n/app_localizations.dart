@@ -883,6 +883,30 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
   String nearestDueMonths({required int count});
+
+  /// No description provided for @navSchedule.
+  ///
+  /// In ru, this message translates to:
+  /// **'График работ'**
+  String get navSchedule;
+
+  /// No description provided for @navPlanning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Планирование'**
+  String get navPlanning;
+
+  /// No description provided for @navHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнено'**
+  String get navHistory;
+
+  /// No description provided for @exitConfirmMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нажмите ещё раз для выхода'**
+  String get exitConfirmMessage;
 }
 
 class _AppLocalizationsDelegate

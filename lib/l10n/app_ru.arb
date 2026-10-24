@@ -249,5 +249,9 @@
   "nearestDueMonths": "{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}",
   "@nearestDueMonths": {
     "placeholders": { "count": { "type": "int" } }
-  }
+  },
+  "navSchedule": "График работ",
+  "navPlanning": "Планирование",
+  "navHistory": "Выполнено",
+  "exitConfirmMessage": "Нажмите ещё раз для выхода"
 }

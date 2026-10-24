@@ -482,5 +482,20 @@
 
   "settingsVersionTitle": "Версия",
   "splashLoadError": "Не удалось загрузить данные",
-  "splashRetry": "Повторить"
+  "splashRetry": "Повторить",
+  "notificationChannelName": "Напоминание о пробеге",
+  "notificationChannelDescription": "Приложение просит обновить пробег машины",
+  "notificationMileageTitle": "Пора обновить пробег",
+  "notificationMileageTitleWithCar": "{carName}: пора обновить пробег",
+  "@notificationMileageTitleWithCar": {
+    "placeholders": { "carName": { "type": "String" } }
+  },
+  "notificationMileageBodyStale": "Данные о пробеге устарели",
+  "notificationMileageBodyOneDay": "Данные устарели 1 день назад",
+  "notificationMileageBodyDays": "Данные устарели {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
+  "@notificationMileageBodyDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "notificationActionUpdate": "Обновить",
+  "notificationActionLater": "Позже"
 }

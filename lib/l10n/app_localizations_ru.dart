@@ -962,4 +962,44 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get splashRetry => 'Повторить';
+
+  @override
+  String get notificationChannelName => 'Напоминание о пробеге';
+
+  @override
+  String get notificationChannelDescription =>
+      'Приложение просит обновить пробег машины';
+
+  @override
+  String get notificationMileageTitle => 'Пора обновить пробег';
+
+  @override
+  String notificationMileageTitleWithCar({required String carName}) {
+    return '$carName: пора обновить пробег';
+  }
+
+  @override
+  String get notificationMileageBodyStale => 'Данные о пробеге устарели';
+
+  @override
+  String get notificationMileageBodyOneDay => 'Данные устарели 1 день назад';
+
+  @override
+  String notificationMileageBodyDays({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'дня',
+      many: 'дней',
+      few: 'дня',
+      one: 'день',
+    );
+    return 'Данные устарели $days $_temp0 назад';
+  }
+
+  @override
+  String get notificationActionUpdate => 'Обновить';
+
+  @override
+  String get notificationActionLater => 'Позже';
 }

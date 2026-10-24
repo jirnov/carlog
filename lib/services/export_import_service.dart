@@ -45,22 +45,22 @@ class ExportImportService {
     try {
       decoded = jsonDecode(content);
     } catch (e) {
-      throw Exception('Файл повреждён или не является JSON');
+      throw Exception('File is corrupted or is not JSON');
     }
 
     if (decoded is! Map<String, dynamic>) {
-      throw Exception('Неверный формат файла');
+      throw Exception('Invalid file format');
     }
 
     if (decoded['app'] != _appMarker) {
-      throw Exception('Файл от другого приложения');
+      throw Exception('File is from another app');
     }
 
     final version = decoded['schema_version'];
     if (version is! int || version != _schemaVersion) {
       throw Exception(
-        'Версия файла ($version) несовместима с текущей '
-        '($_schemaVersion). Импорт возможен только для этой версии.',
+        'File version ($version) is incompatible with the current '
+        '($_schemaVersion). Import is only possible for this version.',
       );
     }
 

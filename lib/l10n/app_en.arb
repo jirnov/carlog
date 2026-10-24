@@ -484,5 +484,23 @@
 
   "settingsVersionTitle": "Version",
   "splashLoadError": "Failed to load data",
-  "splashRetry": "Retry"
+  "splashRetry": "Retry",
+  "notificationChannelName": "Mileage reminder",
+  "notificationChannelDescription": "The app asks you to update your car mileage",
+
+  "notificationMileageTitle": "Time to update mileage",
+  "notificationMileageTitleWithCar": "{carName}: time to update mileage",
+  "@notificationMileageTitleWithCar": {
+    "placeholders": { "carName": { "type": "String" } }
+  },
+
+  "notificationMileageBodyStale": "Mileage data is out of date",
+  "notificationMileageBodyOneDay": "Data is 1 day out of date",
+  "notificationMileageBodyDays": "Data is {days} {days, plural, one{day} other{days}} out of date",
+  "@notificationMileageBodyDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+
+  "notificationActionUpdate": "Update",
+  "notificationActionLater": "Later"
 }

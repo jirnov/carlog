@@ -1662,6 +1662,60 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Повторить'**
   String get splashRetry;
+
+  /// No description provided for @notificationChannelName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Напоминание о пробеге'**
+  String get notificationChannelName;
+
+  /// No description provided for @notificationChannelDescription.
+  ///
+  /// In ru, this message translates to:
+  /// **'Приложение просит обновить пробег машины'**
+  String get notificationChannelDescription;
+
+  /// No description provided for @notificationMileageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пора обновить пробег'**
+  String get notificationMileageTitle;
+
+  /// No description provided for @notificationMileageTitleWithCar.
+  ///
+  /// In ru, this message translates to:
+  /// **'{carName}: пора обновить пробег'**
+  String notificationMileageTitleWithCar({required String carName});
+
+  /// No description provided for @notificationMileageBodyStale.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные о пробеге устарели'**
+  String get notificationMileageBodyStale;
+
+  /// No description provided for @notificationMileageBodyOneDay.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные устарели 1 день назад'**
+  String get notificationMileageBodyOneDay;
+
+  /// No description provided for @notificationMileageBodyDays.
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные устарели {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад'**
+  String notificationMileageBodyDays({required int days});
+
+  /// No description provided for @notificationActionUpdate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить'**
+  String get notificationActionUpdate;
+
+  /// No description provided for @notificationActionLater.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позже'**
+  String get notificationActionLater;
 }
 
 class _AppLocalizationsDelegate

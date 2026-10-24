@@ -1,9 +1,13 @@
 // lib/services/reminder_service.dart
 
+import 'package:flutter/widgets.dart';
+
+import 'package:carlog/l10n/app_localizations.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/services/notification_service.dart';
+import 'package:carlog/services/notification_texts.dart';
 import 'package:carlog/utils/formatting.dart';
 
 /// Во сколько показывать уведомление по расписанию.
@@ -47,6 +51,11 @@ class ReminderService {
     return today.difference(updated).inDays;
   }
 
+  /// Локаль для текстов уведомления.
+  /// Берём системную; если хотите следовать языку приложения —
+  /// сохраняйте выбранную локаль в настройках и читайте здесь.
+  Locale get _locale => WidgetsBinding.instance.platformDispatcher.locale;
+
   /// Запланировать следующую проверку на завтра в 10:00.
   /// Вызывается после каждой успешной проверки.
   Future<void> scheduleNextCheck() async {
@@ -64,10 +73,17 @@ class ReminderService {
     );
 
     final days = _daysSinceUpdate ?? 0;
-    await _notifications.scheduleMileageReminder(
-      when: when,
+
+    final l10n = await AppLocalizations.delegate.load(_locale);
+    final texts = NotificationTexts.fromL10n(
+      l10n,
       carName: _settings.carName,
       daysSinceUpdate: days,
+    );
+
+    await _notifications.scheduleMileageReminder(
+      when: when,
+      texts: texts,
     );
   }
 

@@ -2,6 +2,7 @@
 
 import 'dart:io' show Platform;
 
+import 'package:carlog/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -31,7 +32,13 @@ Future<void> main() async {
 
   final notifications = NotificationService();
   if (Platform.isAndroid || Platform.isIOS) {
-    await notifications.init();
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final l10n = await AppLocalizations.delegate.load(locale);
+
+    await notifications.init(
+      channelName: l10n.notificationChannelName,
+      channelDescription: l10n.notificationChannelDescription,
+    );
     await notifications.requestPermissions();
   }
 

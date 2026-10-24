@@ -7,11 +7,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'package:carlog/services/notification_texts.dart';
+
 const int _mileageReminderId = 1001;
 
 const String _channelId = 'mileage_reminder';
-const String _channelName = 'Напоминание о пробеге';
-const String _channelDescription = 'Приложение просит обновить пробег машины';
 
 const String _actionUpdate = 'update';
 const String _actionLater = 'later';
@@ -19,7 +19,6 @@ const String _actionLater = 'later';
 const String _payloadMileageReminder = 'mileage_reminder';
 
 /// Имя drawable-ресурса для маленькой иконки уведомления.
-/// Файл должен лежать в android/app/src/main/res/drawable/.
 const String _notificationIcon = '@drawable/ic_notification';
 
 enum NotificationAction {
@@ -37,28 +36,33 @@ class NotificationService {
 
   bool _initialized = false;
 
-  /// Запрос на открытие диалога обновления пробега.
-  /// Инкрементится, когда пользователь нажал «Обновить» в уведомлении.
-  /// HomeScreen слушает это значение и при изменении открывает диалог.
+  /// Имя и описание канала, заданные при [init].
+  /// Нужны, чтобы `_notificationDetails` мог построить AndroidNotificationDetails
+  /// без повторной передачи строк.
+  String _channelName = '';
+  String _channelDescription = '';
+
   final ValueNotifier<int> openMileageRequests = ValueNotifier<int>(0);
 
-  /// Флаг «есть непрочитанный запрос обновления пробега».
-  /// Нужен для холодного старта: приложение могло быть запущено именно
-  /// нажатием на «Обновить», и тогда `_handleAction` срабатывает до того,
-  /// как HomeScreen успел подписаться на `openMileageRequests`.
-  /// HomeScreen при `initState` проверяет флаг и, если он true,
-  /// открывает диалог и сбрасывает флаг.
   bool pendingOpenMileage = false;
 
   void Function(NotificationAction)? onAction;
 
-  /// Поддерживает ли текущая платформа уведомления.
   static bool get _isSupported => Platform.isAndroid || Platform.isIOS;
 
-  Future<void> init() async {
+  /// Инициализация. [channelName]/[channelDescription] нужны только на Android
+  /// и только при первом создании канала. В фоновом изоляте канал уже создан
+  /// основным приложением, поэтому там можно передать пустые строки.
+  Future<void> init({
+    required String channelName,
+    required String channelDescription,
+  }) async {
     if (_initialized) return;
     if (!_isSupported) return;
     _initialized = true;
+
+    _channelName = channelName;
+    _channelDescription = channelDescription;
 
     tz.initializeTimeZones();
 
@@ -80,8 +84,8 @@ class NotificationService {
       onDidReceiveBackgroundNotificationResponse: _onBackgroundResponse,
     );
 
-    if (Platform.isAndroid) {
-      await _createChannel();
+    if (Platform.isAndroid && channelName.isNotEmpty) {
+      await _createChannel(channelName, channelDescription);
     }
 
     final launchDetails = await _plugin.getNotificationAppLaunchDetails();
@@ -93,10 +97,12 @@ class NotificationService {
     }
   }
 
+  /// Инициализация в фоновом изоляте.
+  /// Канал уже создан основным приложением, поэтому строки не нужны.
   static Future<NotificationService> initForBackground() async {
     final service = NotificationService();
     service._initialized = false;
-    await service.init();
+    await service.init(channelName: '', channelDescription: '');
     return service;
   }
 
@@ -127,48 +133,36 @@ class NotificationService {
   }
 
   Future<void> showMileageReminder({
-    required String carName,
-    required int daysSinceUpdate,
+    required NotificationTexts texts,
     int id = _mileageReminderId,
   }) async {
     if (!_isSupported || !_initialized) return;
 
-    final title = carName.isEmpty
-        ? 'Пора обновить пробег'
-        : '$carName: пора обновить пробег';
-    final body = _bodyText(daysSinceUpdate);
-
     await _plugin.show(
       id,
-      title,
-      body,
-      _notificationDetails(),
+      texts.title,
+      texts.body,
+      _notificationDetails(texts),
       payload: _payloadMileageReminder,
     );
   }
 
   Future<void> scheduleMileageReminder({
+    required NotificationTexts texts,
     required DateTime when,
-    required String carName,
-    required int daysSinceUpdate,
     int id = _mileageReminderId,
   }) async {
     if (!_isSupported || !_initialized) return;
     if (when.isBefore(DateTime.now())) return;
 
-    final title = carName.isEmpty
-        ? 'Пора обновить пробег'
-        : '$carName: пора обновить пробег';
-    final body = _bodyText(daysSinceUpdate);
-
     final scheduled = tz.TZDateTime.from(when, tz.local);
 
     await _plugin.zonedSchedule(
       id,
-      title,
-      body,
+      texts.title,
+      texts.body,
       scheduled,
-      _notificationDetails(),
+      _notificationDetails(texts),
       payload: _payloadMileageReminder,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
@@ -189,14 +183,8 @@ class NotificationService {
     await _plugin.cancel(_mileageReminderId);
   }
 
-  String _bodyText(int days) {
-    if (days <= 0) return 'Данные о пробеге устарели';
-    if (days == 1) return 'Данные устарели 1 день назад';
-    return 'Данные устарели $days дней назад';
-  }
-
-  NotificationDetails _notificationDetails() {
-    return const NotificationDetails(
+  NotificationDetails _notificationDetails(NotificationTexts texts) {
+    return NotificationDetails(
       android: AndroidNotificationDetails(
         _channelId,
         _channelName,
@@ -208,22 +196,25 @@ class NotificationService {
         actions: [
           AndroidNotificationAction(
             _actionUpdate,
-            'Обновить',
+            texts.actionUpdate,
             showsUserInterface: true,
           ),
           AndroidNotificationAction(
             _actionLater,
-            'Позже',
+            texts.actionLater,
             showsUserInterface: false,
             cancelNotification: true,
           ),
         ],
       ),
-      iOS: DarwinNotificationDetails(),
+      iOS: const DarwinNotificationDetails(),
     );
   }
 
-  Future<void> _createChannel() async {
+  Future<void> _createChannel(
+    String name,
+    String description,
+  ) async {
     if (!_isSupported) return;
 
     final android = _plugin.resolvePlatformSpecificImplementation<
@@ -231,10 +222,10 @@ class NotificationService {
     if (android == null) return;
 
     await android.createNotificationChannel(
-      const AndroidNotificationChannel(
+      AndroidNotificationChannel(
         _channelId,
-        _channelName,
-        description: _channelDescription,
+        name,
+        description: description,
         importance: Importance.high,
       ),
     );
@@ -251,9 +242,6 @@ class NotificationService {
     if (payload != _payloadMileageReminder) return;
 
     if (actionId == _actionUpdate) {
-      // Сигнал для UI — открыть диалог обновления пробега.
-      // Если приложение было запущено именно этим нажатием (холодный старт),
-      // HomeScreen ещё не подписан на notifier — тогда выставим флаг.
       pendingOpenMileage = true;
       openMileageRequests.value++;
       onAction?.call(NotificationAction.openMileage);

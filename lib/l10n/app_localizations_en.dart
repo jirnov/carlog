@@ -951,4 +951,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get splashRetry => 'Retry';
+
+  @override
+  String get notificationChannelName => 'Mileage reminder';
+
+  @override
+  String get notificationChannelDescription =>
+      'The app asks you to update your car mileage';
+
+  @override
+  String get notificationMileageTitle => 'Time to update mileage';
+
+  @override
+  String notificationMileageTitleWithCar({required String carName}) {
+    return '$carName: time to update mileage';
+  }
+
+  @override
+  String get notificationMileageBodyStale => 'Mileage data is out of date';
+
+  @override
+  String get notificationMileageBodyOneDay => 'Data is 1 day out of date';
+
+  @override
+  String notificationMileageBodyDays({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return 'Data is $days $_temp0 out of date';
+  }
+
+  @override
+  String get notificationActionUpdate => 'Update';
+
+  @override
+  String get notificationActionLater => 'Later';
 }

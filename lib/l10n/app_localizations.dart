@@ -986,6 +986,130 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Да'**
   String get actionYes;
+
+  /// No description provided for @markDoneTitleEdit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить событие'**
+  String get markDoneTitleEdit;
+
+  /// No description provided for @markDoneTitleRule.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнить работу'**
+  String get markDoneTitleRule;
+
+  /// No description provided for @markDoneTitleAdd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить событие'**
+  String get markDoneTitleAdd;
+
+  /// No description provided for @markDoneWorkLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Работа'**
+  String get markDoneWorkLabel;
+
+  /// No description provided for @markDoneWorkHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, поменял лампочку'**
+  String get markDoneWorkHint;
+
+  /// No description provided for @markDoneMileageLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег выполнения'**
+  String get markDoneMileageLabel;
+
+  /// No description provided for @markDoneMileageUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get markDoneMileageUnit;
+
+  /// No description provided for @markDoneMonthLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Месяц выполнения'**
+  String get markDoneMonthLabel;
+
+  /// No description provided for @markDoneCostLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость'**
+  String get markDoneCostLabel;
+
+  /// No description provided for @markDoneCostHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Необязательно'**
+  String get markDoneCostHint;
+
+  /// No description provided for @markDoneCostUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'₽'**
+  String get markDoneCostUnit;
+
+  /// No description provided for @markDoneNoteLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заметка'**
+  String get markDoneNoteLabel;
+
+  /// No description provided for @markDoneNoteHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, синтетическое масло'**
+  String get markDoneNoteHint;
+
+  /// No description provided for @mileageErrorTooSmall.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег подозрительно мал — проверьте значение'**
+  String get mileageErrorTooSmall;
+
+  /// No description provided for @markDoneJumpTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег резко вырос'**
+  String get markDoneJumpTitle;
+
+  /// No description provided for @markDoneJumpMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.'**
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
+      required String diff});
+
+  /// No description provided for @markDoneJumpEdit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить'**
+  String get markDoneJumpEdit;
+
+  /// No description provided for @markDoneJumpConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Да, верно'**
+  String get markDoneJumpConfirm;
+
+  /// No description provided for @markDoneUpdateMileageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить пробег машины?'**
+  String get markDoneUpdateMileageTitle;
+
+  /// No description provided for @markDoneUpdateMileageMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
+  String markDoneUpdateMileageMessage(
+      {required String current, required String performed});
 }
 
 class _AppLocalizationsDelegate

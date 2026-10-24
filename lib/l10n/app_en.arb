@@ -278,5 +278,42 @@
     }
   },
   "actionNo": "No",
-  "actionYes": "Yes"
+  "actionYes": "Yes",
+  "markDoneTitleEdit": "Edit event",
+  "markDoneTitleRule": "Complete work",
+  "markDoneTitleAdd": "Add event",
+
+  "markDoneWorkLabel": "Work",
+  "markDoneWorkHint": "For example, replaced a bulb",
+  "markDoneMileageLabel": "Completion mileage",
+  "markDoneMileageUnit": "km",
+  "markDoneMonthLabel": "Completion month",
+  "markDoneCostLabel": "Cost",
+  "markDoneCostHint": "Optional",
+  "markDoneCostUnit": "₽",
+  "markDoneNoteLabel": "Note",
+  "markDoneNoteHint": "For example, synthetic oil",
+
+  "mileageErrorTooSmall": "Mileage looks suspiciously small — check the value",
+
+  "markDoneJumpTitle": "Mileage jumped sharply",
+  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. Usually people don''t drive that much between updates. Check for an extra zero.",
+  "@markDoneJumpMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" },
+      "diff": { "type": "String" }
+    }
+  },
+  "markDoneJumpEdit": "Edit",
+  "markDoneJumpConfirm": "Yes, correct",
+
+  "markDoneUpdateMileageTitle": "Update car mileage?",
+  "markDoneUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nUpdate the current car mileage to {performed} km?",
+  "@markDoneUpdateMileageMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" }
+    }
+  }
 }

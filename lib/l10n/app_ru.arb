@@ -278,5 +278,42 @@
     }
   },
   "actionNo": "Нет",
-  "actionYes": "Да"
+  "actionYes": "Да",
+  "markDoneTitleEdit": "Изменить событие",
+  "markDoneTitleRule": "Выполнить работу",
+  "markDoneTitleAdd": "Добавить событие",
+
+  "markDoneWorkLabel": "Работа",
+  "markDoneWorkHint": "Например, поменял лампочку",
+  "markDoneMileageLabel": "Пробег выполнения",
+  "markDoneMileageUnit": "км",
+  "markDoneMonthLabel": "Месяц выполнения",
+  "markDoneCostLabel": "Стоимость",
+  "markDoneCostHint": "Необязательно",
+  "markDoneCostUnit": "₽",
+  "markDoneNoteLabel": "Заметка",
+  "markDoneNoteHint": "Например, синтетическое масло",
+
+  "mileageErrorTooSmall": "Пробег подозрительно мал — проверьте значение",
+
+  "markDoneJumpTitle": "Пробег резко вырос",
+  "markDoneJumpMessage": "Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.",
+  "@markDoneJumpMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" },
+      "diff": { "type": "String" }
+    }
+  },
+  "markDoneJumpEdit": "Изменить",
+  "markDoneJumpConfirm": "Да, верно",
+
+  "markDoneUpdateMileageTitle": "Обновить пробег машины?",
+  "markDoneUpdateMileageMessage": "Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?",
+  "@markDoneUpdateMileageMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" }
+    }
+  }
 }

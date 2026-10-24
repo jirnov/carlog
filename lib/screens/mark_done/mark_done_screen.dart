@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/dialogs/confirm_exit_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
 
@@ -82,10 +83,11 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   bool get _isRuleFixed => widget.rule != null;
   bool get _strictMode => _isRuleFixed && !_isEditing;
 
-  String get _screenTitle {
-    if (_isEditing) return 'Изменить событие';
-    if (_isRuleFixed) return 'Выполнить работу';
-    return 'Добавить событие';
+  String _screenTitle(BuildContext context) {
+    final l10n = context.l10n;
+    if (_isEditing) return l10n.markDoneTitleEdit;
+    if (_isRuleFixed) return l10n.markDoneTitleRule;
+    return l10n.markDoneTitleAdd;
   }
 
   /// Привести дату к 15-му числу её месяца.
@@ -153,15 +155,16 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
   int? get _mileage => parseThousands(_mileageController.text);
 
   String? _validateMileage() {
+    final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return 'Обязательное поле';
-    if (value <= 0) return 'Пробег должен быть больше нуля';
-    if (value > 10000000) return 'Слишком большое значение';
+    if (value == null) return l10n.validationRequired;
+    if (value <= 0) return l10n.mileageErrorPositive;
+    if (value > 10000000) return l10n.mileageErrorTooLarge;
 
     if (!_strictMode) return null;
 
     if (value < 1000) {
-      return 'Пробег подозрительно мал — проверьте значение';
+      return l10n.mileageErrorTooSmall;
     }
 
     return null;
@@ -194,8 +197,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
 
   void _onTitleChanged(String _) {
     setState(() {
-      _titleError =
-          _titleController.text.trim().isEmpty ? 'Обязательное поле' : null;
+      _titleError = _titleController.text.trim().isEmpty
+          ? context.l10n.validationRequired
+          : null;
     });
   }
 
@@ -226,26 +230,26 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final diff = value - currentMileage;
     if (diff <= _suspiciousJumpKm) return true;
 
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Пробег резко вырос'),
+        title: Text(l10n.markDoneJumpTitle),
         content: Text(
-          'Текущий пробег машины: '
-          '${formatThousands(currentMileage)} км.\n'
-          'Вы отметили ТО на ${formatThousands(value)} км.\n\n'
-          'Разница: ${formatThousands(diff)} км. '
-          'Обычно столько не проезжают между обновлениями. '
-          'Проверьте, не лишний ли ноль.',
+          l10n.markDoneJumpMessage(
+            current: formatThousands(currentMileage),
+            performed: formatThousands(value),
+            diff: formatThousands(diff),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Изменить'),
+            child: Text(l10n.markDoneJumpEdit),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Да, верно'),
+            child: Text(l10n.markDoneJumpConfirm),
           ),
         ],
       ),
@@ -257,24 +261,25 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     int newMileage,
     int currentMileage,
   ) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Обновить пробег машины?'),
+        title: Text(l10n.markDoneUpdateMileageTitle),
         content: Text(
-          'Текущий пробег: ${formatThousands(currentMileage)} км.\n'
-          'Пробег выполнения: ${formatThousands(newMileage)} км.\n\n'
-          'Обновить текущий пробег машины '
-          'до ${formatThousands(newMileage)} км?',
+          l10n.markDoneUpdateMileageMessage(
+            current: formatThousands(currentMileage),
+            performed: formatThousands(newMileage),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Нет'),
+            child: Text(l10n.actionNo),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Да'),
+            child: Text(l10n.actionYes),
           ),
         ],
       ),
@@ -327,6 +332,8 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) async {
@@ -347,7 +354,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
               }
             },
           ),
-          title: Text(_screenTitle),
+          title: Text(_screenTitle(context)),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -357,7 +364,8 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
               // Работа
               if (_isRuleFixed)
                 InputDecorator(
-                  decoration: const InputDecoration(labelText: 'Работа'),
+                  decoration:
+                      InputDecoration(labelText: l10n.markDoneWorkLabel),
                   child: Text(_titleController.text),
                 )
               else
@@ -369,8 +377,8 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                   textCapitalization: TextCapitalization.sentences,
                   onChanged: _onTitleChanged,
                   decoration: InputDecoration(
-                    labelText: 'Работа',
-                    hintText: 'Например, поменял лампочку',
+                    labelText: l10n.markDoneWorkLabel,
+                    hintText: l10n.markDoneWorkHint,
                     errorText: _titleError,
                   ),
                 ),
@@ -383,8 +391,8 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 inputFormatters: const [ThousandsSeparatorFormatter()],
                 onChanged: _onMileageChanged,
                 decoration: InputDecoration(
-                  labelText: 'Пробег выполнения',
-                  suffixText: 'км',
+                  labelText: l10n.markDoneMileageLabel,
+                  suffixText: l10n.markDoneMileageUnit,
                   errorText: _mileageError,
                 ),
               ),
@@ -394,9 +402,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
               InkWell(
                 onTap: _pickDate,
                 child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Месяц выполнения',
-                    suffixIcon: Icon(Icons.calendar_today),
+                  decoration: InputDecoration(
+                    labelText: l10n.markDoneMonthLabel,
+                    suffixIcon: const Icon(Icons.calendar_today),
                   ),
                   child: Text(formatMonthYear(_date)),
                 ),
@@ -408,10 +416,10 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 controller: _costController,
                 keyboardType: TextInputType.number,
                 inputFormatters: const [ThousandsSeparatorFormatter()],
-                decoration: const InputDecoration(
-                  labelText: 'Стоимость',
-                  hintText: 'Необязательно',
-                  suffixText: '₽',
+                decoration: InputDecoration(
+                  labelText: l10n.markDoneCostLabel,
+                  hintText: l10n.markDoneCostHint,
+                  suffixText: l10n.markDoneCostUnit,
                 ),
               ),
               const SizedBox(height: 16),
@@ -421,9 +429,9 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 controller: _noteController,
                 maxLines: 3,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  labelText: 'Заметка',
-                  hintText: 'Например, синтетическое масло',
+                decoration: InputDecoration(
+                  labelText: l10n.markDoneNoteLabel,
+                  hintText: l10n.markDoneNoteHint,
                 ),
               ),
               const SizedBox(height: 24),
@@ -437,7 +445,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                         width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Сохранить'),
+                    : Text(l10n.actionSave),
               ),
             ],
           ),

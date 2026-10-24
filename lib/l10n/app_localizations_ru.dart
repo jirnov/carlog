@@ -572,4 +572,73 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get actionYes => 'Да';
+
+  @override
+  String get markDoneTitleEdit => 'Изменить событие';
+
+  @override
+  String get markDoneTitleRule => 'Выполнить работу';
+
+  @override
+  String get markDoneTitleAdd => 'Добавить событие';
+
+  @override
+  String get markDoneWorkLabel => 'Работа';
+
+  @override
+  String get markDoneWorkHint => 'Например, поменял лампочку';
+
+  @override
+  String get markDoneMileageLabel => 'Пробег выполнения';
+
+  @override
+  String get markDoneMileageUnit => 'км';
+
+  @override
+  String get markDoneMonthLabel => 'Месяц выполнения';
+
+  @override
+  String get markDoneCostLabel => 'Стоимость';
+
+  @override
+  String get markDoneCostHint => 'Необязательно';
+
+  @override
+  String get markDoneCostUnit => '₽';
+
+  @override
+  String get markDoneNoteLabel => 'Заметка';
+
+  @override
+  String get markDoneNoteHint => 'Например, синтетическое масло';
+
+  @override
+  String get mileageErrorTooSmall =>
+      'Пробег подозрительно мал — проверьте значение';
+
+  @override
+  String get markDoneJumpTitle => 'Пробег резко вырос';
+
+  @override
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
+      required String diff}) {
+    return 'Текущий пробег машины: $current км.\nВы отметили ТО на $performed км.\n\nРазница: $diff км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.';
+  }
+
+  @override
+  String get markDoneJumpEdit => 'Изменить';
+
+  @override
+  String get markDoneJumpConfirm => 'Да, верно';
+
+  @override
+  String get markDoneUpdateMileageTitle => 'Обновить пробег машины?';
+
+  @override
+  String markDoneUpdateMileageMessage(
+      {required String current, required String performed}) {
+    return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
+  }
 }

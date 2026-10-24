@@ -562,4 +562,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionYes => 'Yes';
+
+  @override
+  String get markDoneTitleEdit => 'Edit event';
+
+  @override
+  String get markDoneTitleRule => 'Complete work';
+
+  @override
+  String get markDoneTitleAdd => 'Add event';
+
+  @override
+  String get markDoneWorkLabel => 'Work';
+
+  @override
+  String get markDoneWorkHint => 'For example, replaced a bulb';
+
+  @override
+  String get markDoneMileageLabel => 'Completion mileage';
+
+  @override
+  String get markDoneMileageUnit => 'km';
+
+  @override
+  String get markDoneMonthLabel => 'Completion month';
+
+  @override
+  String get markDoneCostLabel => 'Cost';
+
+  @override
+  String get markDoneCostHint => 'Optional';
+
+  @override
+  String get markDoneCostUnit => '₽';
+
+  @override
+  String get markDoneNoteLabel => 'Note';
+
+  @override
+  String get markDoneNoteHint => 'For example, synthetic oil';
+
+  @override
+  String get mileageErrorTooSmall =>
+      'Mileage looks suspiciously small — check the value';
+
+  @override
+  String get markDoneJumpTitle => 'Mileage jumped sharply';
+
+  @override
+  String markDoneJumpMessage(
+      {required String current,
+      required String performed,
+      required String diff}) {
+    return 'Current car mileage: $current km.\nYou marked maintenance at $performed km.\n\nDifference: $diff km. Usually people don\'t drive that much between updates. Check for an extra zero.';
+  }
+
+  @override
+  String get markDoneJumpEdit => 'Edit';
+
+  @override
+  String get markDoneJumpConfirm => 'Yes, correct';
+
+  @override
+  String get markDoneUpdateMileageTitle => 'Update car mileage?';
+
+  @override
+  String markDoneUpdateMileageMessage(
+      {required String current, required String performed}) {
+    return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
+  }
 }

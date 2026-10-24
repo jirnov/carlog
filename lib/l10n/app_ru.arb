@@ -348,5 +348,43 @@
   "@rulesDeleteTitle": {
     "placeholders": { "title": { "type": "String" } }
   },
-  "rulesDeleteMessage": "История выполненных работ не изменится."
+  "rulesDeleteMessage": "История выполненных работ не изменится.",
+  "ruleCardIntervalNotSet": "интервал не задан",
+  "ruleCardIntervalKm": "{km} км",
+  "@ruleCardIntervalKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "ruleCardIntervalMonths": "{months} мес",
+  "@ruleCardIntervalMonths": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+  "ruleCardEveryOne": "Каждые {value}",
+  "@ruleCardEveryOne": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "ruleCardEveryTwo": "Каждые {first} или {second}",
+  "@ruleCardEveryTwo": {
+    "placeholders": {
+      "first": { "type": "String" },
+      "second": { "type": "String" }
+    }
+  },
+  "ruleCardNextOne": "Следующее: {value}",
+  "@ruleCardNextOne": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "ruleCardNextTwo": "Следующее: {first} · {second}",
+  "@ruleCardNextTwo": {
+    "placeholders": {
+      "first": { "type": "String" },
+      "second": { "type": "String" }
+    }
+  },
+  "ruleCardNextNotSet": "Следующее ТО не задано",
+  "ruleCardCost": "~{amount} ₽",
+  "@ruleCardCost": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "ruleCardEditTooltip": "Редактировать",
+  "ruleCardDeleteTooltip": "Удалить"
 }

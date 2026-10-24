@@ -349,5 +349,43 @@
   "@rulesDeleteTitle": {
     "placeholders": { "title": { "type": "String" } }
   },
-  "rulesDeleteMessage": "The history of completed works will not change."
+  "rulesDeleteMessage": "The history of completed works will not change.",
+  "ruleCardIntervalNotSet": "interval not set",
+  "ruleCardIntervalKm": "{km} km",
+  "@ruleCardIntervalKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "ruleCardIntervalMonths": "{months} mo",
+  "@ruleCardIntervalMonths": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+  "ruleCardEveryOne": "Every {value}",
+  "@ruleCardEveryOne": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "ruleCardEveryTwo": "Every {first} or {second}",
+  "@ruleCardEveryTwo": {
+    "placeholders": {
+      "first": { "type": "String" },
+      "second": { "type": "String" }
+    }
+  },
+  "ruleCardNextOne": "Next: {value}",
+  "@ruleCardNextOne": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "ruleCardNextTwo": "Next: {first} · {second}",
+  "@ruleCardNextTwo": {
+    "placeholders": {
+      "first": { "type": "String" },
+      "second": { "type": "String" }
+    }
+  },
+  "ruleCardNextNotSet": "Next maintenance not set",
+  "ruleCardCost": "~{amount} ₽",
+  "@ruleCardCost": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "ruleCardEditTooltip": "Edit",
+  "ruleCardDeleteTooltip": "Delete"
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:carlog/data/models/rule.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
 class RuleCard extends StatelessWidget {
@@ -17,49 +18,54 @@ class RuleCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDelete;
 
-  String _intervalLabel() {
+  String _intervalLabel(BuildContext context) {
+    final l10n = context.l10n;
     final parts = <String>[];
     if (rule.intervalKm != null && rule.intervalKm! > 0) {
-      parts.add('${formatThousands(rule.intervalKm!)} км');
+      parts.add(l10n.ruleCardIntervalKm(km: formatThousands(rule.intervalKm!)));
     }
     if (rule.intervalMonths != null && rule.intervalMonths! > 0) {
-      parts.add('${rule.intervalMonths} мес');
+      parts.add(l10n.ruleCardIntervalMonths(months: rule.intervalMonths!));
     }
-    if (parts.isEmpty) return 'интервал не задан';
-    if (parts.length == 1) return 'Каждые ${parts.first}';
-    return 'Каждые ${parts[0]} или ${parts[1]}';
+    if (parts.isEmpty) return l10n.ruleCardIntervalNotSet;
+    if (parts.length == 1) return l10n.ruleCardEveryOne(value: parts.first);
+    return l10n.ruleCardEveryTwo(first: parts[0], second: parts[1]);
   }
 
-  String _nextLabel() {
-    final kmText =
-        rule.nextKm != null ? '${formatThousands(rule.nextKm!)} км' : null;
+  String _nextLabel(BuildContext context) {
+    final l10n = context.l10n;
+
+    final kmText = rule.nextKm != null
+        ? l10n.ruleCardIntervalKm(km: formatThousands(rule.nextKm!))
+        : null;
 
     final dateText =
         rule.nextDate != null ? formatMonthYearShort(rule.nextDate!) : null;
 
     if (kmText != null && dateText == null) {
-      return 'Следующее: $kmText';
+      return l10n.ruleCardNextOne(value: kmText);
     }
     if (dateText != null && kmText == null) {
-      return 'Следующее: $dateText';
+      return l10n.ruleCardNextOne(value: dateText);
     }
     if (kmText != null && dateText != null) {
-      return 'Следующее: $kmText · $dateText';
+      return l10n.ruleCardNextTwo(first: kmText, second: dateText);
     }
-    return 'Следующее ТО не задано';
+    return l10n.ruleCardNextNotSet;
   }
 
   /// «~5 000 ₽» или null, если стоимость не задана.
-  String? _costLabel() {
+  String? _costLabel(BuildContext context) {
     final cost = rule.cost;
     if (cost == null || cost <= 0) return null;
-    return '~${formatThousands(cost.round())} ₽';
+    return context.l10n.ruleCardCost(amount: formatThousands(cost.round()));
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final costLabel = _costLabel();
+    final l10n = context.l10n;
+    final costLabel = _costLabel(context);
 
     return Card(
       child: InkWell(
@@ -81,12 +87,12 @@ class RuleCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      _intervalLabel(),
+                      _intervalLabel(context),
                       style: theme.textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _nextLabel(),
+                      _nextLabel(context),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -107,13 +113,13 @@ class RuleCard extends StatelessWidget {
                 icon: const Icon(Icons.edit_outlined),
                 color: theme.colorScheme.primary,
                 onPressed: onTap,
-                tooltip: 'Редактировать',
+                tooltip: l10n.ruleCardEditTooltip,
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 color: theme.colorScheme.error,
                 onPressed: onDelete,
-                tooltip: 'Удалить',
+                tooltip: l10n.ruleCardDeleteTooltip,
               ),
             ],
           ),

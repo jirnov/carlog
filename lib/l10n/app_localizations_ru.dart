@@ -713,4 +713,51 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get rulesDeleteMessage => 'История выполненных работ не изменится.';
+
+  @override
+  String get ruleCardIntervalNotSet => 'интервал не задан';
+
+  @override
+  String ruleCardIntervalKm({required String km}) {
+    return '$km км';
+  }
+
+  @override
+  String ruleCardIntervalMonths({required int months}) {
+    return '$months мес';
+  }
+
+  @override
+  String ruleCardEveryOne({required String value}) {
+    return 'Каждые $value';
+  }
+
+  @override
+  String ruleCardEveryTwo({required String first, required String second}) {
+    return 'Каждые $first или $second';
+  }
+
+  @override
+  String ruleCardNextOne({required String value}) {
+    return 'Следующее: $value';
+  }
+
+  @override
+  String ruleCardNextTwo({required String first, required String second}) {
+    return 'Следующее: $first · $second';
+  }
+
+  @override
+  String get ruleCardNextNotSet => 'Следующее ТО не задано';
+
+  @override
+  String ruleCardCost({required String amount}) {
+    return '~$amount ₽';
+  }
+
+  @override
+  String get ruleCardEditTooltip => 'Редактировать';
+
+  @override
+  String get ruleCardDeleteTooltip => 'Удалить';
 }

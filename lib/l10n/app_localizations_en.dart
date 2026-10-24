@@ -704,4 +704,51 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get rulesDeleteMessage =>
       'The history of completed works will not change.';
+
+  @override
+  String get ruleCardIntervalNotSet => 'interval not set';
+
+  @override
+  String ruleCardIntervalKm({required String km}) {
+    return '$km km';
+  }
+
+  @override
+  String ruleCardIntervalMonths({required int months}) {
+    return '$months mo';
+  }
+
+  @override
+  String ruleCardEveryOne({required String value}) {
+    return 'Every $value';
+  }
+
+  @override
+  String ruleCardEveryTwo({required String first, required String second}) {
+    return 'Every $first or $second';
+  }
+
+  @override
+  String ruleCardNextOne({required String value}) {
+    return 'Next: $value';
+  }
+
+  @override
+  String ruleCardNextTwo({required String first, required String second}) {
+    return 'Next: $first · $second';
+  }
+
+  @override
+  String get ruleCardNextNotSet => 'Next maintenance not set';
+
+  @override
+  String ruleCardCost({required String amount}) {
+    return '~$amount ₽';
+  }
+
+  @override
+  String get ruleCardEditTooltip => 'Edit';
+
+  @override
+  String get ruleCardDeleteTooltip => 'Delete';
 }

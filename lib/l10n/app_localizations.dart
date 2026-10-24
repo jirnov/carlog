@@ -1242,6 +1242,72 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'История выполненных работ не изменится.'**
   String get rulesDeleteMessage;
+
+  /// No description provided for @ruleCardIntervalNotSet.
+  ///
+  /// In ru, this message translates to:
+  /// **'интервал не задан'**
+  String get ruleCardIntervalNotSet;
+
+  /// No description provided for @ruleCardIntervalKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'{km} км'**
+  String ruleCardIntervalKm({required String km});
+
+  /// No description provided for @ruleCardIntervalMonths.
+  ///
+  /// In ru, this message translates to:
+  /// **'{months} мес'**
+  String ruleCardIntervalMonths({required int months});
+
+  /// No description provided for @ruleCardEveryOne.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каждые {value}'**
+  String ruleCardEveryOne({required String value});
+
+  /// No description provided for @ruleCardEveryTwo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каждые {first} или {second}'**
+  String ruleCardEveryTwo({required String first, required String second});
+
+  /// No description provided for @ruleCardNextOne.
+  ///
+  /// In ru, this message translates to:
+  /// **'Следующее: {value}'**
+  String ruleCardNextOne({required String value});
+
+  /// No description provided for @ruleCardNextTwo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Следующее: {first} · {second}'**
+  String ruleCardNextTwo({required String first, required String second});
+
+  /// No description provided for @ruleCardNextNotSet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Следующее ТО не задано'**
+  String get ruleCardNextNotSet;
+
+  /// No description provided for @ruleCardCost.
+  ///
+  /// In ru, this message translates to:
+  /// **'~{amount} ₽'**
+  String ruleCardCost({required String amount});
+
+  /// No description provided for @ruleCardEditTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Редактировать'**
+  String get ruleCardEditTooltip;
+
+  /// No description provided for @ruleCardDeleteTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить'**
+  String get ruleCardDeleteTooltip;
 }
 
 class _AppLocalizationsDelegate

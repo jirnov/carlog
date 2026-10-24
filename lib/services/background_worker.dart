@@ -58,7 +58,7 @@ Future<void> _checkMileageReminder() async {
       daysSinceUpdate: days,
     );
   } catch (e) {
-    debugPrint('Ошибка в фоновой задаче: $e');
+    debugPrint('Background task error: $e');
   }
   // db.close() НЕ вызываем.
 }

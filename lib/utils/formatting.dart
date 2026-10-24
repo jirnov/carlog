@@ -29,17 +29,53 @@ class ThousandsSeparatorFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
-    if (digits.isEmpty) return const TextEditingValue();
+    // Пустой текст — вернуть пустое значение.
+    if (newValue.text.isEmpty) {
+      return const TextEditingValue();
+    }
 
+    // Извлечь только цифры.
+    final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
+    if (digits.isEmpty) {
+      return const TextEditingValue();
+    }
+
+    // Ограничить количество цифр.
     final limited =
         digits.length > maxDigits ? digits.substring(0, maxDigits) : digits;
 
+    // Отформатировать.
     final formatted = formatThousands(int.parse(limited), locale);
+
+    // Вычислить позицию курсора: сколько цифр слева от курсора
+    // в новом (неформатированном) тексте.
+    final cursorInNew = newValue.selection.baseOffset;
+    int digitsBeforeCursor = 0;
+    for (int i = 0; i < cursorInNew && i < newValue.text.length; i++) {
+      if (RegExp(r'\d').hasMatch(newValue.text[i])) {
+        digitsBeforeCursor++;
+      }
+    }
+
+    // Найти соответствующую позицию в отформатированном тексте.
+    int newCursor = 0;
+    int digitsSeen = 0;
+    for (int i = 0; i < formatted.length; i++) {
+      if (digitsSeen == digitsBeforeCursor) break;
+      if (RegExp(r'\d').hasMatch(formatted[i])) {
+        digitsSeen++;
+      }
+      newCursor = i + 1;
+    }
+
+    // Если курсор был в конце — ставим в конец.
+    if (digitsBeforeCursor >= limited.length) {
+      newCursor = formatted.length;
+    }
 
     return TextEditingValue(
       text: formatted,
-      selection: TextSelection.collapsed(offset: formatted.length),
+      selection: TextSelection.collapsed(offset: newCursor),
     );
   }
 }

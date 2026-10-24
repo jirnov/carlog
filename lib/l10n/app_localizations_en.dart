@@ -533,7 +533,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingCarNameLabel => 'Car name';
 
   @override
-  String get onboardingCarNameHint => 'For example, My swallow';
+  String get onboardingCarNameHint => 'For example, My Betsy';
 
   @override
   String get onboardingCarNameHelper => 'Optional';

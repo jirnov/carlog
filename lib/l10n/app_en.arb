@@ -280,7 +280,7 @@
   "onboardingWelcomeSubtitle": "A couple of questions so the app\ncan calculate maintenance intervals right away",
 
   "onboardingCarNameLabel": "Car name",
-  "onboardingCarNameHint": "For example, My swallow",
+  "onboardingCarNameHint": "For example, My Betsy",
   "onboardingCarNameHelper": "Optional",
 
   "onboardingMileageLabel": "Current mileage",

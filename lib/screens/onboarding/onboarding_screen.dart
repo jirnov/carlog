@@ -24,6 +24,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   String? _mileageError;
   bool _isSaving = false;
 
+  /// Последняя известная локаль — чтобы отследить смену языка
+  /// и переформатировать введённые числа.
+  String? _lastLocale;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final locale = Localizations.localeOf(context).languageCode;
+    if (_lastLocale != null && _lastLocale != locale) {
+      _reformatMileage(locale);
+    }
+    _lastLocale = locale;
+  }
+
   @override
   void dispose() {
     _carNameController.dispose();
@@ -53,6 +67,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool get _canContinue {
     final value = _mileage;
     return value != null && value > 0 && value <= 10000000 && !_isSaving;
+  }
+
+  /// Переформатировать уже введённый пробег под новую локаль.
+  void _reformatMileage(String locale) {
+    final text = _mileageController.text;
+    if (text.isEmpty) return;
+
+    final value = parseThousands(text);
+    if (value == null) return;
+
+    final formatted = formatThousands(value, locale);
+    _mileageController.value = TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: formatted.length),
+    );
+
+    setState(() {
+      _mileageError = _validateMileage();
+    });
   }
 
   String _themeLabel(BuildContext context, ThemeModePreference pref) {
@@ -173,17 +206,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       final settingsProvider = context.read<SettingsProvider>();
       final mileageProvider = context.read<MileageProvider>();
 
-      // 1. Название машины.
       final carName = _carNameController.text.trim();
       if (carName.isNotEmpty) {
         await settingsProvider.setCarName(carName);
       }
 
-      // 2. Первая запись в журнал пробега.
       await mileageProvider.add(_mileage!);
 
-      // 3. Флаг онбординга — последним.
-      // Тема и язык уже сохранены при выборе.
       await settingsProvider.setOnboardingDone(true);
     } catch (e) {
       if (!mounted) return;
@@ -223,8 +252,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const Spacer(flex: 2),
-
-                      // Иконка
                       Center(
                         child: Icon(
                           Icons.directions_car_outlined,
@@ -233,8 +260,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // Заголовок
                       Text(
                         l10n.onboardingWelcomeTitle,
                         textAlign: TextAlign.center,
@@ -243,8 +268,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 12),
-
-                      // Подзаголовок
                       Text(
                         l10n.onboardingWelcomeSubtitle,
                         textAlign: TextAlign.center,
@@ -253,8 +276,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 40),
-
-                      // Название машины
                       TextField(
                         controller: _carNameController,
                         textInputAction: TextInputAction.next,
@@ -267,8 +288,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onSubmitted: (_) => _mileageFocus.requestFocus(),
                       ),
                       const SizedBox(height: 20),
-
-                      // Пробег
                       TextField(
                         controller: _mileageController,
                         focusNode: _mileageFocus,
@@ -287,8 +306,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         style: theme.textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 24),
-
-                      // Язык
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.language),
@@ -297,8 +314,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => _pickLocale(context),
                       ),
-
-                      // Тема оформления — как в настройках.
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.brightness_6_outlined),
@@ -316,10 +331,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                       ),
-
                       const Spacer(flex: 3),
-
-                      // Кнопка
                       FilledButton(
                         onPressed: _canContinue ? _onContinue : null,
                         child: _isSaving

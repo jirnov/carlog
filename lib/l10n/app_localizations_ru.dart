@@ -521,4 +521,55 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsTooltip => 'Настройки';
+
+  @override
+  String markDoneMultiTitle({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count работы',
+      many: '$count работ',
+      few: '$count работы',
+      one: '$count работу',
+    );
+    return 'Выполнить $_temp0';
+  }
+
+  @override
+  String get markDoneMultiWorksSection => 'Работы';
+
+  @override
+  String get markDoneMultiMileageLabel => 'Пробег выполнения';
+
+  @override
+  String get markDoneMultiMileageUnit => 'км';
+
+  @override
+  String get markDoneMultiMonthLabel => 'Месяц выполнения';
+
+  @override
+  String get markDoneMultiNoteLabel => 'Заметка';
+
+  @override
+  String get markDoneMultiNoteHint => 'Например, сервис на Ленина';
+
+  @override
+  String markDoneMultiSaveButton({required int count}) {
+    return 'Выполнить $count';
+  }
+
+  @override
+  String get markDoneMultiUpdateMileageTitle => 'Обновить пробег машины?';
+
+  @override
+  String markDoneMultiUpdateMileageMessage(
+      {required String current, required String performed}) {
+    return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
+  }
+
+  @override
+  String get actionNo => 'Нет';
+
+  @override
+  String get actionYes => 'Да';
 }

@@ -913,6 +913,79 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Настройки'**
   String get settingsTooltip;
+
+  /// No description provided for @markDoneMultiTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнить {count, plural, one{{count} работу} few{{count} работы} many{{count} работ} other{{count} работы}}'**
+  String markDoneMultiTitle({required int count});
+
+  /// No description provided for @markDoneMultiWorksSection.
+  ///
+  /// In ru, this message translates to:
+  /// **'Работы'**
+  String get markDoneMultiWorksSection;
+
+  /// No description provided for @markDoneMultiMileageLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег выполнения'**
+  String get markDoneMultiMileageLabel;
+
+  /// No description provided for @markDoneMultiMileageUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get markDoneMultiMileageUnit;
+
+  /// No description provided for @markDoneMultiMonthLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Месяц выполнения'**
+  String get markDoneMultiMonthLabel;
+
+  /// No description provided for @markDoneMultiNoteLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заметка'**
+  String get markDoneMultiNoteLabel;
+
+  /// No description provided for @markDoneMultiNoteHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, сервис на Ленина'**
+  String get markDoneMultiNoteHint;
+
+  /// No description provided for @markDoneMultiSaveButton.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнить {count}'**
+  String markDoneMultiSaveButton({required int count});
+
+  /// No description provided for @markDoneMultiUpdateMileageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить пробег машины?'**
+  String get markDoneMultiUpdateMileageTitle;
+
+  /// No description provided for @markDoneMultiUpdateMileageMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
+  String markDoneMultiUpdateMileageMessage(
+      {required String current, required String performed});
+
+  /// No description provided for @actionNo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет'**
+  String get actionNo;
+
+  /// No description provided for @actionYes.
+  ///
+  /// In ru, this message translates to:
+  /// **'Да'**
+  String get actionYes;
 }
 
 class _AppLocalizationsDelegate

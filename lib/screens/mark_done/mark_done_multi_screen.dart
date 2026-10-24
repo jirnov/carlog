@@ -5,6 +5,7 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
 
@@ -75,10 +76,11 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
   int? get _mileage => parseThousands(_mileageController.text);
 
   String? _validateMileage() {
+    final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return 'Обязательное поле';
-    if (value <= 0) return 'Пробег должен быть больше нуля';
-    if (value > 10000000) return 'Слишком большое значение';
+    if (value == null) return l10n.validationRequired;
+    if (value <= 0) return l10n.mileageErrorPositive;
+    if (value > 10000000) return l10n.mileageErrorTooLarge;
     return null;
   }
 
@@ -104,24 +106,25 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
   }
 
   Future<bool> _confirmUpdateMileage(int mileage, int currentMileage) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Обновить пробег машины?'),
+        title: Text(l10n.markDoneMultiUpdateMileageTitle),
         content: Text(
-          'Текущий пробег: ${formatThousands(currentMileage)} км.\n'
-          'Пробег выполнения: ${formatThousands(mileage)} км.\n\n'
-          'Обновить текущий пробег машины '
-          'до ${formatThousands(mileage)} км?',
+          l10n.markDoneMultiUpdateMileageMessage(
+            current: formatThousands(currentMileage),
+            performed: formatThousands(mileage),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Нет'),
+            child: Text(l10n.actionNo),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Да'),
+            child: Text(l10n.actionYes),
           ),
         ],
       ),
@@ -155,16 +158,15 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(
-          'Выполнить ${widget.rules.length} '
-          '${pluralWorksAccusative(widget.rules.length)}',
-        ),
+        title: Text(l10n.markDoneMultiTitle(count: widget.rules.length)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -172,7 +174,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Работы',
+              l10n.markDoneMultiWorksSection,
               style: Theme.of(context).textTheme.labelLarge,
             ),
             const SizedBox(height: 8),
@@ -200,8 +202,8 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
               inputFormatters: const [ThousandsSeparatorFormatter()],
               onChanged: _onMileageChanged,
               decoration: InputDecoration(
-                labelText: 'Пробег выполнения',
-                suffixText: 'км',
+                labelText: l10n.markDoneMultiMileageLabel,
+                suffixText: l10n.markDoneMultiMileageUnit,
                 errorText: _mileageError,
               ),
             ),
@@ -209,9 +211,9 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
             InkWell(
               onTap: _pickDate,
               child: InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Месяц выполнения',
-                  suffixIcon: Icon(Icons.calendar_today),
+                decoration: InputDecoration(
+                  labelText: l10n.markDoneMultiMonthLabel,
+                  suffixIcon: const Icon(Icons.calendar_today),
                 ),
                 child: Text(formatMonthYear(_date)),
               ),
@@ -221,15 +223,16 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
               controller: _noteController,
               maxLines: 2,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Заметка',
-                hintText: 'Например, сервис на Ленина',
+              decoration: InputDecoration(
+                labelText: l10n.markDoneMultiNoteLabel,
+                hintText: l10n.markDoneMultiNoteHint,
               ),
             ),
             const SizedBox(height: 24),
             FilledButton(
               onPressed: _canSave ? _onSave : null,
-              child: Text('Выполнить ${widget.rules.length}'),
+              child: Text(
+                  l10n.markDoneMultiSaveButton(count: widget.rules.length)),
             ),
           ],
         ),

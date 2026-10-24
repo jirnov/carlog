@@ -254,5 +254,29 @@
   "navPlanning": "Планирование",
   "navHistory": "Выполнено",
   "exitConfirmMessage": "Нажмите ещё раз для выхода",
-  "settingsTooltip": "Настройки"
+  "settingsTooltip": "Настройки",
+  "markDoneMultiTitle": "Выполнить {count, plural, one{{count} работу} few{{count} работы} many{{count} работ} other{{count} работы}}",
+  "@markDoneMultiTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "markDoneMultiWorksSection": "Работы",
+  "markDoneMultiMileageLabel": "Пробег выполнения",
+  "markDoneMultiMileageUnit": "км",
+  "markDoneMultiMonthLabel": "Месяц выполнения",
+  "markDoneMultiNoteLabel": "Заметка",
+  "markDoneMultiNoteHint": "Например, сервис на Ленина",
+  "markDoneMultiSaveButton": "Выполнить {count}",
+  "@markDoneMultiSaveButton": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "markDoneMultiUpdateMileageTitle": "Обновить пробег машины?",
+  "markDoneMultiUpdateMileageMessage": "Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?",
+  "@markDoneMultiUpdateMileageMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" }
+    }
+  },
+  "actionNo": "Нет",
+  "actionYes": "Да"
 }

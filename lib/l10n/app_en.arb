@@ -254,5 +254,29 @@
   "navPlanning": "Planning",
   "navHistory": "Completed",
   "exitConfirmMessage": "Press again to exit",
-  "settingsTooltip": "Settings"
+  "settingsTooltip": "Settings",
+  "markDoneMultiTitle": "Complete {count, plural, one{{count} work} other{{count} works}}",
+  "@markDoneMultiTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "markDoneMultiWorksSection": "Works",
+  "markDoneMultiMileageLabel": "Completion mileage",
+  "markDoneMultiMileageUnit": "km",
+  "markDoneMultiMonthLabel": "Completion month",
+  "markDoneMultiNoteLabel": "Note",
+  "markDoneMultiNoteHint": "For example, service on Lenin St.",
+  "markDoneMultiSaveButton": "Complete {count}",
+  "@markDoneMultiSaveButton": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "markDoneMultiUpdateMileageTitle": "Update car mileage?",
+  "markDoneMultiUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nUpdate the current car mileage to {performed} km?",
+  "@markDoneMultiUpdateMileageMessage": {
+    "placeholders": {
+      "current": { "type": "String" },
+      "performed": { "type": "String" }
+    }
+  },
+  "actionNo": "No",
+  "actionYes": "Yes"
 }

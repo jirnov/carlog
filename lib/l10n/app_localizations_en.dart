@@ -513,4 +513,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsTooltip => 'Settings';
+
+  @override
+  String markDoneMultiTitle({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count works',
+      one: '$count work',
+    );
+    return 'Complete $_temp0';
+  }
+
+  @override
+  String get markDoneMultiWorksSection => 'Works';
+
+  @override
+  String get markDoneMultiMileageLabel => 'Completion mileage';
+
+  @override
+  String get markDoneMultiMileageUnit => 'km';
+
+  @override
+  String get markDoneMultiMonthLabel => 'Completion month';
+
+  @override
+  String get markDoneMultiNoteLabel => 'Note';
+
+  @override
+  String get markDoneMultiNoteHint => 'For example, service on Lenin St.';
+
+  @override
+  String markDoneMultiSaveButton({required int count}) {
+    return 'Complete $count';
+  }
+
+  @override
+  String get markDoneMultiUpdateMileageTitle => 'Update car mileage?';
+
+  @override
+  String markDoneMultiUpdateMileageMessage(
+      {required String current, required String performed}) {
+    return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
+  }
+
+  @override
+  String get actionNo => 'No';
+
+  @override
+  String get actionYes => 'Yes';
 }

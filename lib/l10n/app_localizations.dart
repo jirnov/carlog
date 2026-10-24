@@ -104,6 +104,36 @@ abstract class AppLocalizations {
   /// **'Журнал ТО'**
   String get appTitle;
 
+  /// No description provided for @languageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык'**
+  String get languageTitle;
+
+  /// No description provided for @languageDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык приложения'**
+  String get languageDialogTitle;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как в системе'**
+  String get languageSystem;
+
+  /// No description provided for @languageRussian.
+  ///
+  /// In ru, this message translates to:
+  /// **'Русский'**
+  String get languageRussian;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In ru, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
   /// No description provided for @workCategoryEngine.
   ///
   /// In ru, this message translates to:

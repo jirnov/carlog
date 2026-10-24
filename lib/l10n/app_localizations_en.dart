@@ -12,6 +12,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Vehicle Maintenance Log';
 
   @override
+  String get languageTitle => 'Language';
+
+  @override
+  String get languageDialogTitle => 'App language';
+
+  @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageRussian => 'Русский';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
   String get workCategoryEngine => 'Engine';
 
   @override

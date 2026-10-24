@@ -2,6 +2,9 @@
 
 import 'package:carlog/data/models/theme_mode_preference.dart';
 
+/// Sentinel для `copyWith`, чтобы отличать «не передали» от «передали null».
+const Object _unset = Object();
+
 class Settings {
   const Settings({
     required this.carName,
@@ -11,6 +14,7 @@ class Settings {
     required this.yellowMonths,
     required this.onboardingDone,
     required this.themeMode,
+    required this.locale,
   });
 
   final String carName;
@@ -21,6 +25,9 @@ class Settings {
   final bool onboardingDone;
   final ThemeModePreference themeMode;
 
+  /// Язык приложения: `'ru'`, `'en'` или `null` — «как в системе».
+  final String? locale;
+
   static const defaults = Settings(
     carName: '',
     remindEnabled: true,
@@ -29,6 +36,7 @@ class Settings {
     yellowMonths: 1,
     onboardingDone: false,
     themeMode: ThemeModePreference.system,
+    locale: null,
   );
 
   factory Settings.fromMap(Map<String, Object?> map) {
@@ -42,6 +50,7 @@ class Settings {
       themeMode: ThemeModePreference.fromString(
         (map['theme_mode'] as String?) ?? 'system',
       ),
+      locale: map['locale'] as String?,
     );
   }
 
@@ -54,6 +63,7 @@ class Settings {
       'yellow_months': yellowMonths,
       'onboarding_done': onboardingDone ? 1 : 0,
       'theme_mode': themeMode.name,
+      'locale': locale,
     };
   }
 
@@ -65,6 +75,7 @@ class Settings {
     int? yellowMonths,
     bool? onboardingDone,
     ThemeModePreference? themeMode,
+    Object? locale = _unset,
   }) {
     return Settings(
       carName: carName ?? this.carName,
@@ -74,6 +85,7 @@ class Settings {
       yellowMonths: yellowMonths ?? this.yellowMonths,
       onboardingDone: onboardingDone ?? this.onboardingDone,
       themeMode: themeMode ?? this.themeMode,
+      locale: identical(locale, _unset) ? this.locale : locale as String?,
     );
   }
 
@@ -81,7 +93,8 @@ class Settings {
   String toString() => 'Settings(carName: $carName, '
       'remindEnabled: $remindEnabled, remindDays: $remindDays, '
       'yellowKm: $yellowKm, yellowMonths: $yellowMonths, '
-      'onboardingDone: $onboardingDone, themeMode: $themeMode)';
+      'onboardingDone: $onboardingDone, themeMode: $themeMode, '
+      'locale: $locale)';
 
   @override
   bool operator ==(Object other) {
@@ -93,7 +106,8 @@ class Settings {
         other.yellowKm == yellowKm &&
         other.yellowMonths == yellowMonths &&
         other.onboardingDone == onboardingDone &&
-        other.themeMode == themeMode;
+        other.themeMode == themeMode &&
+        other.locale == locale;
   }
 
   @override
@@ -105,5 +119,6 @@ class Settings {
         yellowMonths,
         onboardingDone,
         themeMode,
+        locale,
       );
 }

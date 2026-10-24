@@ -3,6 +3,12 @@
   "appTitle": "Vehicle Maintenance Log",
   "onboardingWelcome": "Welcome",
 
+  "languageTitle": "Language",
+  "languageDialogTitle": "App language",
+  "languageSystem": "System",
+  "languageRussian": "Русский",
+  "languageEnglish": "English",
+
   "workCategoryEngine": "Engine",
   "workCategoryTransmission": "Transmission",
   "workCategoryAwd": "All-wheel drive",

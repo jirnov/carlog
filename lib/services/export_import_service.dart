@@ -6,7 +6,15 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:carlog/data/database.dart';
 
-const int _schemaVersion = 1;
+/// Версия схемы JSON.
+/// v1 → v2: из `settings` убраны `yellow_km`, `yellow_months`,
+/// `theme_mode`, `remind_enabled`, `remind_days`.
+/// Оставлены `car_name` (данные) и `onboarding_done` (флаг «данные введены»).
+const int _schemaVersion = 2;
+
+/// Минимальная поддерживаемая версия для конвертации.
+const int _minSupportedVersion = 1;
+
 const String _appMarker = 'carlog';
 
 class ExportImportService {
@@ -28,7 +36,8 @@ class ExportImportService {
       'app': _appMarker,
       'schema_version': _schemaVersion,
       'exported_at': DateTime.now().toUtc().toIso8601String(),
-      'settings': settingsRows.isEmpty ? null : settingsRows.first,
+      'settings':
+          _settingsToJson(settingsRows.isEmpty ? null : settingsRows.first),
       'rules': rulesRows,
       'history': historyRows,
       'mileage_log': mileageRows,
@@ -38,8 +47,23 @@ class ExportImportService {
     return const JsonEncoder.withIndent('  ').convert(data);
   }
 
+  /// Только «данные» из settings. Предпочтения устройства (тема, язык,
+  /// напоминания, пороги) в JSON не попадают.
+  Map<String, Object?>? _settingsToJson(Map<String, Object?>? row) {
+    if (row == null) return null;
+    return {
+      'car_name': row['car_name'] ?? '',
+      'onboarding_done': row['onboarding_done'] ?? 0,
+    };
+  }
+
   /// Импортировать данные из JSON-строки.
   /// Бросает исключение, если формат неверный или версия несовместима.
+  ///
+  /// Старые версии (v1) конвертируются: из `settings` берутся только
+  /// `car_name` и `onboarding_done`. Остальные поля
+  /// (тема, язык, напоминания, пороги) не трогаются —
+  /// остаются текущие на устройстве.
   Future<void> importFromJson(String content) async {
     final dynamic decoded;
     try {
@@ -57,48 +81,41 @@ class ExportImportService {
     }
 
     final version = decoded['schema_version'];
-    if (version is! int || version != _schemaVersion) {
+    if (version is! int ||
+        version < _minSupportedVersion ||
+        version > _schemaVersion) {
       throw Exception(
         'File version ($version) is incompatible with the current '
-        '($_schemaVersion). Import is only possible for this version.',
+        '($_schemaVersion). Import is only possible for versions '
+        '$_minSupportedVersion..$_schemaVersion.',
       );
     }
 
     final db = _db.db;
 
     await db.transaction((txn) async {
-      // 1. Очистить таблицы.
+      // 1. Очистить таблицы (кроме settings — его обновим).
       await txn.delete('history');
       await txn.delete('rules');
       await txn.delete('mileage_log');
       await txn.delete('postponements');
-      await txn.delete('settings');
 
-      // 2. Settings.
+      // 2. Settings — обновляем только car_name и onboarding_done.
+      // Остальные поля (theme_mode, locale, remind_enabled, remind_days,
+      // yellow_km, yellow_months) остаются текущие на устройстве.
       final settings = decoded['settings'];
       if (settings is Map<String, dynamic>) {
-        await txn.insert('settings', {
-          'id': 1,
-          'car_name': settings['car_name'] ?? '',
-          'remind_enabled': settings['remind_enabled'] ?? 1,
-          'remind_days': settings['remind_days'] ?? 30,
-          'yellow_km': settings['yellow_km'] ?? 500,
-          'yellow_months': settings['yellow_months'] ?? 1,
-          'onboarding_done': settings['onboarding_done'] ?? 1,
-          'theme_mode': settings['theme_mode'] ?? 'system',
-        });
-      } else {
-        await txn.insert('settings', {
-          'id': 1,
-          'car_name': '',
-          'remind_enabled': 1,
-          'remind_days': 30,
-          'yellow_km': 500,
-          'yellow_months': 1,
-          'onboarding_done': 1,
-          'theme_mode': 'system',
-        });
+        await txn.update(
+          'settings',
+          {
+            'car_name': settings['car_name'] ?? '',
+            'onboarding_done': settings['onboarding_done'] ?? 1,
+          },
+          where: 'id = ?',
+          whereArgs: [1],
+        );
       }
+      // Если settings нет — ничего не меняем. Текущие настройки остаются.
 
       // 3. Rules.
       final rules = decoded['rules'];

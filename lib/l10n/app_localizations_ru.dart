@@ -12,6 +12,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'Журнал ТО';
 
   @override
+  String get languageTitle => 'Язык';
+
+  @override
+  String get languageDialogTitle => 'Язык приложения';
+
+  @override
+  String get languageSystem => 'Как в системе';
+
+  @override
+  String get languageRussian => 'Русский';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
   String get workCategoryEngine => 'Двигатель';
 
   @override

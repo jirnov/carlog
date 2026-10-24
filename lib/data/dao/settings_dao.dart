@@ -45,4 +45,6 @@ class SettingsDao {
 
   Future<void> setThemeMode(ThemeModePreference value) =>
       update({'theme_mode': value.name});
+
+  Future<void> setLocale(String? value) => update({'locale': value});
 }

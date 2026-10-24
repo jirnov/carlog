@@ -1,5 +1,7 @@
 ﻿// lib/data/database.dart
 
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -16,7 +18,7 @@ class AppDatabase {
   factory AppDatabase() => instance;
 
   static const _dbName = 'carlog.db';
-  static const _currentVersion = 1;
+  static const _currentVersion = 2;
 
   Database? _db;
 
@@ -85,7 +87,8 @@ class AppDatabase {
         yellow_km             INTEGER NOT NULL DEFAULT 500,
         yellow_months         INTEGER NOT NULL DEFAULT 1,
         onboarding_done       INTEGER NOT NULL DEFAULT 0,
-        theme_mode            TEXT    NOT NULL DEFAULT 'system'
+        theme_mode            TEXT    NOT NULL DEFAULT 'system',
+        locale                TEXT
       )
     ''');
 
@@ -135,6 +138,7 @@ class AppDatabase {
     batch.execute(
         'CREATE INDEX idx_mileage_recorded ON mileage_log(recorded_at DESC)');
 
+    // Новые установки: locale = null (системный).
     batch.insert('settings', {
       'id': 1,
       'car_name': '',
@@ -144,13 +148,29 @@ class AppDatabase {
       'yellow_months': 1,
       'onboarding_done': 0,
       'theme_mode': 'system',
+      'locale': null,
     });
 
     await batch.commit(noResult: true);
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    // Схема пересоздаётся с нуля. Миграций нет.
+    if (oldVersion < 2) {
+      // v1 → v2: добавить колонку locale.
+      await db.execute('ALTER TABLE settings ADD COLUMN locale TEXT');
+
+      // Определить язык системы: русский → 'ru', иначе → 'en'.
+      final systemLang =
+          PlatformDispatcher.instance.locale.languageCode.toLowerCase();
+      final initialLocale = systemLang == 'ru' ? 'ru' : 'en';
+
+      await db.update(
+        'settings',
+        {'locale': initialLocale},
+        where: 'id = ?',
+        whereArgs: [1],
+      );
+    }
   }
 
   Future<void> close() async {

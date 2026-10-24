@@ -67,6 +67,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
+  String _localeLabel(BuildContext context, String? locale) {
+    final l10n = context.l10n;
+    switch (locale) {
+      case 'ru':
+        return l10n.languageRussian;
+      case 'en':
+        return l10n.languageEnglish;
+      default:
+        return l10n.languageSystem;
+    }
+  }
+
   Future<void> _pickTheme(BuildContext context) async {
     final provider = context.read<SettingsProvider>();
     final current = provider.themeModePreference;
@@ -105,8 +117,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
 
     if (result != null && context.mounted) {
-      // Сохраняем и применяем сразу.
       await provider.setThemeMode(result);
+    }
+  }
+
+  Future<void> _pickLocale(BuildContext context) async {
+    final provider = context.read<SettingsProvider>();
+    final current = provider.locale;
+    final l10n = context.l10n;
+
+    final result = await showDialog<String?>(
+      context: context,
+      builder: (dialogContext) {
+        return SimpleDialog(
+          title: Text(l10n.languageDialogTitle),
+          children: [
+            RadioListTile<String?>(
+              value: null,
+              groupValue: current,
+              title: Text(l10n.languageSystem),
+              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+            ),
+            RadioListTile<String?>(
+              value: 'ru',
+              groupValue: current,
+              title: Text(l10n.languageRussian),
+              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+            ),
+            RadioListTile<String?>(
+              value: 'en',
+              groupValue: current,
+              title: Text(l10n.languageEnglish),
+              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (context.mounted && result != null) {
+      await provider.setLocale(result);
     }
   }
 
@@ -133,7 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       await mileageProvider.add(_mileage!);
 
       // 3. Флаг онбординга — последним.
-      // Тема уже сохранена при выборе в _pickTheme.
+      // Тема и язык уже сохранены при выборе.
       await settingsProvider.setOnboardingDone(true);
     } catch (e) {
       if (!mounted) return;
@@ -155,6 +205,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final locale = Localizations.localeOf(context).languageCode;
     final currentTheme = context.select<SettingsProvider, ThemeModePreference>(
       (p) => p.themeModePreference,
+    );
+    final currentLocale = context.select<SettingsProvider, String?>(
+      (p) => p.locale,
     );
 
     return Scaffold(
@@ -234,6 +287,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         style: theme.textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 24),
+
+                      // Язык
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.language),
+                        title: Text(l10n.languageTitle),
+                        subtitle: Text(_localeLabel(context, currentLocale)),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => _pickLocale(context),
+                      ),
 
                       // Тема оформления — как в настройках.
                       ListTile(

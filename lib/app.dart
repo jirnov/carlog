@@ -2,7 +2,6 @@
 
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/providers/settings_provider.dart';
@@ -17,19 +16,18 @@ class CarlogApp extends StatelessWidget {
     final themeMode = context.select<SettingsProvider, ThemeMode>(
       (p) => p.themeMode,
     );
+    final locale = context.select<SettingsProvider, String?>(
+      (p) => p.locale,
+    );
 
     return MaterialApp(
-      title: context.l10n.appTitle,
+      onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
       themeMode: themeMode,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      locale: locale != null ? Locale(locale) : null,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const SplashScreen(),
     );

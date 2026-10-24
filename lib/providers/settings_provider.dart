@@ -27,6 +27,9 @@ class SettingsProvider extends ChangeNotifier {
   ThemeModePreference get themeModePreference => _settings.themeMode;
   ThemeMode get themeMode => _settings.themeMode.toFlutter();
 
+  /// Язык приложения: `'ru'`, `'en'` или `null` — «как в системе».
+  String? get locale => _settings.locale;
+
   Future<void> load() async {
     _settings = await _db.settings.get();
     _notify();
@@ -80,6 +83,13 @@ class SettingsProvider extends ChangeNotifier {
     if (_settings.themeMode == value) return;
     await _db.settings.setThemeMode(value);
     _settings = _settings.copyWith(themeMode: value);
+    _notify();
+  }
+
+  Future<void> setLocale(String? value) async {
+    if (_settings.locale == value) return;
+    await _db.settings.setLocale(value);
+    _settings = _settings.copyWith(locale: value);
     _notify();
   }
 

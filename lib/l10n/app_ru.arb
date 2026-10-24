@@ -2,6 +2,12 @@
   "@@locale": "ru",
   "appTitle": "Журнал ТО",
 
+  "languageTitle": "Язык",
+  "languageDialogTitle": "Язык приложения",
+  "languageSystem": "Как в системе",
+  "languageRussian": "Русский",
+  "languageEnglish": "English",
+
   "workCategoryEngine": "Двигатель",
   "workCategoryTransmission": "Трансмиссия",
   "workCategoryAwd": "Полный привод",

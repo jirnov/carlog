@@ -69,18 +69,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return value != null && value > 0 && value <= 10000000 && !_isSaving;
   }
 
-  /// Переформатировать уже введённый пробег под новую локаль.
+  /// Переформатировать уже введённый пробег под новую локаль,
+  /// сохранив позицию курсора (по количеству цифр слева от него).
   void _reformatMileage(String locale) {
-    final text = _mileageController.text;
-    if (text.isEmpty) return;
+    final oldText = _mileageController.text;
+    if (oldText.isEmpty) return;
 
-    final value = parseThousands(text);
+    final value = parseThousands(oldText);
     if (value == null) return;
 
     final formatted = formatThousands(value, locale);
+
+    // Сколько цифр слева от курсора в старом тексте.
+    final oldCursor = _mileageController.selection.baseOffset;
+    int digitsBefore = 0;
+    if (oldCursor > 0) {
+      for (int i = 0; i < oldCursor && i < oldText.length; i++) {
+        if (RegExp(r'\d').hasMatch(oldText[i])) digitsBefore++;
+      }
+    }
+
+    // Найти соответствующую позицию в новом тексте.
+    int newCursor = formatted.length;
+    if (digitsBefore < value.toString().length) {
+      int digitsSeen = 0;
+      for (int i = 0; i < formatted.length; i++) {
+        if (digitsSeen == digitsBefore) {
+          newCursor = i;
+          break;
+        }
+        if (RegExp(r'\d').hasMatch(formatted[i])) digitsSeen++;
+      }
+    }
+
     _mileageController.value = TextEditingValue(
       text: formatted,
-      selection: TextSelection.collapsed(offset: formatted.length),
+      selection: TextSelection.collapsed(offset: newCursor),
     );
 
     setState(() {

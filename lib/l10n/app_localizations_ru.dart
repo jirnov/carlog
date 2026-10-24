@@ -442,4 +442,35 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get mileageHeaderNotSet => 'Пробег не задан';
+
+  @override
+  String get mileageHeaderUpdatedToday => 'Обновлено сегодня';
+
+  @override
+  String get mileageHeaderUpdatedYesterday => 'Обновлено вчера';
+
+  @override
+  String mileageHeaderUpdatedDaysAgo({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'дня',
+      many: 'дней',
+      few: 'дня',
+      one: 'день',
+    );
+    return 'Обновлено $days $_temp0 назад';
+  }
+
+  @override
+  String get mileageHeaderStaleSuffix => 'обновить';
+
+  @override
+  String get mileageHeaderUnitKm => 'км';
+
+  @override
+  String get mileageHeaderUpdateButton => 'Обновить пробег';
 }

@@ -438,4 +438,33 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get mileageHeaderNotSet => 'Mileage not set';
+
+  @override
+  String get mileageHeaderUpdatedToday => 'Updated today';
+
+  @override
+  String get mileageHeaderUpdatedYesterday => 'Updated yesterday';
+
+  @override
+  String mileageHeaderUpdatedDaysAgo({required int days}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return 'Updated $days $_temp0 ago';
+  }
+
+  @override
+  String get mileageHeaderStaleSuffix => 'update';
+
+  @override
+  String get mileageHeaderUnitKm => 'km';
+
+  @override
+  String get mileageHeaderUpdateButton => 'Update mileage';
 }

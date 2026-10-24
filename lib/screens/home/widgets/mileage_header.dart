@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
 class MileageHeader extends StatelessWidget {
@@ -36,32 +37,32 @@ class MileageHeader extends StatelessWidget {
     return days >= remindDays;
   }
 
-  String get _subtitle {
-    if (lastUpdatedAt == null) return 'Пробег не задан';
-    final days = _daysSinceUpdate!;
-    if (days <= 0) return 'Обновлено сегодня';
-    if (days == 1) return 'Обновлено вчера';
-    return 'Обновлено $days ${_pluralDays(days)} назад';
-  }
-
-  String _pluralDays(int n) {
-    if (n % 10 == 1 && n % 100 != 11) return 'день';
-    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-      return 'дня';
-    }
-    return 'дней';
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final isStale = _isStale;
 
     // Оранжевый — если пора обновить. Иначе серый, как было.
     final subtitleColor =
         isStale ? Colors.orange.shade700 : theme.colorScheme.onSurfaceVariant;
 
-    final subtitleText = isStale ? '$_subtitle · обновить' : _subtitle;
+    final String subtitle;
+    if (lastUpdatedAt == null) {
+      subtitle = l10n.mileageHeaderNotSet;
+    } else {
+      final days = _daysSinceUpdate!;
+      if (days <= 0) {
+        subtitle = l10n.mileageHeaderUpdatedToday;
+      } else if (days == 1) {
+        subtitle = l10n.mileageHeaderUpdatedYesterday;
+      } else {
+        subtitle = l10n.mileageHeaderUpdatedDaysAgo(days: days);
+      }
+    }
+
+    final subtitleText =
+        isStale ? '$subtitle · ${l10n.mileageHeaderStaleSuffix}' : subtitle;
 
     return Container(
       width: double.infinity,
@@ -82,7 +83,7 @@ class MileageHeader extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                'км',
+                l10n.mileageHeaderUnitKm,
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -124,7 +125,7 @@ class MileageHeader extends StatelessWidget {
           FilledButton.tonalIcon(
             onPressed: onUpdate,
             icon: const Icon(Icons.refresh),
-            label: const Text('Обновить пробег'),
+            label: Text(l10n.mileageHeaderUpdateButton),
           ),
         ],
       ),

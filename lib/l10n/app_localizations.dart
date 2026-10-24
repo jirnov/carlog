@@ -811,6 +811,48 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
   String dueMonthsShort({required int count});
+
+  /// No description provided for @mileageHeaderNotSet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег не задан'**
+  String get mileageHeaderNotSet;
+
+  /// No description provided for @mileageHeaderUpdatedToday.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновлено сегодня'**
+  String get mileageHeaderUpdatedToday;
+
+  /// No description provided for @mileageHeaderUpdatedYesterday.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновлено вчера'**
+  String get mileageHeaderUpdatedYesterday;
+
+  /// No description provided for @mileageHeaderUpdatedDaysAgo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновлено {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад'**
+  String mileageHeaderUpdatedDaysAgo({required int days});
+
+  /// No description provided for @mileageHeaderStaleSuffix.
+  ///
+  /// In ru, this message translates to:
+  /// **'обновить'**
+  String get mileageHeaderStaleSuffix;
+
+  /// No description provided for @mileageHeaderUnitKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get mileageHeaderUnitKm;
+
+  /// No description provided for @mileageHeaderUpdateButton.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить пробег'**
+  String get mileageHeaderUpdateButton;
 }
 
 class _AppLocalizationsDelegate

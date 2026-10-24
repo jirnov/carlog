@@ -219,5 +219,15 @@
   "dueMonthsShort": "{count, plural, one{{count} mo} other{{count} mo}}",
   "@dueMonthsShort": {
     "placeholders": { "count": { "type": "int" } }
-  }
+  },
+    "mileageHeaderNotSet": "Mileage not set",
+  "mileageHeaderUpdatedToday": "Updated today",
+  "mileageHeaderUpdatedYesterday": "Updated yesterday",
+  "mileageHeaderUpdatedDaysAgo": "Updated {days} {days, plural, one{day} other{days}} ago",
+  "@mileageHeaderUpdatedDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "mileageHeaderStaleSuffix": "update",
+  "mileageHeaderUnitKm": "km",
+  "mileageHeaderUpdateButton": "Update mileage"
 }

@@ -219,5 +219,15 @@
   "dueMonthsShort": "{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}",
   "@dueMonthsShort": {
     "placeholders": { "count": { "type": "int" } }
-  }
+  },
+  "mileageHeaderNotSet": "Пробег не задан",
+  "mileageHeaderUpdatedToday": "Обновлено сегодня",
+  "mileageHeaderUpdatedYesterday": "Обновлено вчера",
+  "mileageHeaderUpdatedDaysAgo": "Обновлено {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
+  "@mileageHeaderUpdatedDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "mileageHeaderStaleSuffix": "обновить",
+  "mileageHeaderUnitKm": "км",
+  "mileageHeaderUpdateButton": "Обновить пробег"
 }

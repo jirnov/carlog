@@ -19,15 +19,23 @@ class _HelpScreenState extends State<HelpScreen> {
   String? _html;
   String? _error;
 
+  /// Чтобы не загружать повторно при каждом изменении зависимостей,
+  /// запоминаем локаль, для которой уже загрузили HTML.
+  String? _loadedLocale;
+
   @override
-  void initState() {
-    super.initState();
-    _loadHtml();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Безопасно получать локаль здесь — InheritedWidget уже доступен.
+    final locale = Localizations.localeOf(context).languageCode;
+    if (locale != _loadedLocale) {
+      _loadedLocale = locale;
+      _loadHtml(locale);
+    }
   }
 
-  Future<void> _loadHtml() async {
+  Future<void> _loadHtml(String locale) async {
     try {
-      final locale = Localizations.localeOf(context).languageCode;
       final asset = 'assets/help/help_$locale.html';
       final content = await rootBundle.loadString(asset);
       if (!mounted) return;
@@ -38,11 +46,6 @@ class _HelpScreenState extends State<HelpScreen> {
     }
   }
 
-  /// Обработка кликов по ссылкам в HTML.
-  ///
-  /// Для `mailto:` собираем URI заново — с локализованным subject
-  /// и текущей версией приложения. Это надёжнее, чем хардкодить
-  /// закодированную строку в HTML.
   Future<void> _onLinkTap(String? url) async {
     if (url == null || url.isEmpty) return;
 

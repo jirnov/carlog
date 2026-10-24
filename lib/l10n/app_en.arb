@@ -153,5 +153,36 @@
     "placeholders": { "amount": { "type": "String" } }
   },
   "historyCardEditTooltip": "Edit",
-  "historyCardDeleteTooltip": "Delete"
+  "historyCardDeleteTooltip": "Delete",
+  "homeCarNameFallback": "My car",
+  "homeSelectionCancel": "Cancel",
+  "homeSelectionCount": "Selected: {count}",
+  "@homeSelectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "homePostponedSection": "Postponed",
+  "homeMarkDoneSelected": "Complete ({count})",
+  "@homeMarkDoneSelected": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "homeEmptyTitle": "Work schedule is empty",
+  "homeEmptyMessage": "Add scheduled maintenance on the “Schedule” tab",
+  "homeHowItWorks": "How does it work?",
+
+  "homeDoneSelectedSnack": "{count, plural, =1{1 work} other{{count} works}} completed — {km} km, {date}",
+  "@homeDoneSelectedSnack": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "km": { "type": "String" },
+      "date": { "type": "String" }
+    }
+  },
+  "homeDoneSingleSnack": "{title} completed — {km} km, {date}",
+  "@homeDoneSingleSnack": {
+    "placeholders": {
+      "title": { "type": "String" },
+      "km": { "type": "String" },
+      "date": { "type": "String" }
+    }
+  }
 }

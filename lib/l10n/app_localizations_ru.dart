@@ -331,4 +331,53 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get historyCardDeleteTooltip => 'Удалить';
+
+  @override
+  String get homeCarNameFallback => 'Мой автомобиль';
+
+  @override
+  String get homeSelectionCancel => 'Отмена';
+
+  @override
+  String homeSelectionCount({required int count}) {
+    return 'Выбрано: $count';
+  }
+
+  @override
+  String get homePostponedSection => 'Отложенные';
+
+  @override
+  String homeMarkDoneSelected({required int count}) {
+    return 'Выполнить ($count)';
+  }
+
+  @override
+  String get homeEmptyTitle => 'График работ пуст';
+
+  @override
+  String get homeEmptyMessage =>
+      'Добавьте плановое ТО на вкладке «Планирование»';
+
+  @override
+  String get homeHowItWorks => 'Как это работает?';
+
+  @override
+  String homeDoneSelectedSnack(
+      {required int count, required String km, required String date}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count работы',
+      many: '$count работ',
+      few: '$count работы',
+      one: '1 работа',
+    );
+    return 'Выполнено $_temp0 — $km км, $date';
+  }
+
+  @override
+  String homeDoneSingleSnack(
+      {required String title, required String km, required String date}) {
+    return '$title выполнено — $km км, $date';
+  }
 }

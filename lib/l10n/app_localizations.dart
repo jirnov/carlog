@@ -689,6 +689,68 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Удалить'**
   String get historyCardDeleteTooltip;
+
+  /// No description provided for @homeCarNameFallback.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мой автомобиль'**
+  String get homeCarNameFallback;
+
+  /// No description provided for @homeSelectionCancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отмена'**
+  String get homeSelectionCancel;
+
+  /// No description provided for @homeSelectionCount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбрано: {count}'**
+  String homeSelectionCount({required int count});
+
+  /// No description provided for @homePostponedSection.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отложенные'**
+  String get homePostponedSection;
+
+  /// No description provided for @homeMarkDoneSelected.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнить ({count})'**
+  String homeMarkDoneSelected({required int count});
+
+  /// No description provided for @homeEmptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'График работ пуст'**
+  String get homeEmptyTitle;
+
+  /// No description provided for @homeEmptyMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавьте плановое ТО на вкладке «Планирование»'**
+  String get homeEmptyMessage;
+
+  /// No description provided for @homeHowItWorks.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как это работает?'**
+  String get homeHowItWorks;
+
+  /// No description provided for @homeDoneSelectedSnack.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнено {count, plural, =1{1 работа} few{{count} работы} many{{count} работ} other{{count} работы}} — {km} км, {date}'**
+  String homeDoneSelectedSnack(
+      {required int count, required String km, required String date});
+
+  /// No description provided for @homeDoneSingleSnack.
+  ///
+  /// In ru, this message translates to:
+  /// **'{title} выполнено — {km} км, {date}'**
+  String homeDoneSingleSnack(
+      {required String title, required String km, required String date});
 }
 
 class _AppLocalizationsDelegate

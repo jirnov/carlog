@@ -9,6 +9,7 @@ import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/dialogs/postpone_dialog.dart';
 import 'package:carlog/dialogs/update_mileage_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/due_list_provider.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/providers/mileage_provider.dart';
@@ -186,14 +187,16 @@ class HomeScreenState extends State<HomeScreen> {
 
     _exitSelectionMode();
 
+    final l10n = context.l10n;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
         content: Text(
-          'Выполнено ${selectedRules.length} '
-          '${pluralWorks(selectedRules.length)} — '
-          '${formatThousands(result.mileage)} км, '
-          '${formatMonthYear(result.performedAt)}',
+          l10n.homeDoneSelectedSnack(
+            count: selectedRules.length,
+            km: formatThousands(result.mileage),
+            date: formatMonthYear(result.performedAt),
+          ),
         ),
       ),
     );
@@ -240,13 +243,16 @@ class HomeScreenState extends State<HomeScreen> {
       }
     });
 
+    final l10n = context.l10n;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
         content: Text(
-          '${rule.title} выполнено — '
-          '${formatThousands(result.record.mileage)} км, '
-          '${formatMonthYear(result.record.performedAt)}',
+          l10n.homeDoneSingleSnack(
+            title: rule.title,
+            km: formatThousands(result.record.mileage),
+            date: formatMonthYear(result.record.performedAt),
+          ),
         ),
       ),
     );
@@ -267,6 +273,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final carName = context.select<SettingsProvider, String>(
       (p) => p.carName,
     );
@@ -294,12 +301,14 @@ class HomeScreenState extends State<HomeScreen> {
             ? IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: _exitSelectionMode,
-                tooltip: 'Отмена',
+                tooltip: l10n.homeSelectionCancel,
               )
             : null,
         title: _selectionMode
-            ? Text('Выбрано: ${_selectedRuleIds.length}')
-            : Text(carName.isEmpty ? 'Мой автомобиль' : carName),
+            ? Text(l10n.homeSelectionCount(count: _selectedRuleIds.length))
+            : Text(
+                carName.isEmpty ? l10n.homeCarNameFallback : carName,
+              ),
         actions: _selectionMode ? null : const [SettingsAction()],
       ),
       body: Column(
@@ -342,7 +351,7 @@ class HomeScreenState extends State<HomeScreen> {
                             bottom: 8,
                           ),
                           child: Text(
-                            'Отложенные',
+                            l10n.homePostponedSection,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge
@@ -379,7 +388,9 @@ class HomeScreenState extends State<HomeScreen> {
               heroTag: 'fab_mark_done_selected',
               onPressed: _onMarkDoneSelected,
               icon: const Icon(Icons.done_all),
-              label: Text('Выполнить (${_selectedRuleIds.length})'),
+              label: Text(
+                l10n.homeMarkDoneSelected(count: _selectedRuleIds.length),
+              ),
             )
           : null,
     );
@@ -392,6 +403,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Center(
       child: Padding(
@@ -406,12 +418,12 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'График работ пуст',
+              l10n.homeEmptyTitle,
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Добавьте плановое ТО на вкладке «Планирование»',
+              l10n.homeEmptyMessage,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
@@ -427,7 +439,7 @@ class _EmptyState extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.help_outline),
-              label: const Text('Как это работает?'),
+              label: Text(l10n.homeHowItWorks),
             ),
           ],
         ),

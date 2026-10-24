@@ -153,5 +153,36 @@
     "placeholders": { "amount": { "type": "String" } }
   },
   "historyCardEditTooltip": "Редактировать",
-  "historyCardDeleteTooltip": "Удалить"
+  "historyCardDeleteTooltip": "Удалить",
+  "homeCarNameFallback": "Мой автомобиль",
+  "homeSelectionCancel": "Отмена",
+  "homeSelectionCount": "Выбрано: {count}",
+  "@homeSelectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "homePostponedSection": "Отложенные",
+  "homeMarkDoneSelected": "Выполнить ({count})",
+  "@homeMarkDoneSelected": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "homeEmptyTitle": "График работ пуст",
+  "homeEmptyMessage": "Добавьте плановое ТО на вкладке «Планирование»",
+  "homeHowItWorks": "Как это работает?",
+
+  "homeDoneSelectedSnack": "Выполнено {count, plural, =1{1 работа} few{{count} работы} many{{count} работ} other{{count} работы}} — {km} км, {date}",
+  "@homeDoneSelectedSnack": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "km": { "type": "String" },
+      "date": { "type": "String" }
+    }
+  },
+  "homeDoneSingleSnack": "{title} выполнено — {km} км, {date}",
+  "@homeDoneSingleSnack": {
+    "placeholders": {
+      "title": { "type": "String" },
+      "km": { "type": "String" },
+      "date": { "type": "String" }
+    }
+  }
 }

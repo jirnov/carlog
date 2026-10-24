@@ -333,4 +333,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyCardDeleteTooltip => 'Delete';
+
+  @override
+  String get homeCarNameFallback => 'My car';
+
+  @override
+  String get homeSelectionCancel => 'Cancel';
+
+  @override
+  String homeSelectionCount({required int count}) {
+    return 'Selected: $count';
+  }
+
+  @override
+  String get homePostponedSection => 'Postponed';
+
+  @override
+  String homeMarkDoneSelected({required int count}) {
+    return 'Complete ($count)';
+  }
+
+  @override
+  String get homeEmptyTitle => 'Work schedule is empty';
+
+  @override
+  String get homeEmptyMessage =>
+      'Add scheduled maintenance on the “Schedule” tab';
+
+  @override
+  String get homeHowItWorks => 'How does it work?';
+
+  @override
+  String homeDoneSelectedSnack(
+      {required int count, required String km, required String date}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count works',
+      one: '1 work',
+    );
+    return '$_temp0 completed — $km km, $date';
+  }
+
+  @override
+  String homeDoneSingleSnack(
+      {required String title, required String km, required String date}) {
+    return '$title completed — $km km, $date';
+  }
 }

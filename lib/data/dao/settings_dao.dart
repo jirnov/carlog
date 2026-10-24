@@ -20,7 +20,7 @@ class SettingsDao {
       whereArgs: [_id],
     );
     if (rows.isEmpty) {
-      throw StateError('Строка settings с id=1 отсутствует');
+      throw StateError('String settings with id=1 is missed');
     }
     return Settings.fromMap(rows.first);
   }

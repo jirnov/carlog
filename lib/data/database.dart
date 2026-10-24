@@ -23,7 +23,7 @@ class AppDatabase {
   Database get db {
     final d = _db;
     if (d == null) {
-      throw StateError('AppDatabase не открыта');
+      throw StateError('AppDatabase is not opened');
     }
     return d;
   }

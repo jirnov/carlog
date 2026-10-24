@@ -2,24 +2,28 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
+
 /// Диалог подтверждения выхода без сохранения.
 Future<bool> showConfirmExitDialog(BuildContext context) async {
+  final l10n = context.l10n;
+
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Выйти без сохранения?'),
-      content: const Text('Все изменения будут утеряны'),
+      title: Text(l10n.confirmExitTitle),
+      content: Text(l10n.confirmExitMessage),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Отмена'),
+          child: Text(l10n.actionCancel),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
           style: TextButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.error,
           ),
-          child: const Text('Выйти'),
+          child: Text(l10n.actionExit),
         ),
       ],
     ),

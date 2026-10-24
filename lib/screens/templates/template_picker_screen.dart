@@ -1,10 +1,12 @@
 // lib/screens/templates/template_picker_screen.dart
 
+import 'package:carlog/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/data/templates/work_templates.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/screens/edit_rule/edit_rule_screen.dart';
@@ -93,16 +95,19 @@ class TemplatePickerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final templates = buildWorkTemplates(l10n);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Типовые работы'),
+        title: Text(l10n.templatePickerTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
           _CustomTile(onTap: () => _onCustom(context)),
           const SizedBox(height: 8),
-          for (final category in workTemplates) ...[
+          for (final category in templates) ...[
             _CategoryHeader(name: category.name),
             for (final item in category.items)
               _TemplateTile(
@@ -124,6 +129,7 @@ class _CustomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -131,7 +137,7 @@ class _CustomTile extends StatelessWidget {
         Icons.edit_outlined,
         color: theme.colorScheme.primary,
       ),
-      title: const Text('Своё'),
+      title: Text(l10n.templateCustom),
       trailing: Icon(
         Icons.chevron_right,
         color: theme.colorScheme.onSurfaceVariant,
@@ -171,20 +177,23 @@ class _TemplateTile extends StatelessWidget {
   final WorkTemplate template;
   final VoidCallback onTap;
 
-  /// «каждые 10 000 км · 12 мес» или «каждые 30 000 км».
-  String _intervalLabel() {
+  /// «каждые 10 000 км · 12 мес», «каждые 30 000 км» или «интервал не задан».
+  String _intervalLabel(AppLocalizations l10n) {
     final km = template.intervalKm;
     final months = template.intervalMonths;
 
-    final parts = <String>[];
-    if (km != null && km > 0) {
-      parts.add('${formatThousands(km)} км');
+    final hasKm = km != null && km > 0;
+    final hasMonths = months != null && months > 0;
+
+    if (!hasKm && !hasMonths) return l10n.templateIntervalNotSet;
+    if (hasKm && hasMonths) {
+      return l10n.templateIntervalEveryKmMonths(
+        km: formatThousands(km),
+        months: months,
+      );
     }
-    if (months != null && months > 0) {
-      parts.add('$months мес');
-    }
-    if (parts.isEmpty) return 'интервал не задан';
-    return 'каждые ${parts.join(' · ')}';
+    if (hasKm) return l10n.templateIntervalEveryKm(km: formatThousands(km));
+    return l10n.templateIntervalEveryMonths(months: months!);
   }
 
   @override
@@ -216,7 +225,7 @@ class _TemplateTile extends StatelessWidget {
                   ],
                   const SizedBox(height: 2),
                   Text(
-                    _intervalLabel(),
+                    _intervalLabel(context.l10n),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

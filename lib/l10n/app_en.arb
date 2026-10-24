@@ -1,8 +1,106 @@
 ﻿{
   "@@locale": "en",
-  "appTitle": "CarLog",
+  "appTitle": "Vehicle Maintenance Log",
   "onboardingWelcome": "Welcome",
-  "@onboardingWelcome": {
-    "description": "Заголовок на экране онбординга"
-  }
+
+  "workCategoryEngine": "Engine",
+  "workCategoryTransmission": "Transmission",
+  "workCategoryAwd": "All-wheel drive",
+  "workCategoryBrakes": "Brakes",
+  "workCategoryInterior": "Interior",
+
+  "workEngineOilChange": "Engine oil change",
+  "workAirFilterReplace": "Air filter replacement",
+  "workFuelFilterReplace": "Fuel filter replacement",
+  "workSparkPlugReplace": "Spark plug replacement",
+  "workTimingBeltReplace": "Timing belt replacement",
+  "workAntifreezeReplace": "Antifreeze replacement",
+
+  "workMtmOilChange": "Manual transmission oil change",
+  "workAtmOilChange": "Automatic transmission oil change",
+  "workCvtOilChange": "CVT transmission oil change",
+
+  "workHaldexOilChange": "Haldex oil change",
+  "workTransferCaseOilChange": "Transfer case oil change",
+  "workTransferCaseOilChangeSubtitle": "xDrive / 4Matic / quattro",
+  "workDifferentialOilChange": "Differential oil change",
+
+  "workBrakeFluidReplace": "Brake fluid replacement",
+  "workBrakePadReplace": "Brake pad replacement",
+  "workBrakeDiscReplace": "Brake disc replacement",
+  "workBrakeDrumReplace": "Brake drum replacement",
+
+  "workCabinFilterReplace": "Cabin filter replacement",
+
+  "templatePickerTitle": "Typical works",
+  "templateCustom": "Custom",
+  "templateIntervalNotSet": "interval not set",
+  "templateIntervalEveryKm": "every {km} km",
+  "@templateIntervalEveryKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "templateIntervalEveryMonths": "every {months} mo",
+  "@templateIntervalEveryMonths": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+  "templateIntervalEveryKmMonths": "every {km} km · {months} mo",
+  "@templateIntervalEveryKmMonths": {
+    "placeholders": {
+      "km": { "type": "String" },
+      "months": { "type": "int" }
+    }
+  },
+
+  "confirmCancelTitle": "Cancel maintenance?",
+  "confirmCancelMessage": "Work “{ruleTitle}” will be marked as cancelled. It will appear in history with a cancellation icon and will not be counted as completed. The next maintenance will be shifted to the current mileage.",
+  "@confirmCancelMessage": {
+    "placeholders": {
+      "ruleTitle": { "type": "String" }
+    }
+  },
+  "actionCancel": "Cancel",
+  "actionConfirmCancel": "Cancel it",
+  "actionDelete": "Delete",
+  "confirmExitTitle": "Exit without saving?",
+  "confirmExitMessage": "All changes will be lost",
+  "actionExit": "Exit",
+  "postponeTitle": "Postpone maintenance",
+  "postponePeriodQuestion": "For how long?",
+  "postponeThreeDays": "For 3 days",
+  "postponeOneWeek": "For a week",
+  "postponeOneMonth": "For a month",
+  "postponeCustom": "Custom date",
+  "postponeDateLabel": "Date",
+  "postponePickDate": "Pick a date",
+  "actionPostpone": "Postpone",
+  "updateMileageTitle": "Update mileage",
+  "updateMileageFieldLabel": "New mileage",
+  "updateMileageUnitKm": "km",
+  "updateMileagePrevious": "Previous: {km} km",
+  "@updateMileagePrevious": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "updateMileageDateToday": "Date: today",
+
+  "mileageErrorRequired": "Required field",
+  "mileageErrorPositive": "Mileage must be greater than zero",
+  "mileageErrorMin": "Not less than {km} km",
+  "@mileageErrorMin": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "mileageErrorTooLarge": "Value is too large",
+
+  "mileageJumpTitle": "Mileage jumped sharply",
+  "mileageJumpMessage": "Previous mileage: {previous} km.\nNew: {current} km.\n\nDifference: {diff} km at once. Usually people don''t drive that much between updates. Check for an extra zero.",
+  "@mileageJumpMessage": {
+    "placeholders": {
+      "previous": { "type": "String" },
+      "current": { "type": "String" },
+      "diff": { "type": "String" }
+    }
+  },
+  "mileageJumpEdit": "Edit",
+  "mileageJumpConfirm": "Yes, correct",
+
+  "actionSave": "Save"
 }

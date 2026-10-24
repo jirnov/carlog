@@ -109,6 +109,370 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Добро пожаловать'**
   String get onboardingWelcome;
+
+  /// No description provided for @workCategoryEngine.
+  ///
+  /// In ru, this message translates to:
+  /// **'Двигатель'**
+  String get workCategoryEngine;
+
+  /// No description provided for @workCategoryTransmission.
+  ///
+  /// In ru, this message translates to:
+  /// **'Трансмиссия'**
+  String get workCategoryTransmission;
+
+  /// No description provided for @workCategoryAwd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Полный привод'**
+  String get workCategoryAwd;
+
+  /// No description provided for @workCategoryBrakes.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тормоза'**
+  String get workCategoryBrakes;
+
+  /// No description provided for @workCategoryInterior.
+  ///
+  /// In ru, this message translates to:
+  /// **'Салон'**
+  String get workCategoryInterior;
+
+  /// No description provided for @workEngineOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в двигателе'**
+  String get workEngineOilChange;
+
+  /// No description provided for @workAirFilterReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена воздушного фильтра'**
+  String get workAirFilterReplace;
+
+  /// No description provided for @workFuelFilterReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена топливного фильтра'**
+  String get workFuelFilterReplace;
+
+  /// No description provided for @workSparkPlugReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена свечей зажигания'**
+  String get workSparkPlugReplace;
+
+  /// No description provided for @workTimingBeltReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена ГРМ'**
+  String get workTimingBeltReplace;
+
+  /// No description provided for @workAntifreezeReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена антифриза'**
+  String get workAntifreezeReplace;
+
+  /// No description provided for @workMtmOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в МКПП'**
+  String get workMtmOilChange;
+
+  /// No description provided for @workAtmOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в АКПП'**
+  String get workAtmOilChange;
+
+  /// No description provided for @workCvtOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в вариаторе (CVT)'**
+  String get workCvtOilChange;
+
+  /// No description provided for @workHaldexOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в Haldex'**
+  String get workHaldexOilChange;
+
+  /// No description provided for @workTransferCaseOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в раздатке'**
+  String get workTransferCaseOilChange;
+
+  /// No description provided for @workTransferCaseOilChangeSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'xDrive / 4Matic / quattro'**
+  String get workTransferCaseOilChangeSubtitle;
+
+  /// No description provided for @workDifferentialOilChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена масла в редукторе'**
+  String get workDifferentialOilChange;
+
+  /// No description provided for @workBrakeFluidReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена тормозной жидкости'**
+  String get workBrakeFluidReplace;
+
+  /// No description provided for @workBrakePadReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена тормозных колодок'**
+  String get workBrakePadReplace;
+
+  /// No description provided for @workBrakeDiscReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена тормозных дисков'**
+  String get workBrakeDiscReplace;
+
+  /// No description provided for @workBrakeDrumReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена тормозных барабанов'**
+  String get workBrakeDrumReplace;
+
+  /// No description provided for @workCabinFilterReplace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Замена салонного фильтра'**
+  String get workCabinFilterReplace;
+
+  /// No description provided for @templatePickerTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Typical works'**
+  String get templatePickerTitle;
+
+  /// No description provided for @templateCustom.
+  ///
+  /// In ru, this message translates to:
+  /// **'Custom'**
+  String get templateCustom;
+
+  /// No description provided for @templateIntervalNotSet.
+  ///
+  /// In ru, this message translates to:
+  /// **'interval not set'**
+  String get templateIntervalNotSet;
+
+  /// No description provided for @templateIntervalEveryKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'every {km} km'**
+  String templateIntervalEveryKm({required String km});
+
+  /// No description provided for @templateIntervalEveryMonths.
+  ///
+  /// In ru, this message translates to:
+  /// **'every {months} mo'**
+  String templateIntervalEveryMonths({required int months});
+
+  /// No description provided for @templateIntervalEveryKmMonths.
+  ///
+  /// In ru, this message translates to:
+  /// **'every {km} km · {months} mo'**
+  String templateIntervalEveryKmMonths(
+      {required String km, required int months});
+
+  /// No description provided for @confirmCancelTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отменить ТО?'**
+  String get confirmCancelTitle;
+
+  /// No description provided for @confirmCancelMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Работа «{ruleTitle}» будет помечена как отменённая. Она попадёт в историю со значком отмены и не будет считаться выполненной. Следующее ТО сдвинется на текущий пробег.'**
+  String confirmCancelMessage({required String ruleTitle});
+
+  /// No description provided for @actionCancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отмена'**
+  String get actionCancel;
+
+  /// No description provided for @actionConfirmCancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отменить'**
+  String get actionConfirmCancel;
+
+  /// No description provided for @actionDelete.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить'**
+  String get actionDelete;
+
+  /// No description provided for @confirmExitTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти без сохранения?'**
+  String get confirmExitTitle;
+
+  /// No description provided for @confirmExitMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все изменения будут утеряны'**
+  String get confirmExitMessage;
+
+  /// No description provided for @actionExit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти'**
+  String get actionExit;
+
+  /// No description provided for @postponeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отложить ТО'**
+  String get postponeTitle;
+
+  /// No description provided for @postponePeriodQuestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'На какой срок?'**
+  String get postponePeriodQuestion;
+
+  /// No description provided for @postponeThreeDays.
+  ///
+  /// In ru, this message translates to:
+  /// **'На 3 дня'**
+  String get postponeThreeDays;
+
+  /// No description provided for @postponeOneWeek.
+  ///
+  /// In ru, this message translates to:
+  /// **'На неделю'**
+  String get postponeOneWeek;
+
+  /// No description provided for @postponeOneMonth.
+  ///
+  /// In ru, this message translates to:
+  /// **'На месяц'**
+  String get postponeOneMonth;
+
+  /// No description provided for @postponeCustom.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свой срок'**
+  String get postponeCustom;
+
+  /// No description provided for @postponeDateLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата'**
+  String get postponeDateLabel;
+
+  /// No description provided for @postponePickDate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите дату'**
+  String get postponePickDate;
+
+  /// No description provided for @actionPostpone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отложить'**
+  String get actionPostpone;
+
+  /// No description provided for @updateMileageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить пробег'**
+  String get updateMileageTitle;
+
+  /// No description provided for @updateMileageFieldLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Новый пробег'**
+  String get updateMileageFieldLabel;
+
+  /// No description provided for @updateMileageUnitKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get updateMileageUnitKm;
+
+  /// No description provided for @updateMileagePrevious.
+  ///
+  /// In ru, this message translates to:
+  /// **'Прошлый: {km} км'**
+  String updateMileagePrevious({required String km});
+
+  /// No description provided for @updateMileageDateToday.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата: сегодня'**
+  String get updateMileageDateToday;
+
+  /// No description provided for @mileageErrorRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обязательное поле'**
+  String get mileageErrorRequired;
+
+  /// No description provided for @mileageErrorPositive.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег должен быть больше нуля'**
+  String get mileageErrorPositive;
+
+  /// No description provided for @mileageErrorMin.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не меньше {km} км'**
+  String mileageErrorMin({required String km});
+
+  /// No description provided for @mileageErrorTooLarge.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слишком большое значение'**
+  String get mileageErrorTooLarge;
+
+  /// No description provided for @mileageJumpTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пробег резко вырос'**
+  String get mileageJumpTitle;
+
+  /// No description provided for @mileageJumpMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Прошлый пробег: {previous} км.\nНовый: {current} км.\n\nРазница: {diff} км за один раз. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.'**
+  String mileageJumpMessage(
+      {required String previous,
+      required String current,
+      required String diff});
+
+  /// No description provided for @mileageJumpEdit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить'**
+  String get mileageJumpEdit;
+
+  /// No description provided for @mileageJumpConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Да, верно'**
+  String get mileageJumpConfirm;
+
+  /// No description provided for @actionSave.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить'**
+  String get actionSave;
 }
 
 class _AppLocalizationsDelegate

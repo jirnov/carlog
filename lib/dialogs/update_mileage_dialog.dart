@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
 /// Порог, при превышении которого пробег считается подозрительным.
@@ -49,12 +50,13 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
   int? get _value => parseThousands(_controller.text);
 
   String? _validate(int? value) {
-    if (value == null) return 'Обязательное поле';
-    if (value <= 0) return 'Пробег должен быть больше нуля';
+    final l10n = context.l10n;
+    if (value == null) return l10n.mileageErrorRequired;
+    if (value <= 0) return l10n.mileageErrorPositive;
     if (value < widget.previousMileage) {
-      return 'Не меньше ${formatThousands(widget.previousMileage)} км';
+      return l10n.mileageErrorMin(km: formatThousands(widget.previousMileage));
     }
-    if (value > _maxMileage) return 'Слишком большое значение';
+    if (value > _maxMileage) return l10n.mileageErrorTooLarge;
     return null;
   }
 
@@ -73,26 +75,26 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
     final diff = value - widget.previousMileage;
     if (diff <= _suspiciousJumpKm) return true;
 
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Пробег резко вырос'),
+        title: Text(l10n.mileageJumpTitle),
         content: Text(
-          'Прошлый пробег: '
-          '${formatThousands(widget.previousMileage)} км.\n'
-          'Новый: ${formatThousands(value)} км.\n\n'
-          'Разница: ${formatThousands(diff)} км за один раз. '
-          'Обычно столько не проезжают между обновлениями. '
-          'Проверьте, не лишний ли ноль.',
+          l10n.mileageJumpMessage(
+            previous: formatThousands(widget.previousMileage),
+            current: formatThousands(value),
+            diff: formatThousands(diff),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Изменить'),
+            child: Text(l10n.mileageJumpEdit),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Да, верно'),
+            child: Text(l10n.mileageJumpConfirm),
           ),
         ],
       ),
@@ -120,10 +122,11 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return AlertDialog(
       scrollable: true,
-      title: const Text('Обновить пробег'),
+      title: Text(l10n.updateMileageTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,22 +142,23 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
               if (_canSave) _onSave();
             },
             decoration: InputDecoration(
-              labelText: 'Новый пробег',
-              suffixText: 'км',
+              labelText: l10n.updateMileageFieldLabel,
+              suffixText: l10n.updateMileageUnitKm,
               errorText: _errorText,
             ),
             style: theme.textTheme.headlineSmall,
           ),
           const SizedBox(height: 12),
           Text(
-            'Прошлый: ${formatThousands(widget.previousMileage)} км',
+            l10n.updateMileagePrevious(
+                km: formatThousands(widget.previousMileage)),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            'Дата: сегодня',
+            l10n.updateMileageDateToday,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -164,11 +168,11 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Отмена'),
+          child: Text(l10n.actionCancel),
         ),
         FilledButton(
           onPressed: _canSave ? _onSave : null,
-          child: const Text('Сохранить'),
+          child: Text(l10n.actionSave),
         ),
       ],
     );

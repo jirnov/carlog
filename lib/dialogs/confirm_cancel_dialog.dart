@@ -2,30 +2,29 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
+
 /// Диалог подтверждения отмены ТО.
 /// Возвращает true, если пользователь подтвердил.
 Future<bool> showConfirmCancelDialog(
   BuildContext context, {
   required String ruleTitle,
 }) async {
+  final l10n = context.l10n;
+
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Отменить ТО?'),
-      content: Text(
-        'Работа «$ruleTitle» будет помечена как отменённая. '
-        'Она попадёт в историю со значком отмены и не будет '
-        'считаться выполненной. Следующее ТО сдвинется на '
-        'текущий пробег.',
-      ),
+      title: Text(l10n.confirmCancelTitle),
+      content: Text(l10n.confirmCancelMessage(ruleTitle: ruleTitle)),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Отмена'),
+          child: Text(l10n.actionCancel),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Отменить'),
+          child: Text(l10n.actionConfirmCancel),
         ),
       ],
     ),

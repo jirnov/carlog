@@ -1,11 +1,13 @@
 // lib/app.dart
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/screens/splash/splash_screen.dart';
+import 'l10n/app_localizations.dart';
 
 class CarlogApp extends StatelessWidget {
   const CarlogApp({super.key});
@@ -17,19 +19,18 @@ class CarlogApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'Журнал ТО',
+      title: context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
       themeMode: themeMode,
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('ru'),
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       home: const SplashScreen(),
     );
   }

@@ -35,7 +35,7 @@ class RulesDao {
 
   Future<void> update(Rule rule) async {
     if (rule.id == null) {
-      throw ArgumentError('Нельзя обновить правило без id');
+      throw ArgumentError('Cannot update rule without id');
     }
     await _db.update(
       _table,

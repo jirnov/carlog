@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
 /// Показать диалог отложки ТО.
@@ -71,9 +72,10 @@ class _PostponeDialogState extends State<_PostponeDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return AlertDialog(
-      title: const Text('Отложить ТО'),
+      title: Text(l10n.postponeTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -88,11 +90,9 @@ class _PostponeDialogState extends State<_PostponeDialog> {
             const SizedBox(height: 16),
             const Divider(height: 1),
             const SizedBox(height: 8),
-            Text('На какой срок?', style: theme.textTheme.labelLarge),
+            Text(l10n.postponePeriodQuestion,
+                style: theme.textTheme.labelLarge),
             const SizedBox(height: 8),
-
-            // RadioGroup управляет значением группы; каждый RadioListTile
-            // передаёт только свой value.
             RadioGroup<_PostponeOption>(
               groupValue: _option,
               onChanged: (value) {
@@ -104,45 +104,44 @@ class _PostponeDialogState extends State<_PostponeDialog> {
                 children: [
                   RadioListTile<_PostponeOption>(
                     value: _PostponeOption.threeDays,
-                    title: const Text('На 3 дня'),
+                    title: Text(l10n.postponeThreeDays),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                   ),
                   RadioListTile<_PostponeOption>(
                     value: _PostponeOption.oneWeek,
-                    title: const Text('На неделю'),
+                    title: Text(l10n.postponeOneWeek),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                   ),
                   RadioListTile<_PostponeOption>(
                     value: _PostponeOption.oneMonth,
-                    title: const Text('На месяц'),
+                    title: Text(l10n.postponeOneMonth),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                   ),
                   RadioListTile<_PostponeOption>(
                     value: _PostponeOption.custom,
-                    title: const Text('Свой срок'),
+                    title: Text(l10n.postponeCustom),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                   ),
                 ],
               ),
             ),
-
             if (_option == _PostponeOption.custom) ...[
               const SizedBox(height: 8),
               InkWell(
                 onTap: _pickCustomDate,
                 child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Дата',
-                    suffixIcon: Icon(Icons.calendar_today),
+                  decoration: InputDecoration(
+                    labelText: l10n.postponeDateLabel,
+                    suffixIcon: const Icon(Icons.calendar_today),
                   ),
                   child: Text(
                     _customDate != null
                         ? _formatDate(_customDate!)
-                        : 'Выберите дату',
+                        : l10n.postponePickDate,
                   ),
                 ),
               ),
@@ -153,12 +152,12 @@ class _PostponeDialogState extends State<_PostponeDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Отмена'),
+          child: Text(l10n.actionCancel),
         ),
         FilledButton(
           onPressed:
               _canSubmit ? () => Navigator.of(context).pop(_resultDate) : null,
-          child: const Text('Отложить'),
+          child: Text(l10n.actionPostpone),
         ),
       ],
     );

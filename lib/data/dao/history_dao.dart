@@ -37,7 +37,7 @@ class HistoryDao {
 
   Future<void> update(HistoryRecord record) async {
     if (record.id == null) {
-      throw ArgumentError('Нельзя обновить запись без id');
+      throw ArgumentError('Cannot update record without id');
     }
     await _db.update(
       _table,

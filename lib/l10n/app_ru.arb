@@ -1,5 +1,106 @@
 ﻿{
   "@@locale": "ru",
   "appTitle": "Журнал ТО",
-  "onboardingWelcome": "Добро пожаловать"
+  "onboardingWelcome": "Добро пожаловать",
+
+  "workCategoryEngine": "Двигатель",
+  "workCategoryTransmission": "Трансмиссия",
+  "workCategoryAwd": "Полный привод",
+  "workCategoryBrakes": "Тормоза",
+  "workCategoryInterior": "Салон",
+
+  "workEngineOilChange": "Замена масла в двигателе",
+  "workAirFilterReplace": "Замена воздушного фильтра",
+  "workFuelFilterReplace": "Замена топливного фильтра",
+  "workSparkPlugReplace": "Замена свечей зажигания",
+  "workTimingBeltReplace": "Замена ГРМ",
+  "workAntifreezeReplace": "Замена антифриза",
+
+  "workMtmOilChange": "Замена масла в МКПП",
+  "workAtmOilChange": "Замена масла в АКПП",
+  "workCvtOilChange": "Замена масла в вариаторе (CVT)",
+
+  "workHaldexOilChange": "Замена масла в Haldex",
+  "workTransferCaseOilChange": "Замена масла в раздатке",
+  "workTransferCaseOilChangeSubtitle": "xDrive / 4Matic / quattro",
+  "workDifferentialOilChange": "Замена масла в редукторе",
+
+  "workBrakeFluidReplace": "Замена тормозной жидкости",
+  "workBrakePadReplace": "Замена тормозных колодок",
+  "workBrakeDiscReplace": "Замена тормозных дисков",
+  "workBrakeDrumReplace": "Замена тормозных барабанов",
+
+  "workCabinFilterReplace": "Замена салонного фильтра",
+
+  "templatePickerTitle": "Typical works",
+  "templateCustom": "Custom",
+  "templateIntervalNotSet": "interval not set",
+  "templateIntervalEveryKm": "every {km} km",
+  "@templateIntervalEveryKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "templateIntervalEveryMonths": "every {months} mo",
+  "@templateIntervalEveryMonths": {
+    "placeholders": { "months": { "type": "int" } }
+  },
+  "templateIntervalEveryKmMonths": "every {km} km · {months} mo",
+  "@templateIntervalEveryKmMonths": {
+    "placeholders": {
+      "km": { "type": "String" },
+      "months": { "type": "int" }
+    }
+  },
+
+  "confirmCancelTitle": "Отменить ТО?",
+  "confirmCancelMessage": "Работа «{ruleTitle}» будет помечена как отменённая. Она попадёт в историю со значком отмены и не будет считаться выполненной. Следующее ТО сдвинется на текущий пробег.",
+  "@confirmCancelMessage": {
+    "placeholders": {
+      "ruleTitle": { "type": "String" }
+    }
+  },
+  "actionCancel": "Отмена",
+  "actionConfirmCancel": "Отменить",
+  "actionDelete": "Удалить",
+  "confirmExitTitle": "Выйти без сохранения?",
+  "confirmExitMessage": "Все изменения будут утеряны",
+  "actionExit": "Выйти",
+  "postponeTitle": "Отложить ТО",
+  "postponePeriodQuestion": "На какой срок?",
+  "postponeThreeDays": "На 3 дня",
+  "postponeOneWeek": "На неделю",
+  "postponeOneMonth": "На месяц",
+  "postponeCustom": "Свой срок",
+  "postponeDateLabel": "Дата",
+  "postponePickDate": "Выберите дату",
+  "actionPostpone": "Отложить",
+  "updateMileageTitle": "Обновить пробег",
+  "updateMileageFieldLabel": "Новый пробег",
+  "updateMileageUnitKm": "км",
+  "updateMileagePrevious": "Прошлый: {km} км",
+  "@updateMileagePrevious": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "updateMileageDateToday": "Дата: сегодня",
+
+  "mileageErrorRequired": "Обязательное поле",
+  "mileageErrorPositive": "Пробег должен быть больше нуля",
+  "mileageErrorMin": "Не меньше {km} км",
+  "@mileageErrorMin": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "mileageErrorTooLarge": "Слишком большое значение",
+
+  "mileageJumpTitle": "Пробег резко вырос",
+  "mileageJumpMessage": "Прошлый пробег: {previous} км.\nНовый: {current} км.\n\nРазница: {diff} км за один раз. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.",
+  "@mileageJumpMessage": {
+    "placeholders": {
+      "previous": { "type": "String" },
+      "current": { "type": "String" },
+      "diff": { "type": "String" }
+    }
+  },
+  "mileageJumpEdit": "Изменить",
+  "mileageJumpConfirm": "Да, верно",
+
+  "actionSave": "Сохранить"
 }

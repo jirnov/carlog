@@ -12,9 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Vehicle Maintenance Log';
 
   @override
-  String get onboardingWelcome => 'Welcome';
-
-  @override
   String get workCategoryEngine => 'Engine';
 
   @override
@@ -631,4 +628,55 @@ class AppLocalizationsEn extends AppLocalizations {
       {required String current, required String performed}) {
     return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
   }
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'A couple of questions so the app\ncan calculate maintenance intervals right away';
+
+  @override
+  String get onboardingCarNameLabel => 'Car name';
+
+  @override
+  String get onboardingCarNameHint => 'For example, My swallow';
+
+  @override
+  String get onboardingCarNameHelper => 'Optional';
+
+  @override
+  String get onboardingMileageLabel => 'Current mileage';
+
+  @override
+  String get onboardingMileageUnit => 'km';
+
+  @override
+  String get onboardingMileageRequired => 'Required field';
+
+  @override
+  String get onboardingThemeTitle => 'Theme';
+
+  @override
+  String get onboardingThemeHint => 'You can change it later in settings';
+
+  @override
+  String get onboardingContinue => 'Continue';
+
+  @override
+  String onboardingSaveError({required String error}) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeDialogTitle => 'Appearance theme';
 }

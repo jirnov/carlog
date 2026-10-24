@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/theme_mode_preference.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/utils/formatting.dart';
@@ -34,10 +35,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int? get _mileage => parseThousands(_mileageController.text);
 
   String? _validateMileage() {
+    final l10n = context.l10n;
     final value = _mileage;
-    if (value == null) return 'Обязательное поле';
-    if (value <= 0) return 'Пробег должен быть больше нуля';
-    if (value > 10000000) return 'Слишком большое значение';
+    if (value == null) return l10n.validationRequired;
+    if (value <= 0) return l10n.mileageErrorPositive;
+    if (value > 10000000) return l10n.mileageErrorTooLarge;
     return null;
   }
 
@@ -54,19 +56,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   String _themeLabel(ThemeModePreference pref) {
+    final l10n = context.l10n;
     switch (pref) {
       case ThemeModePreference.system:
-        return 'Как в системе';
+        return l10n.themeSystem;
       case ThemeModePreference.light:
-        return 'Светлая';
+        return l10n.themeLight;
       case ThemeModePreference.dark:
-        return 'Тёмная';
+        return l10n.themeDark;
     }
   }
 
   Future<void> _pickTheme(BuildContext context) async {
     final provider = context.read<SettingsProvider>();
     final current = provider.themeModePreference;
+    final l10n = context.l10n;
 
     final result = await showDialog<ThemeModePreference>(
       context: context,
@@ -74,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         var selected = current;
         return StatefulBuilder(
           builder: (context, setState) => SimpleDialog(
-            title: const Text('Тема оформления'),
+            title: Text(l10n.themeDialogTitle),
             children: [
               RadioGroup<ThemeModePreference>(
                 groupValue: selected,
@@ -135,7 +139,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (!mounted) return;
       setState(() => _isSaving = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Не удалось сохранить: $e')),
+        SnackBar(
+            content:
+                Text(context.l10n.onboardingSaveError(error: e.toString()))),
       );
     }
   }
@@ -143,6 +149,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final currentTheme = context.select<SettingsProvider, ThemeModePreference>(
       (p) => p.themeModePreference,
     );
@@ -173,7 +180,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                       // Заголовок
                       Text(
-                        'Добро пожаловать',
+                        l10n.onboardingWelcomeTitle,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w500,
@@ -183,8 +190,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                       // Подзаголовок
                       Text(
-                        'Пара вопросов, чтобы приложение\n'
-                        'сразу считало сроки ТО',
+                        l10n.onboardingWelcomeSubtitle,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
@@ -197,10 +203,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         controller: _carNameController,
                         textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.sentences,
-                        decoration: const InputDecoration(
-                          labelText: 'Название машины',
-                          hintText: 'Например, Моя ласточка',
-                          helperText: 'Необязательно',
+                        decoration: InputDecoration(
+                          labelText: l10n.onboardingCarNameLabel,
+                          hintText: l10n.onboardingCarNameHint,
+                          helperText: l10n.onboardingCarNameHelper,
                         ),
                         onSubmitted: (_) => _mileageFocus.requestFocus(),
                       ),
@@ -216,11 +222,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ],
                         onChanged: _onMileageChanged,
                         decoration: InputDecoration(
-                          labelText: 'Текущий пробег',
-                          suffixText: 'км',
+                          labelText: l10n.onboardingMileageLabel,
+                          suffixText: l10n.onboardingMileageUnit,
                           errorText: _mileageError,
                           helperText: _mileageError == null
-                              ? 'Обязательное поле'
+                              ? l10n.onboardingMileageRequired
                               : null,
                         ),
                         style: theme.textTheme.headlineSmall,
@@ -231,7 +237,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.brightness_6_outlined),
-                        title: const Text('Тема'),
+                        title: Text(l10n.onboardingThemeTitle),
                         subtitle: Text(_themeLabel(currentTheme)),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => _pickTheme(context),
@@ -239,7 +245,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 4, top: 4),
                         child: Text(
-                          'Можно изменить позже в настройках',
+                          l10n.onboardingThemeHint,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -259,7 +265,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text('Продолжить'),
+                            : Text(l10n.onboardingContinue),
                       ),
                       const SizedBox(height: 16),
                     ],

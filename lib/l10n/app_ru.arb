@@ -1,7 +1,6 @@
 ﻿{
   "@@locale": "ru",
   "appTitle": "Журнал ТО",
-  "onboardingWelcome": "Добро пожаловать",
 
   "workCategoryEngine": "Двигатель",
   "workCategoryTransmission": "Трансмиссия",
@@ -315,5 +314,29 @@
       "current": { "type": "String" },
       "performed": { "type": "String" }
     }
-  }
+  },
+  "onboardingWelcomeTitle": "Добро пожаловать",
+  "onboardingWelcomeSubtitle": "Пара вопросов, чтобы приложение\nсразу считало сроки ТО",
+
+  "onboardingCarNameLabel": "Название машины",
+  "onboardingCarNameHint": "Например, Моя ласточка",
+  "onboardingCarNameHelper": "Необязательно",
+
+  "onboardingMileageLabel": "Текущий пробег",
+  "onboardingMileageUnit": "км",
+  "onboardingMileageRequired": "Обязательное поле",
+
+  "onboardingThemeTitle": "Тема",
+  "onboardingThemeHint": "Можно изменить позже в настройках",
+
+  "onboardingContinue": "Продолжить",
+  "onboardingSaveError": "Не удалось сохранить: {error}",
+  "@onboardingSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "themeSystem": "Как в системе",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "themeDialogTitle": "Тема оформления"
 }

@@ -315,5 +315,29 @@
       "current": { "type": "String" },
       "performed": { "type": "String" }
     }
-  }
+  },
+  "onboardingWelcomeTitle": "Welcome",
+  "onboardingWelcomeSubtitle": "A couple of questions so the app\ncan calculate maintenance intervals right away",
+
+  "onboardingCarNameLabel": "Car name",
+  "onboardingCarNameHint": "For example, My swallow",
+  "onboardingCarNameHelper": "Optional",
+
+  "onboardingMileageLabel": "Current mileage",
+  "onboardingMileageUnit": "km",
+  "onboardingMileageRequired": "Required field",
+
+  "onboardingThemeTitle": "Theme",
+  "onboardingThemeHint": "You can change it later in settings",
+
+  "onboardingContinue": "Continue",
+  "onboardingSaveError": "Failed to save: {error}",
+  "@onboardingSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeDialogTitle": "Appearance theme"
 }

@@ -104,12 +104,6 @@ abstract class AppLocalizations {
   /// **'Журнал ТО'**
   String get appTitle;
 
-  /// No description provided for @onboardingWelcome.
-  ///
-  /// In ru, this message translates to:
-  /// **'Добро пожаловать'**
-  String get onboardingWelcome;
-
   /// No description provided for @workCategoryEngine.
   ///
   /// In ru, this message translates to:
@@ -1110,6 +1104,102 @@ abstract class AppLocalizations {
   /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
   String markDoneUpdateMileageMessage(
       {required String current, required String performed});
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добро пожаловать'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пара вопросов, чтобы приложение\nсразу считало сроки ТО'**
+  String get onboardingWelcomeSubtitle;
+
+  /// No description provided for @onboardingCarNameLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Название машины'**
+  String get onboardingCarNameLabel;
+
+  /// No description provided for @onboardingCarNameHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, Моя ласточка'**
+  String get onboardingCarNameHint;
+
+  /// No description provided for @onboardingCarNameHelper.
+  ///
+  /// In ru, this message translates to:
+  /// **'Необязательно'**
+  String get onboardingCarNameHelper;
+
+  /// No description provided for @onboardingMileageLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Текущий пробег'**
+  String get onboardingMileageLabel;
+
+  /// No description provided for @onboardingMileageUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get onboardingMileageUnit;
+
+  /// No description provided for @onboardingMileageRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обязательное поле'**
+  String get onboardingMileageRequired;
+
+  /// No description provided for @onboardingThemeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тема'**
+  String get onboardingThemeTitle;
+
+  /// No description provided for @onboardingThemeHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Можно изменить позже в настройках'**
+  String get onboardingThemeHint;
+
+  /// No description provided for @onboardingContinue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжить'**
+  String get onboardingContinue;
+
+  /// No description provided for @onboardingSaveError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось сохранить: {error}'**
+  String onboardingSaveError({required String error});
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как в системе'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In ru, this message translates to:
+  /// **'Светлая'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тёмная'**
+  String get themeDark;
+
+  /// No description provided for @themeDialogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тема оформления'**
+  String get themeDialogTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -12,9 +12,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'Журнал ТО';
 
   @override
-  String get onboardingWelcome => 'Добро пожаловать';
-
-  @override
   String get workCategoryEngine => 'Двигатель';
 
   @override
@@ -641,4 +638,55 @@ class AppLocalizationsRu extends AppLocalizations {
       {required String current, required String performed}) {
     return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
   }
+
+  @override
+  String get onboardingWelcomeTitle => 'Добро пожаловать';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Пара вопросов, чтобы приложение\nсразу считало сроки ТО';
+
+  @override
+  String get onboardingCarNameLabel => 'Название машины';
+
+  @override
+  String get onboardingCarNameHint => 'Например, Моя ласточка';
+
+  @override
+  String get onboardingCarNameHelper => 'Необязательно';
+
+  @override
+  String get onboardingMileageLabel => 'Текущий пробег';
+
+  @override
+  String get onboardingMileageUnit => 'км';
+
+  @override
+  String get onboardingMileageRequired => 'Обязательное поле';
+
+  @override
+  String get onboardingThemeTitle => 'Тема';
+
+  @override
+  String get onboardingThemeHint => 'Можно изменить позже в настройках';
+
+  @override
+  String get onboardingContinue => 'Продолжить';
+
+  @override
+  String onboardingSaveError({required String error}) {
+    return 'Не удалось сохранить: $error';
+  }
+
+  @override
+  String get themeSystem => 'Как в системе';
+
+  @override
+  String get themeLight => 'Светлая';
+
+  @override
+  String get themeDark => 'Тёмная';
+
+  @override
+  String get themeDialogTitle => 'Тема оформления';
 }

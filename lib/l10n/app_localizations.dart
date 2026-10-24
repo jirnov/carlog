@@ -473,6 +473,156 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Сохранить'**
   String get actionSave;
+
+  /// No description provided for @editRuleTitleEdit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить плановое ТО'**
+  String get editRuleTitleEdit;
+
+  /// No description provided for @editRuleTitleNew.
+  ///
+  /// In ru, this message translates to:
+  /// **'Новое плановое ТО'**
+  String get editRuleTitleNew;
+
+  /// No description provided for @editRuleNameLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Название регламентной работы'**
+  String get editRuleNameLabel;
+
+  /// No description provided for @editRuleNameHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, замена масла в АКПП'**
+  String get editRuleNameHint;
+
+  /// No description provided for @editRuleNextKmLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'На каком пробеге делать следующее ТО'**
+  String get editRuleNextKmLabel;
+
+  /// No description provided for @editRuleNextKmUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get editRuleNextKmUnit;
+
+  /// No description provided for @editRuleNextKmWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Меньше текущего пробега ({km} км). Возможно, ТО уже выполнено.'**
+  String editRuleNextKmWarning({required String km});
+
+  /// No description provided for @editRuleIntervalSection.
+  ///
+  /// In ru, this message translates to:
+  /// **'Интервал'**
+  String get editRuleIntervalSection;
+
+  /// No description provided for @editRuleIntervalKmLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'По км'**
+  String get editRuleIntervalKmLabel;
+
+  /// No description provided for @editRuleIntervalKmUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'км'**
+  String get editRuleIntervalKmUnit;
+
+  /// No description provided for @editRuleIntervalMonthsLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'По месяцам'**
+  String get editRuleIntervalMonthsLabel;
+
+  /// No description provided for @editRuleIntervalMonthsUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'мес'**
+  String get editRuleIntervalMonthsUnit;
+
+  /// No description provided for @editRuleIntervalError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заполните хотя бы один интервал'**
+  String get editRuleIntervalError;
+
+  /// No description provided for @editRuleCostLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Примерная стоимость'**
+  String get editRuleCostLabel;
+
+  /// No description provided for @editRuleCostHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Для статистики и планирования расходов (необязательно)'**
+  String get editRuleCostHint;
+
+  /// No description provided for @editRuleCostUnit.
+  ///
+  /// In ru, this message translates to:
+  /// **'₽'**
+  String get editRuleCostUnit;
+
+  /// No description provided for @editRuleNoteLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заметка'**
+  String get editRuleNoteLabel;
+
+  /// No description provided for @editRuleNoteHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, синтетическое масло'**
+  String get editRuleNoteHint;
+
+  /// No description provided for @editRuleNextDateLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата следующего ТО'**
+  String get editRuleNextDateLabel;
+
+  /// No description provided for @editRuleNextDateNone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не указано'**
+  String get editRuleNextDateNone;
+
+  /// No description provided for @editRuleResetDate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сбросить'**
+  String get editRuleResetDate;
+
+  /// No description provided for @validationRequired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обязательное поле'**
+  String get validationRequired;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Помощь'**
+  String get helpTitle;
+
+  /// No description provided for @helpLoadError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось загрузить справку'**
+  String get helpLoadError;
+
+  /// No description provided for @helpMailSubject.
+  ///
+  /// In ru, this message translates to:
+  /// **'Предложения по Журналу ТО (версия {version})'**
+  String helpMailSubject({required String version});
 }
 
 class _AppLocalizationsDelegate

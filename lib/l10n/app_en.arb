@@ -102,5 +102,36 @@
   "mileageJumpEdit": "Edit",
   "mileageJumpConfirm": "Yes, correct",
 
-  "actionSave": "Save"
+  "actionSave": "Save",
+  "editRuleTitleEdit": "Edit scheduled maintenance",
+  "editRuleTitleNew": "New scheduled maintenance",
+  "editRuleNameLabel": "Name of scheduled work",
+  "editRuleNameHint": "For example, automatic transmission oil change",
+  "editRuleNextKmLabel": "At what mileage to do the next maintenance",
+  "editRuleNextKmUnit": "km",
+  "editRuleNextKmWarning": "Less than current mileage ({km} km). The maintenance may already be done.",
+  "@editRuleNextKmWarning": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "editRuleIntervalSection": "Interval",
+  "editRuleIntervalKmLabel": "By km",
+  "editRuleIntervalKmUnit": "km",
+  "editRuleIntervalMonthsLabel": "By months",
+  "editRuleIntervalMonthsUnit": "mo",
+  "editRuleIntervalError": "Fill in at least one interval",
+  "editRuleCostLabel": "Estimated cost",
+  "editRuleCostHint": "For statistics and expense planning (optional)",
+  "editRuleCostUnit": "₽",
+  "editRuleNoteLabel": "Note",
+  "editRuleNoteHint": "For example, synthetic oil",
+  "editRuleNextDateLabel": "Next maintenance date",
+  "editRuleNextDateNone": "Not set",
+  "editRuleResetDate": "Reset",
+  "validationRequired": "Required field",
+  "helpTitle": "Help",
+  "helpLoadError": "Failed to load help",
+  "helpMailSubject": "Suggestions for the Maintenance Log (version {version})",
+  "@helpMailSubject": {
+    "placeholders": { "version": { "type": "String" } }
+  }
 }

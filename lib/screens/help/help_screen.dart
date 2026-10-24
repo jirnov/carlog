@@ -6,6 +6,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:carlog/l10n/context_l10n.dart';
+
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
 
@@ -25,7 +27,9 @@ class _HelpScreenState extends State<HelpScreen> {
 
   Future<void> _loadHtml() async {
     try {
-      final content = await rootBundle.loadString('assets/help/help_ru.html');
+      final locale = Localizations.localeOf(context).languageCode;
+      final asset = 'assets/help/help_$locale.html';
+      final content = await rootBundle.loadString(asset);
       if (!mounted) return;
       setState(() => _html = content);
     } catch (e) {
@@ -36,17 +40,19 @@ class _HelpScreenState extends State<HelpScreen> {
 
   /// Обработка кликов по ссылкам в HTML.
   ///
-  /// Для `mailto:` собираем URI заново — с русским subject
+  /// Для `mailto:` собираем URI заново — с локализованным subject
   /// и текущей версией приложения. Это надёжнее, чем хардкодить
   /// закодированную строку в HTML.
   Future<void> _onLinkTap(String? url) async {
     if (url == null || url.isEmpty) return;
 
+    final l10n = context.l10n;
+
     Uri uri;
     if (url.startsWith('mailto:')) {
       final packageInfo = await PackageInfo.fromPlatform();
       final version = packageInfo.version;
-      final subject = 'Предложения по Журналу ТО (версия $version)';
+      final subject = l10n.helpMailSubject(version: version);
 
       uri = Uri(
         scheme: 'mailto',
@@ -62,23 +68,26 @@ class _HelpScreenState extends State<HelpScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      debugPrint('Не удалось открыть ссылку: $uri');
+      debugPrint('Failed to open link: $uri');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Помощь'),
+        title: Text(l10n.helpTitle),
       ),
       body: _buildBody(context, theme),
     );
   }
 
   Widget _buildBody(BuildContext context, ThemeData theme) {
+    final l10n = context.l10n;
+
     if (_error != null) {
       return Center(
         child: Padding(
@@ -93,7 +102,7 @@ class _HelpScreenState extends State<HelpScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Не удалось загрузить справку',
+                l10n.helpLoadError,
                 style: theme.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),

@@ -211,4 +211,84 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get actionSave => 'Сохранить';
+
+  @override
+  String get editRuleTitleEdit => 'Изменить плановое ТО';
+
+  @override
+  String get editRuleTitleNew => 'Новое плановое ТО';
+
+  @override
+  String get editRuleNameLabel => 'Название регламентной работы';
+
+  @override
+  String get editRuleNameHint => 'Например, замена масла в АКПП';
+
+  @override
+  String get editRuleNextKmLabel => 'На каком пробеге делать следующее ТО';
+
+  @override
+  String get editRuleNextKmUnit => 'км';
+
+  @override
+  String editRuleNextKmWarning({required String km}) {
+    return 'Меньше текущего пробега ($km км). Возможно, ТО уже выполнено.';
+  }
+
+  @override
+  String get editRuleIntervalSection => 'Интервал';
+
+  @override
+  String get editRuleIntervalKmLabel => 'По км';
+
+  @override
+  String get editRuleIntervalKmUnit => 'км';
+
+  @override
+  String get editRuleIntervalMonthsLabel => 'По месяцам';
+
+  @override
+  String get editRuleIntervalMonthsUnit => 'мес';
+
+  @override
+  String get editRuleIntervalError => 'Заполните хотя бы один интервал';
+
+  @override
+  String get editRuleCostLabel => 'Примерная стоимость';
+
+  @override
+  String get editRuleCostHint =>
+      'Для статистики и планирования расходов (необязательно)';
+
+  @override
+  String get editRuleCostUnit => '₽';
+
+  @override
+  String get editRuleNoteLabel => 'Заметка';
+
+  @override
+  String get editRuleNoteHint => 'Например, синтетическое масло';
+
+  @override
+  String get editRuleNextDateLabel => 'Дата следующего ТО';
+
+  @override
+  String get editRuleNextDateNone => 'Не указано';
+
+  @override
+  String get editRuleResetDate => 'Сбросить';
+
+  @override
+  String get validationRequired => 'Обязательное поле';
+
+  @override
+  String get helpTitle => 'Помощь';
+
+  @override
+  String get helpLoadError => 'Не удалось загрузить справку';
+
+  @override
+  String helpMailSubject({required String version}) {
+    return 'Предложения по Журналу ТО (версия $version)';
+  }
 }

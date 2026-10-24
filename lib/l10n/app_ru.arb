@@ -102,5 +102,36 @@
   "mileageJumpEdit": "Изменить",
   "mileageJumpConfirm": "Да, верно",
 
-  "actionSave": "Сохранить"
+  "actionSave": "Сохранить",
+  "editRuleTitleEdit": "Изменить плановое ТО",
+  "editRuleTitleNew": "Новое плановое ТО",
+  "editRuleNameLabel": "Название регламентной работы",
+  "editRuleNameHint": "Например, замена масла в АКПП",
+  "editRuleNextKmLabel": "На каком пробеге делать следующее ТО",
+  "editRuleNextKmUnit": "км",
+  "editRuleNextKmWarning": "Меньше текущего пробега ({km} км). Возможно, ТО уже выполнено.",
+  "@editRuleNextKmWarning": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "editRuleIntervalSection": "Интервал",
+  "editRuleIntervalKmLabel": "По км",
+  "editRuleIntervalKmUnit": "км",
+  "editRuleIntervalMonthsLabel": "По месяцам",
+  "editRuleIntervalMonthsUnit": "мес",
+  "editRuleIntervalError": "Заполните хотя бы один интервал",
+  "editRuleCostLabel": "Примерная стоимость",
+  "editRuleCostHint": "Для статистики и планирования расходов (необязательно)",
+  "editRuleCostUnit": "₽",
+  "editRuleNoteLabel": "Заметка",
+  "editRuleNoteHint": "Например, синтетическое масло",
+  "editRuleNextDateLabel": "Дата следующего ТО",
+  "editRuleNextDateNone": "Не указано",
+  "editRuleResetDate": "Сбросить",
+  "validationRequired": "Обязательное поле",
+  "helpTitle": "Помощь",
+  "helpLoadError": "Не удалось загрузить справку",
+  "helpMailSubject": "Предложения по Журналу ТО (версия {version})",
+  "@helpMailSubject": {
+    "placeholders": { "version": { "type": "String" } }
+  }
 }

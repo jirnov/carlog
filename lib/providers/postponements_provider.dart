@@ -30,7 +30,7 @@ class PostponementsProvider extends ChangeNotifier {
     final until = dateOnly(untilDate);
 
     if (!until.isAfter(today) && !until.isAtSameMomentAs(today)) {
-      throw ArgumentError('Дата отложки должна быть в будущем');
+      throw ArgumentError('The scheduled date must be in the future');
     }
 
     await _db.postponements.save(Postponement(

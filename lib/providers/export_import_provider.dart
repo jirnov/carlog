@@ -33,7 +33,7 @@ class ExportImportProvider extends ChangeNotifier {
 
       return file.path;
     } catch (e) {
-      debugPrint('Ошибка экспорта: $e');
+      debugPrint('Export error: $e');
       return null;
     } finally {
       _setBusy(false);
@@ -46,14 +46,14 @@ class ExportImportProvider extends ChangeNotifier {
     try {
       final file = File(path);
       if (!await file.exists()) {
-        throw Exception('Файл не найден');
+        throw Exception('File not found');
       }
 
       final content = await file.readAsString();
       await _service.importFromJson(content);
       return true;
     } catch (e) {
-      debugPrint('Ошибка импорта: $e');
+      debugPrint('Import error: $e');
       return false;
     } finally {
       _setBusy(false);

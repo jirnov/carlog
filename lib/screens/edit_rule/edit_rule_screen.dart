@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/dialogs/confirm_exit_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
 
@@ -156,22 +157,23 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
   }
 
   bool _validate() {
+    final l10n = context.l10n;
     final title = _titleController.text.trim();
     final nextKm = _nextKm;
     final intervalKm = _intervalKm;
     final intervalMonths = _intervalMonths;
 
-    _titleError = title.isEmpty ? 'Обязательное поле' : null;
+    _titleError = title.isEmpty ? l10n.validationRequired : null;
 
     if (nextKm == null || nextKm <= 0) {
-      _nextKmError = 'Обязательное поле';
+      _nextKmError = l10n.validationRequired;
     } else {
       _nextKmError = null;
     }
 
     if ((intervalKm == null || intervalKm <= 0) &&
         (intervalMonths == null || intervalMonths <= 0)) {
-      _intervalError = 'Заполните хотя бы один интервал';
+      _intervalError = l10n.editRuleIntervalError;
     } else {
       _intervalError = null;
     }
@@ -254,7 +256,8 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final title = _isEditing ? 'Изменить плановое ТО' : 'Новое плановое ТО';
+    final l10n = context.l10n;
+    final title = _isEditing ? l10n.editRuleTitleEdit : l10n.editRuleTitleNew;
 
     return PopScope(
       canPop: false,
@@ -289,8 +292,8 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 autofocus: _isCustom,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  labelText: 'Название регламентной работы',
-                  hintText: 'Например, замена масла в АКПП',
+                  labelText: l10n.editRuleNameLabel,
+                  hintText: l10n.editRuleNameHint,
                   errorText: _titleError,
                 ),
               ),
@@ -304,8 +307,8 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 autofocus: _isFromTemplate,
                 onChanged: _onNextKmChanged,
                 decoration: InputDecoration(
-                  labelText: 'На каком пробеге делать следующее ТО',
-                  suffixText: 'км',
+                  labelText: l10n.editRuleNextKmLabel,
+                  suffixText: l10n.editRuleNextKmUnit,
                   errorText: _nextKmError,
                 ),
               ),
@@ -313,9 +316,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 4, left: 12),
                   child: Text(
-                    'Меньше текущего пробега '
-                    '(${formatThousands(_currentMileage)} км). '
-                    'Возможно, ТО уже выполнено.',
+                    l10n.editRuleNextKmWarning(
+                      km: formatThousands(_currentMileage),
+                    ),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.error,
                     ),
@@ -324,7 +327,8 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
               const SizedBox(height: 24),
 
               // Интервал
-              Text('Интервал', style: theme.textTheme.labelLarge),
+              Text(l10n.editRuleIntervalSection,
+                  style: theme.textTheme.labelLarge),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -335,9 +339,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                       inputFormatters: const [
                         ThousandsSeparatorFormatter(),
                       ],
-                      decoration: const InputDecoration(
-                        labelText: 'По км',
-                        suffixText: 'км',
+                      decoration: InputDecoration(
+                        labelText: l10n.editRuleIntervalKmLabel,
+                        suffixText: l10n.editRuleIntervalKmUnit,
                       ),
                     ),
                   ),
@@ -350,9 +354,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                         FilteringTextInputFormatter.digitsOnly,
                       ],
                       onChanged: _onIntervalMonthsChanged,
-                      decoration: const InputDecoration(
-                        labelText: 'По месяцам',
-                        suffixText: 'мес',
+                      decoration: InputDecoration(
+                        labelText: l10n.editRuleIntervalMonthsLabel,
+                        suffixText: l10n.editRuleIntervalMonthsUnit,
                       ),
                     ),
                   ),
@@ -385,11 +389,10 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 controller: _costController,
                 keyboardType: TextInputType.number,
                 inputFormatters: const [ThousandsSeparatorFormatter()],
-                decoration: const InputDecoration(
-                  labelText: 'Примерная стоимость',
-                  hintText:
-                      'Для статистики и планирования расходов (необязательно)',
-                  suffixText: '₽',
+                decoration: InputDecoration(
+                  labelText: l10n.editRuleCostLabel,
+                  hintText: l10n.editRuleCostHint,
+                  suffixText: l10n.editRuleCostUnit,
                 ),
               ),
               const SizedBox(height: 24),
@@ -399,9 +402,9 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                 controller: _noteController,
                 maxLines: 2,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  labelText: 'Заметка',
-                  hintText: 'Например, синтетическое масло',
+                decoration: InputDecoration(
+                  labelText: l10n.editRuleNoteLabel,
+                  hintText: l10n.editRuleNoteHint,
                 ),
               ),
               const SizedBox(height: 24),
@@ -415,7 +418,7 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
                         width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Сохранить'),
+                    : Text(l10n.actionSave),
               ),
             ],
           ),
@@ -440,6 +443,7 @@ class _NextDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final hasDate = nextDate != null;
 
     return Row(
@@ -450,12 +454,14 @@ class _NextDateField extends StatelessWidget {
             onTap: onTap,
             borderRadius: BorderRadius.circular(4),
             child: InputDecorator(
-              decoration: const InputDecoration(
-                labelText: 'Дата следующего ТО',
-                suffixIcon: Icon(Icons.calendar_today),
+              decoration: InputDecoration(
+                labelText: l10n.editRuleNextDateLabel,
+                suffixIcon: const Icon(Icons.calendar_today),
               ),
               child: Text(
-                hasDate ? formatMonthYear(nextDate!) : 'Не указано',
+                hasDate
+                    ? formatMonthYear(nextDate!)
+                    : l10n.editRuleNextDateNone,
                 style: hasDate
                     ? null
                     : TextStyle(color: theme.colorScheme.onSurfaceVariant),
@@ -467,7 +473,7 @@ class _NextDateField extends StatelessWidget {
           const SizedBox(width: 4),
           IconButton(
             icon: const Icon(Icons.clear),
-            tooltip: 'Сбросить',
+            tooltip: l10n.editRuleResetDate,
             onPressed: onClear,
           ),
         ],

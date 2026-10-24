@@ -211,4 +211,86 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionSave => 'Save';
+
+  @override
+  String get editRuleTitleEdit => 'Edit scheduled maintenance';
+
+  @override
+  String get editRuleTitleNew => 'New scheduled maintenance';
+
+  @override
+  String get editRuleNameLabel => 'Name of scheduled work';
+
+  @override
+  String get editRuleNameHint =>
+      'For example, automatic transmission oil change';
+
+  @override
+  String get editRuleNextKmLabel =>
+      'At what mileage to do the next maintenance';
+
+  @override
+  String get editRuleNextKmUnit => 'km';
+
+  @override
+  String editRuleNextKmWarning({required String km}) {
+    return 'Less than current mileage ($km km). The maintenance may already be done.';
+  }
+
+  @override
+  String get editRuleIntervalSection => 'Interval';
+
+  @override
+  String get editRuleIntervalKmLabel => 'By km';
+
+  @override
+  String get editRuleIntervalKmUnit => 'km';
+
+  @override
+  String get editRuleIntervalMonthsLabel => 'By months';
+
+  @override
+  String get editRuleIntervalMonthsUnit => 'mo';
+
+  @override
+  String get editRuleIntervalError => 'Fill in at least one interval';
+
+  @override
+  String get editRuleCostLabel => 'Estimated cost';
+
+  @override
+  String get editRuleCostHint =>
+      'For statistics and expense planning (optional)';
+
+  @override
+  String get editRuleCostUnit => '₽';
+
+  @override
+  String get editRuleNoteLabel => 'Note';
+
+  @override
+  String get editRuleNoteHint => 'For example, synthetic oil';
+
+  @override
+  String get editRuleNextDateLabel => 'Next maintenance date';
+
+  @override
+  String get editRuleNextDateNone => 'Not set';
+
+  @override
+  String get editRuleResetDate => 'Reset';
+
+  @override
+  String get validationRequired => 'Required field';
+
+  @override
+  String get helpTitle => 'Help';
+
+  @override
+  String get helpLoadError => 'Failed to load help';
+
+  @override
+  String helpMailSubject({required String version}) {
+    return 'Suggestions for the Maintenance Log (version $version)';
+  }
 }

@@ -246,12 +246,13 @@
   "@nearestDueDays": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "nearestDueMonths": "{count, plural, one{{count} mo} other{{count} mo}}",
+  "nearestDueMonths": "{count} mo",
   "@nearestDueMonths": {
     "placeholders": { "count": { "type": "int" } }
   },
   "navSchedule": "Work schedule",
   "navPlanning": "Planning",
   "navHistory": "Completed",
-  "exitConfirmMessage": "Press again to exit"
+  "exitConfirmMessage": "Press again to exit",
+  "settingsTooltip": "Settings"
 }

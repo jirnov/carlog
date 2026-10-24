@@ -496,13 +496,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nearestDueMonths({required int count}) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count mo',
-      one: '$count mo',
-    );
-    return '$_temp0';
+    return '$count mo';
   }
 
   @override
@@ -516,4 +510,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exitConfirmMessage => 'Press again to exit';
+
+  @override
+  String get settingsTooltip => 'Settings';
 }

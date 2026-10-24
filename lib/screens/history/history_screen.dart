@@ -46,7 +46,7 @@ class HistoryScreen extends StatelessWidget {
 
     final confirmed = await showConfirmDeleteDialog(
       context,
-      title: l10n.historyDeleteTitle(record.title),
+      title: l10n.historyDeleteTitle(title: record.title),
       message: l10n.historyDeleteMessage,
     );
     if (!confirmed) return;

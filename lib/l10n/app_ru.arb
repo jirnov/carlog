@@ -246,12 +246,13 @@
   "@nearestDueDays": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "nearestDueMonths": "{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}",
+  "nearestDueMonths": "{count} мес",
   "@nearestDueMonths": {
     "placeholders": { "count": { "type": "int" } }
   },
   "navSchedule": "График работ",
   "navPlanning": "Планирование",
   "navHistory": "Выполнено",
-  "exitConfirmMessage": "Нажмите ещё раз для выхода"
+  "exitConfirmMessage": "Нажмите ещё раз для выхода",
+  "settingsTooltip": "Настройки"
 }

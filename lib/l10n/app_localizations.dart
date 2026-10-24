@@ -881,7 +881,7 @@ abstract class AppLocalizations {
   /// No description provided for @nearestDueMonths.
   ///
   /// In ru, this message translates to:
-  /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
+  /// **'{count} мес'**
   String nearestDueMonths({required int count});
 
   /// No description provided for @navSchedule.
@@ -907,6 +907,12 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Нажмите ещё раз для выхода'**
   String get exitConfirmMessage;
+
+  /// No description provided for @settingsTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Настройки'**
+  String get settingsTooltip;
 }
 
 class _AppLocalizationsDelegate

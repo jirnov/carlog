@@ -380,4 +380,62 @@ class AppLocalizationsEn extends AppLocalizations {
       {required String title, required String km, required String date}) {
     return '$title completed — $km km, $date';
   }
+
+  @override
+  String dueCardPostponedUntil({required String date}) {
+    return 'Postponed until $date';
+  }
+
+  @override
+  String dueCardNext({required String value}) {
+    return 'Next: $value';
+  }
+
+  @override
+  String dueCardLeft({required String value}) {
+    return 'Left: $value';
+  }
+
+  @override
+  String dueCardOverdueKm({required String km}) {
+    return 'overdue by $km km';
+  }
+
+  @override
+  String dueCardOverdueDays({required String value}) {
+    return 'overdue by $value';
+  }
+
+  @override
+  String dueCardKmLeft({required String km}) {
+    return '$km km';
+  }
+
+  @override
+  String get dueCardActionPostpone => '[Postpone]';
+
+  @override
+  String get dueCardActionMarkDone => '[Complete]';
+
+  @override
+  String dueDaysShort({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '$count day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dueMonthsShort({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mo',
+      one: '$count mo',
+    );
+    return '$_temp0';
+  }
 }

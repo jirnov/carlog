@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:carlog/l10n/app_localizations.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/services/maintenance_service.dart';
 import 'package:carlog/utils/formatting.dart';
 import 'package:carlog/utils/rounding.dart';
@@ -58,7 +60,13 @@ class DueCard extends StatelessWidget {
         '${date.month.toString().padLeft(2, '0')}.${date.year}';
   }
 
-  String _intervalText() {
+  String _daysShort(int value, AppLocalizations l10n) {
+    final abs = value.abs();
+    if (abs < 30) return l10n.dueDaysShort(count: abs);
+    return l10n.dueMonthsShort(count: (abs / 30).round());
+  }
+
+  String _intervalText(AppLocalizations l10n) {
     final kmOverdue = due.kmLeft != null && due.kmLeft! < 0;
     final dateOverdue = due.daysLeft != null && due.daysLeft! < 0;
 
@@ -66,29 +74,35 @@ class DueCard extends StatelessWidget {
       final parts = <String>[];
       if (kmOverdue) {
         parts.add(
-          'просрочено ${formatThousands(roundKmDown(due.missedKm))} км',
+          l10n.dueCardOverdueKm(
+            km: formatThousands(roundKmDown(due.missedKm)),
+          ),
         );
       }
       if (dateOverdue) {
-        parts.add('просрочено ${formatDaysLeftShort(-due.daysLeft!)}');
+        parts.add(
+          l10n.dueCardOverdueDays(value: _daysShort(-due.daysLeft!, l10n)),
+        );
       }
       return parts.join(' · ');
     }
 
     final parts = <String>[];
     if (due.kmLeft != null) {
-      parts.add('${formatThousands(roundKmDown(due.kmLeft!))} км');
+      parts.add(
+        l10n.dueCardKmLeft(km: formatThousands(roundKmDown(due.kmLeft!))),
+      );
     }
     if (due.daysLeft != null) {
-      parts.add(formatDaysLeftShort(due.daysLeft!));
+      parts.add(_daysShort(due.daysLeft!, l10n));
     }
     return parts.join(' · ');
   }
 
-  String _nextText() {
+  String _nextText(AppLocalizations l10n) {
     final parts = <String>[];
     if (due.nextKm != null) {
-      parts.add('${formatThousands(due.nextKm!)} км');
+      parts.add(l10n.dueCardKmLeft(km: formatThousands(due.nextKm!)));
     }
     if (due.nextDate != null) {
       parts.add(formatMonthYear(due.nextDate!));
@@ -101,6 +115,7 @@ class DueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final color = _statusColor(context);
 
     final isPostponed = due.isPostponed;
@@ -159,8 +174,11 @@ class DueCard extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'Отложено до '
-                                    '${_formatDayMonthYear(due.postponement!.untilDate)}',
+                                    l10n.dueCardPostponedUntil(
+                                      date: _formatDayMonthYear(
+                                        due.postponement!.untilDate,
+                                      ),
+                                    ),
                                     style: theme.textTheme.bodySmall?.copyWith(
                                       color: theme.colorScheme.onSurfaceVariant,
                                     ),
@@ -170,7 +188,7 @@ class DueCard extends StatelessWidget {
                               const SizedBox(height: 4),
                             ],
                             Text(
-                              'Следующее: ${_nextText()}',
+                              l10n.dueCardNext(value: _nextText(l10n)),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -178,8 +196,9 @@ class DueCard extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               hasAnyOverdue
-                                  ? _intervalText()
-                                  : 'Осталось: ${_intervalText()}',
+                                  ? _intervalText(l10n)
+                                  : l10n.dueCardLeft(
+                                      value: _intervalText(l10n)),
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: hasAnyOverdue && !isPostponed
                                     ? color
@@ -201,13 +220,13 @@ class DueCard extends StatelessWidget {
                       children: [
                         if (_showPostpone) ...[
                           _ActionButton(
-                            label: '[Отложить]',
+                            label: l10n.dueCardActionPostpone,
                             onPressed: onPostpone,
                           ),
                           const SizedBox(width: 8),
                         ],
                         _ActionButton(
-                          label: '[Выполнить]',
+                          label: l10n.dueCardActionMarkDone,
                           onPressed: onMarkDone,
                         ),
                       ],

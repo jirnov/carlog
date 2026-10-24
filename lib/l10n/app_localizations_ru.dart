@@ -380,4 +380,66 @@ class AppLocalizationsRu extends AppLocalizations {
       {required String title, required String km, required String date}) {
     return '$title выполнено — $km км, $date';
   }
+
+  @override
+  String dueCardPostponedUntil({required String date}) {
+    return 'Отложено до $date';
+  }
+
+  @override
+  String dueCardNext({required String value}) {
+    return 'Следующее: $value';
+  }
+
+  @override
+  String dueCardLeft({required String value}) {
+    return 'Осталось: $value';
+  }
+
+  @override
+  String dueCardOverdueKm({required String km}) {
+    return 'просрочено $km км';
+  }
+
+  @override
+  String dueCardOverdueDays({required String value}) {
+    return 'просрочено $value';
+  }
+
+  @override
+  String dueCardKmLeft({required String km}) {
+    return '$km км';
+  }
+
+  @override
+  String get dueCardActionPostpone => '[Отложить]';
+
+  @override
+  String get dueCardActionMarkDone => '[Выполнить]';
+
+  @override
+  String dueDaysShort({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count дня',
+      many: '$count дней',
+      few: '$count дня',
+      one: '$count день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dueMonthsShort({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count мес',
+      many: '$count мес',
+      few: '$count мес',
+      one: '$count мес',
+    );
+    return '$_temp0';
+  }
 }

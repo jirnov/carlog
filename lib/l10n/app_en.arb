@@ -184,5 +184,40 @@
       "km": { "type": "String" },
       "date": { "type": "String" }
     }
+  },
+  "dueCardPostponedUntil": "Postponed until {date}",
+  "@dueCardPostponedUntil": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "dueCardNext": "Next: {value}",
+  "@dueCardNext": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardLeft": "Left: {value}",
+  "@dueCardLeft": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardOverdueKm": "overdue by {km} km",
+  "@dueCardOverdueKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "dueCardOverdueDays": "overdue by {value}",
+  "@dueCardOverdueDays": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardKmLeft": "{km} km",
+  "@dueCardKmLeft": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "dueCardActionPostpone": "[Postpone]",
+  "dueCardActionMarkDone": "[Complete]",
+
+  "dueDaysShort": "{count, plural, one{{count} day} other{{count} days}}",
+  "@dueDaysShort": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "dueMonthsShort": "{count, plural, one{{count} mo} other{{count} mo}}",
+  "@dueMonthsShort": {
+    "placeholders": { "count": { "type": "int" } }
   }
 }

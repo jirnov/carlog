@@ -751,6 +751,66 @@ abstract class AppLocalizations {
   /// **'{title} выполнено — {km} км, {date}'**
   String homeDoneSingleSnack(
       {required String title, required String km, required String date});
+
+  /// No description provided for @dueCardPostponedUntil.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отложено до {date}'**
+  String dueCardPostponedUntil({required String date});
+
+  /// No description provided for @dueCardNext.
+  ///
+  /// In ru, this message translates to:
+  /// **'Следующее: {value}'**
+  String dueCardNext({required String value});
+
+  /// No description provided for @dueCardLeft.
+  ///
+  /// In ru, this message translates to:
+  /// **'Осталось: {value}'**
+  String dueCardLeft({required String value});
+
+  /// No description provided for @dueCardOverdueKm.
+  ///
+  /// In ru, this message translates to:
+  /// **'просрочено {km} км'**
+  String dueCardOverdueKm({required String km});
+
+  /// No description provided for @dueCardOverdueDays.
+  ///
+  /// In ru, this message translates to:
+  /// **'просрочено {value}'**
+  String dueCardOverdueDays({required String value});
+
+  /// No description provided for @dueCardKmLeft.
+  ///
+  /// In ru, this message translates to:
+  /// **'{km} км'**
+  String dueCardKmLeft({required String km});
+
+  /// No description provided for @dueCardActionPostpone.
+  ///
+  /// In ru, this message translates to:
+  /// **'[Отложить]'**
+  String get dueCardActionPostpone;
+
+  /// No description provided for @dueCardActionMarkDone.
+  ///
+  /// In ru, this message translates to:
+  /// **'[Выполнить]'**
+  String get dueCardActionMarkDone;
+
+  /// No description provided for @dueDaysShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}'**
+  String dueDaysShort({required int count});
+
+  /// No description provided for @dueMonthsShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}'**
+  String dueMonthsShort({required int count});
 }
 
 class _AppLocalizationsDelegate

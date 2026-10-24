@@ -184,5 +184,40 @@
       "km": { "type": "String" },
       "date": { "type": "String" }
     }
+  },
+  "dueCardPostponedUntil": "Отложено до {date}",
+  "@dueCardPostponedUntil": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "dueCardNext": "Следующее: {value}",
+  "@dueCardNext": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardLeft": "Осталось: {value}",
+  "@dueCardLeft": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardOverdueKm": "просрочено {km} км",
+  "@dueCardOverdueKm": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "dueCardOverdueDays": "просрочено {value}",
+  "@dueCardOverdueDays": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "dueCardKmLeft": "{km} км",
+  "@dueCardKmLeft": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "dueCardActionPostpone": "[Отложить]",
+  "dueCardActionMarkDone": "[Выполнить]",
+
+  "dueDaysShort": "{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}",
+  "@dueDaysShort": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "dueMonthsShort": "{count, plural, one{{count} мес} few{{count} мес} many{{count} мес} other{{count} мес}}",
+  "@dueMonthsShort": {
+    "placeholders": { "count": { "type": "int" } }
   }
 }

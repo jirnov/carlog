@@ -315,4 +315,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get historyDeleteMessage => 'Запись будет удалена из истории.';
+
+  @override
+  String historyCardMileage({required String km}) {
+    return '$km км';
+  }
+
+  @override
+  String historyCardCost({required String amount}) {
+    return '$amount ₽';
+  }
+
+  @override
+  String get historyCardEditTooltip => 'Редактировать';
+
+  @override
+  String get historyCardDeleteTooltip => 'Удалить';
 }

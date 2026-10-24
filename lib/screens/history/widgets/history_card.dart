@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:carlog/data/models/history_record.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
 class HistoryCard extends StatelessWidget {
@@ -17,13 +18,10 @@ class HistoryCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDelete;
 
-  String _formatCost(double cost) {
-    return '${formatThousands(cost.round())} ₽';
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final subtleColor = theme.colorScheme.onSurfaceVariant;
 
     return Card(
@@ -60,7 +58,9 @@ class HistoryCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${formatThousands(record.mileage)} км',
+                          l10n.historyCardMileage(
+                            km: formatThousands(record.mileage),
+                          ),
                           style: theme.textTheme.bodyMedium,
                         ),
                         Text(
@@ -74,7 +74,9 @@ class HistoryCard extends StatelessWidget {
                     if (record.hasCost) ...[
                       const SizedBox(height: 2),
                       Text(
-                        _formatCost(record.cost!),
+                        l10n.historyCardCost(
+                          amount: formatThousands(record.cost!.round()),
+                        ),
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.primary,
                         ),
@@ -87,13 +89,13 @@ class HistoryCard extends StatelessWidget {
                 icon: const Icon(Icons.edit_outlined),
                 color: theme.colorScheme.primary,
                 onPressed: onTap,
-                tooltip: 'Редактировать',
+                tooltip: l10n.historyCardEditTooltip,
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 color: theme.colorScheme.error,
                 onPressed: onDelete,
-                tooltip: 'Удалить',
+                tooltip: l10n.historyCardDeleteTooltip,
               ),
             ],
           ),

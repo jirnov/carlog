@@ -317,4 +317,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyDeleteMessage => 'The record will be deleted from history.';
+
+  @override
+  String historyCardMileage({required String km}) {
+    return '$km km';
+  }
+
+  @override
+  String historyCardCost({required String amount}) {
+    return '$amount ₽';
+  }
+
+  @override
+  String get historyCardEditTooltip => 'Edit';
+
+  @override
+  String get historyCardDeleteTooltip => 'Delete';
 }

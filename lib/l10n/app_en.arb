@@ -143,5 +143,15 @@
   "@historyDeleteTitle": {
     "placeholders": { "title": { "type": "String" } }
   },
-  "historyDeleteMessage": "The record will be deleted from history."
+  "historyDeleteMessage": "The record will be deleted from history.",
+  "historyCardMileage": "{km} km",
+  "@historyCardMileage": {
+    "placeholders": { "km": { "type": "String" } }
+  },
+  "historyCardCost": "{amount} ₽",
+  "@historyCardCost": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "historyCardEditTooltip": "Edit",
+  "historyCardDeleteTooltip": "Delete"
 }

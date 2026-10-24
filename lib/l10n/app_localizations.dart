@@ -665,6 +665,30 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Запись будет удалена из истории.'**
   String get historyDeleteMessage;
+
+  /// No description provided for @historyCardMileage.
+  ///
+  /// In ru, this message translates to:
+  /// **'{km} км'**
+  String historyCardMileage({required String km});
+
+  /// No description provided for @historyCardCost.
+  ///
+  /// In ru, this message translates to:
+  /// **'{amount} ₽'**
+  String historyCardCost({required String amount});
+
+  /// No description provided for @historyCardEditTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Редактировать'**
+  String get historyCardEditTooltip;
+
+  /// No description provided for @historyCardDeleteTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить'**
+  String get historyCardDeleteTooltip;
 }
 
 class _AppLocalizationsDelegate

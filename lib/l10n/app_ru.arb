@@ -133,5 +133,15 @@
   "helpMailSubject": "Предложения по Журналу ТО (версия {version})",
   "@helpMailSubject": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+  "historyTitle": "Выполнено",
+  "historyAddTooltip": "Добавить событие",
+  "historyEmptyTitle": "История пуста",
+  "historyEmptyMessage": "Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно",
+  "historyHowItWorks": "Как это работает?",
+  "historyDeleteTitle": "Удалить работу «{title}»?",
+  "@historyDeleteTitle": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "historyDeleteMessage": "Запись будет удалена из истории."
 }

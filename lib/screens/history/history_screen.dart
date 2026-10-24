@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/screens/help/help_screen.dart';
 import 'package:carlog/screens/main/widgets/settings_action.dart';
@@ -41,10 +42,12 @@ class HistoryScreen extends StatelessWidget {
 
   Future<void> _confirmDelete(
       BuildContext context, HistoryRecord record) async {
+    final l10n = context.l10n;
+
     final confirmed = await showConfirmDeleteDialog(
       context,
-      title: 'Удалить работу «${record.title}»?',
-      message: 'Запись будет удалена из истории.',
+      title: l10n.historyDeleteTitle(record.title),
+      message: l10n.historyDeleteMessage,
     );
     if (!confirmed) return;
     if (!context.mounted) return;
@@ -55,10 +58,11 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final records = context.watch<HistoryProvider>().records;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Выполнено'),
+        title: Text(l10n.historyTitle),
         actions: const [SettingsAction()],
       ),
       body: records.isEmpty
@@ -71,7 +75,7 @@ class HistoryScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'fab_add_history',
         onPressed: () => _openTemplates(context),
-        tooltip: 'Добавить событие',
+        tooltip: l10n.historyAddTooltip,
         child: const Icon(Icons.add),
       ),
     );
@@ -139,6 +143,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Center(
       child: Padding(
@@ -153,13 +158,12 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'История пуста',
+              l10n.historyEmptyTitle,
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Здесь появятся выполненные работы\n'
-              'Но вы можете добавлять их самостоятельно',
+              l10n.historyEmptyMessage,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
@@ -175,7 +179,7 @@ class _EmptyState extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.help_outline),
-              label: const Text('Как это работает?'),
+              label: Text(l10n.historyHowItWorks),
             ),
           ],
         ),

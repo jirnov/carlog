@@ -133,5 +133,15 @@
   "helpMailSubject": "Suggestions for the Maintenance Log (version {version})",
   "@helpMailSubject": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+  "historyTitle": "Completed",
+  "historyAddTooltip": "Add event",
+  "historyEmptyTitle": "History is empty",
+  "historyEmptyMessage": "Completed works will appear here\nBut you can add them manually",
+  "historyHowItWorks": "How does it work?",
+  "historyDeleteTitle": "Delete work “{title}”?",
+  "@historyDeleteTitle": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "historyDeleteMessage": "The record will be deleted from history."
 }

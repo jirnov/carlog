@@ -293,4 +293,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String helpMailSubject({required String version}) {
     return 'Suggestions for the Maintenance Log (version $version)';
   }
+
+  @override
+  String get historyTitle => 'Completed';
+
+  @override
+  String get historyAddTooltip => 'Add event';
+
+  @override
+  String get historyEmptyTitle => 'History is empty';
+
+  @override
+  String get historyEmptyMessage =>
+      'Completed works will appear here\nBut you can add them manually';
+
+  @override
+  String get historyHowItWorks => 'How does it work?';
+
+  @override
+  String historyDeleteTitle({required String title}) {
+    return 'Delete work “$title”?';
+  }
+
+  @override
+  String get historyDeleteMessage => 'The record will be deleted from history.';
 }

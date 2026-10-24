@@ -291,4 +291,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String helpMailSubject({required String version}) {
     return 'Предложения по Журналу ТО (версия $version)';
   }
+
+  @override
+  String get historyTitle => 'Выполнено';
+
+  @override
+  String get historyAddTooltip => 'Добавить событие';
+
+  @override
+  String get historyEmptyTitle => 'История пуста';
+
+  @override
+  String get historyEmptyMessage =>
+      'Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно';
+
+  @override
+  String get historyHowItWorks => 'Как это работает?';
+
+  @override
+  String historyDeleteTitle({required String title}) {
+    return 'Удалить работу «$title»?';
+  }
+
+  @override
+  String get historyDeleteMessage => 'Запись будет удалена из истории.';
 }

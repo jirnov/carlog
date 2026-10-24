@@ -623,6 +623,48 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Предложения по Журналу ТО (версия {version})'**
   String helpMailSubject({required String version});
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выполнено'**
+  String get historyTitle;
+
+  /// No description provided for @historyAddTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить событие'**
+  String get historyAddTooltip;
+
+  /// No description provided for @historyEmptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'История пуста'**
+  String get historyEmptyTitle;
+
+  /// No description provided for @historyEmptyMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно'**
+  String get historyEmptyMessage;
+
+  /// No description provided for @historyHowItWorks.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как это работает?'**
+  String get historyHowItWorks;
+
+  /// No description provided for @historyDeleteTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить работу «{title}»?'**
+  String historyDeleteTitle({required String title});
+
+  /// No description provided for @historyDeleteMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Запись будет удалена из истории.'**
+  String get historyDeleteMessage;
 }
 
 class _AppLocalizationsDelegate

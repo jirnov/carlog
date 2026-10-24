@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
 import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/screens/edit_rule/edit_rule_screen.dart';
 import 'package:carlog/screens/help/help_screen.dart';
@@ -34,10 +35,12 @@ class RulesScreen extends StatelessWidget {
   }
 
   Future<void> _confirmDelete(BuildContext context, Rule rule) async {
+    final l10n = context.l10n;
+
     final confirmed = await showConfirmDeleteDialog(
       context,
-      title: 'Удалить правило «${rule.title}»?',
-      message: 'История выполненных работ не изменится.',
+      title: l10n.rulesDeleteTitle(title: rule.title),
+      message: l10n.rulesDeleteMessage,
     );
     if (!confirmed) return;
     if (!context.mounted) return;
@@ -48,10 +51,11 @@ class RulesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rules = context.watch<RulesProvider>().rules;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Планирование'),
+        title: Text(l10n.rulesTitle),
         actions: const [SettingsAction()],
       ),
       body: rules.isEmpty
@@ -72,7 +76,7 @@ class RulesScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'fab_add_rule',
         onPressed: () => _openTemplates(context),
-        tooltip: 'Добавить правило',
+        tooltip: l10n.rulesAddTooltip,
         child: const Icon(Icons.add),
       ),
     );
@@ -85,6 +89,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Center(
       child: Padding(
@@ -99,13 +104,12 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Планов пока нет',
+              l10n.rulesEmptyTitle,
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Добавьте плановое ТО с интервалом\n'
-              'и оно появится в графике работ',
+              l10n.rulesEmptyMessage,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
@@ -113,15 +117,16 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextButton.icon(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const HelpScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.help_outline),
-                label: const Text('С чего начать?')),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const HelpScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.help_outline),
+              label: Text(l10n.rulesHowToStart),
+            ),
           ],
         ),
       ),

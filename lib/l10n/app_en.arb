@@ -339,5 +339,15 @@
   "themeSystem": "System",
   "themeLight": "Light",
   "themeDark": "Dark",
-  "themeDialogTitle": "Appearance theme"
+  "themeDialogTitle": "Appearance theme",
+  "rulesTitle": "Planning",
+  "rulesAddTooltip": "Add rule",
+  "rulesEmptyTitle": "No plans yet",
+  "rulesEmptyMessage": "Add a scheduled maintenance with an interval\nand it will appear in the work schedule",
+  "rulesHowToStart": "Where to start?",
+  "rulesDeleteTitle": "Delete rule “{title}”?",
+  "@rulesDeleteTitle": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "rulesDeleteMessage": "The history of completed works will not change."
 }

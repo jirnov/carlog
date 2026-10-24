@@ -1200,6 +1200,48 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Тема оформления'**
   String get themeDialogTitle;
+
+  /// No description provided for @rulesTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Планирование'**
+  String get rulesTitle;
+
+  /// No description provided for @rulesAddTooltip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить правило'**
+  String get rulesAddTooltip;
+
+  /// No description provided for @rulesEmptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Планов пока нет'**
+  String get rulesEmptyTitle;
+
+  /// No description provided for @rulesEmptyMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавьте плановое ТО с интервалом\nи оно появится в графике работ'**
+  String get rulesEmptyMessage;
+
+  /// No description provided for @rulesHowToStart.
+  ///
+  /// In ru, this message translates to:
+  /// **'С чего начать?'**
+  String get rulesHowToStart;
+
+  /// No description provided for @rulesDeleteTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить правило «{title}»?'**
+  String rulesDeleteTitle({required String title});
+
+  /// No description provided for @rulesDeleteMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'История выполненных работ не изменится.'**
+  String get rulesDeleteMessage;
 }
 
 class _AppLocalizationsDelegate

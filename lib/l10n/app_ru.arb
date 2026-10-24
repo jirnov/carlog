@@ -338,5 +338,15 @@
   "themeSystem": "Как в системе",
   "themeLight": "Светлая",
   "themeDark": "Тёмная",
-  "themeDialogTitle": "Тема оформления"
+  "themeDialogTitle": "Тема оформления",
+  "rulesTitle": "Планирование",
+  "rulesAddTooltip": "Добавить правило",
+  "rulesEmptyTitle": "Планов пока нет",
+  "rulesEmptyMessage": "Добавьте плановое ТО с интервалом\nи оно появится в графике работ",
+  "rulesHowToStart": "С чего начать?",
+  "rulesDeleteTitle": "Удалить правило «{title}»?",
+  "@rulesDeleteTitle": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "rulesDeleteMessage": "История выполненных работ не изменится."
 }

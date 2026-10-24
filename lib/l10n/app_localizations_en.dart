@@ -679,4 +679,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeDialogTitle => 'Appearance theme';
+
+  @override
+  String get rulesTitle => 'Planning';
+
+  @override
+  String get rulesAddTooltip => 'Add rule';
+
+  @override
+  String get rulesEmptyTitle => 'No plans yet';
+
+  @override
+  String get rulesEmptyMessage =>
+      'Add a scheduled maintenance with an interval\nand it will appear in the work schedule';
+
+  @override
+  String get rulesHowToStart => 'Where to start?';
+
+  @override
+  String rulesDeleteTitle({required String title}) {
+    return 'Delete rule “$title”?';
+  }
+
+  @override
+  String get rulesDeleteMessage =>
+      'The history of completed works will not change.';
 }

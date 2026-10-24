@@ -689,4 +689,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get themeDialogTitle => 'Тема оформления';
+
+  @override
+  String get rulesTitle => 'Планирование';
+
+  @override
+  String get rulesAddTooltip => 'Добавить правило';
+
+  @override
+  String get rulesEmptyTitle => 'Планов пока нет';
+
+  @override
+  String get rulesEmptyMessage =>
+      'Добавьте плановое ТО с интервалом\nи оно появится в графике работ';
+
+  @override
+  String get rulesHowToStart => 'С чего начать?';
+
+  @override
+  String rulesDeleteTitle({required String title}) {
+    return 'Удалить правило «$title»?';
+  }
+
+  @override
+  String get rulesDeleteMessage => 'История выполненных работ не изменится.';
 }

@@ -22,44 +22,60 @@ Future<void> main() async {
     exit(1);
   }
 
-  // 3. Разбираем версию (ожидаем формат 0.0.X)
-  final parts = currentVersion.split('.');
-  if (parts.length != 3) {
-    stderr.writeln('Ошибка: ожидается формат версии 0.0.X, получено: $currentVersion');
+  // 3. Разбираем версию формата X.X.X+Y (часть +Y обязательна)
+  final plusIndex = currentVersion.indexOf('+');
+  if (plusIndex == -1) {
+    stderr.writeln(
+      'Ошибка: ожидается формат версии X.X.X+Y, получено: $currentVersion',
+    );
     exit(1);
   }
 
-  final major = int.tryParse(parts[0]);
-  final minor = int.tryParse(parts[1]);
-  final patch = int.tryParse(parts[2]);
+  final versionName = currentVersion.substring(0, plusIndex); // X.X.X
+  final buildNumberStr = currentVersion.substring(plusIndex + 1); // Y
 
-  if (major == null || minor == null || patch == null) {
-    stderr.writeln('Ошибка: нечисловые компоненты версии.');
+  // Проверяем, что versionName — это ровно три числовые части
+  final nameParts = versionName.split('.');
+  if (nameParts.length != 3 ||
+      nameParts.any((p) => int.tryParse(p) == null)) {
+    stderr.writeln(
+      'Ошибка: ожидается формат X.X.X+Y с числовыми X, X, X, получено: $currentVersion',
+    );
     exit(1);
   }
 
-  final newVersion = '$major.$minor.${patch + 1}';
+  final buildNumber = int.tryParse(buildNumberStr);
+  if (buildNumber == null) {
+    stderr.writeln(
+      'Ошибка: число после "+" должно быть целым, получено: $buildNumberStr',
+    );
+    exit(1);
+  }
+
+  // 4. Увеличиваем только число после "+"
+  final newBuildNumber = buildNumber + 1;
+  final newVersion = '$versionName+$newBuildNumber';
   print('Версия: $currentVersion -> $newVersion');
 
-  // 4. Обновляем pubspec.yaml (сохраняя форматирование)
+  // 5. Обновляем pubspec.yaml (сохраняя форматирование)
   final editor = YamlEditor(content);
   editor.update(['version'], newVersion);
   pubspecFile.writeAsStringSync(editor.toString());
 
-  // 5. Git add и commit
+  // 6. Git add и commit
   await _runGit(['add', pubspecFile.path], pubspecFile.parent.path);
   await _runGit(
     ['commit', '-m', 'chore: bump version to $newVersion'],
     pubspecFile.parent.path,
   );
 
-  // 6. Создаём тег
+  // 7. Создаём тег в формате vX.X.X+Y
   final tagName = 'v$newVersion';
   await _runGit(['tag', tagName], pubspecFile.parent.path);
 
   print('Готово. Создан тег: $tagName');
 
-  // 7. Пушим коммит и тег в origin
+  // 8. Пушим коммит и тег в origin
   print('Пуш в origin...');
   await _runGit(['push', 'origin', 'HEAD'], pubspecFile.parent.path);
   await _runGit(['push', 'origin', tagName], pubspecFile.parent.path);

@@ -106,23 +106,26 @@ class LocaleTile extends StatelessWidget {
       builder: (dialogContext) => SimpleDialog(
         title: Text(l10n.languageDialogTitle),
         children: [
-          RadioListTile<String?>(
-            value: null,
+          RadioGroup<String?>(
             groupValue: current,
-            title: Text(l10n.languageSystem),
             onChanged: (value) => Navigator.of(dialogContext).pop(value),
-          ),
-          RadioListTile<String?>(
-            value: 'ru',
-            groupValue: current,
-            title: Text(l10n.languageRussian),
-            onChanged: (value) => Navigator.of(dialogContext).pop(value),
-          ),
-          RadioListTile<String?>(
-            value: 'en',
-            groupValue: current,
-            title: Text(l10n.languageEnglish),
-            onChanged: (value) => Navigator.of(dialogContext).pop(value),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile<String?>(
+                  value: null,
+                  title: Text(l10n.languageSystem),
+                ),
+                RadioListTile<String?>(
+                  value: 'ru',
+                  title: Text(l10n.languageRussian),
+                ),
+                RadioListTile<String?>(
+                  value: 'en',
+                  title: Text(l10n.languageEnglish),
+                ),
+              ],
+            ),
           ),
         ],
       ),

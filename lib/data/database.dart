@@ -18,7 +18,10 @@ class AppDatabase {
   factory AppDatabase() => instance;
 
   static const _dbName = 'carlog.db';
-  static const _currentVersion = 2;
+
+  /// Текущая версия схемы БД.
+  /// Используется и в `ExportImportService` для `schema_version` в JSON.
+  static const int currentVersion = 2;
 
   Database? _db;
 
@@ -55,7 +58,7 @@ class AppDatabase {
 
   Future<Database> _openAt(String path, {DatabaseFactory? factory}) async {
     final options = OpenDatabaseOptions(
-      version: _currentVersion,
+      version: currentVersion,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -138,7 +141,6 @@ class AppDatabase {
     batch.execute(
         'CREATE INDEX idx_mileage_recorded ON mileage_log(recorded_at DESC)');
 
-    // Новые установки: locale = null (системный).
     batch.insert('settings', {
       'id': 1,
       'car_name': '',
@@ -156,10 +158,8 @@ class AppDatabase {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // v1 → v2: добавить колонку locale.
       await db.execute('ALTER TABLE settings ADD COLUMN locale TEXT');
 
-      // Определить язык системы: русский → 'ru', иначе → 'en'.
       final systemLang =
           PlatformDispatcher.instance.locale.languageCode.toLowerCase();
       final initialLocale = systemLang == 'ru' ? 'ru' : 'en';

@@ -38,6 +38,17 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "Integration Test (Flavor)",
+            "request": "launch",
+            "type": "dart",
+            "program": "integration_test/create_rule_test.dart",
+            "args": [
+                "--flavor",
+                "rustore"
+            ],
+            "templateFor": "integration_test"
         }
     ]
 }

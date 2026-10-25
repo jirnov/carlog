@@ -97,6 +97,7 @@
       "diff": { "type": "String" }
     }
   },
+  "markDoneUpdateMileageTitle": "Обновить пробег машины?",
   "markDoneJumpMessage": "Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.",
   "@markDoneJumpMessage": {
     "placeholders": {

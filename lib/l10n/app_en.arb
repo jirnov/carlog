@@ -104,6 +104,7 @@
       "diff": { "type": "String" }
     }
   },
+  "markDoneUpdateMileageTitle": "Update car mileage?",
   "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. Usually people don''t drive that much between updates. Check for an extra zero.",
   "@markDoneJumpMessage": {
     "placeholders": {

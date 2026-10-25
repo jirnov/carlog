@@ -60,13 +60,24 @@ void main() {
       final decoded = jsonDecode(json) as Map<String, dynamic>;
 
       expect(decoded['app'], 'carlog');
-      expect(decoded['schema_version'], 1);
+      expect(decoded['schema_version'], AppDatabase.currentVersion);
       expect(decoded['exported_at'], isA<String>());
       expect(decoded['settings'], isA<Map<String, dynamic>>());
       expect(decoded['rules'], isA<List>());
       expect(decoded['history'], isA<List>());
       expect(decoded['mileage_log'], isA<List>());
       expect(decoded['postponements'], isA<List>());
+    });
+
+    test('settings в JSON содержит только car_name и onboarding_done',
+        () async {
+      await seedData();
+
+      final json = await service.exportToJson();
+      final decoded = jsonDecode(json) as Map<String, dynamic>;
+      final settings = decoded['settings'] as Map<String, dynamic>;
+
+      expect(settings.keys.toSet(), {'car_name', 'onboarding_done'});
     });
 
     test('экспортирует данные из БД', () async {
@@ -90,15 +101,26 @@ void main() {
     });
 
     test('чужое приложение → исключение', () async {
-      final json = jsonEncode({'app': 'other', 'schema_version': 4});
+      final json = jsonEncode({'app': 'other', 'schema_version': 2});
       expect(
         () => service.importFromJson(json),
         throwsA(isA<Exception>()),
       );
     });
 
-    test('старая версия → исключение', () async {
-      final json = jsonEncode({'app': 'carlog', 'schema_version': 3});
+    test('версия выше текущей → исключение', () async {
+      final json = jsonEncode({
+        'app': 'carlog',
+        'schema_version': AppDatabase.currentVersion + 1,
+      });
+      expect(
+        () => service.importFromJson(json),
+        throwsA(isA<Exception>()),
+      );
+    });
+
+    test('версия ниже минимальной → исключение', () async {
+      final json = jsonEncode({'app': 'carlog', 'schema_version': 0});
       expect(
         () => service.importFromJson(json),
         throwsA(isA<Exception>()),
@@ -114,10 +136,44 @@ void main() {
   });
 
   group('importFromJson — успех', () {
-    test('пустые таблицы → не падает', () async {
+    test('v1 (старая) → конвертация, не падает', () async {
       final json = jsonEncode({
         'app': 'carlog',
         'schema_version': 1,
+        'settings': {
+          'car_name': 'Старая машина',
+          'remind_enabled': 0,
+          'remind_days': 60,
+          'yellow_km': 1000,
+          'yellow_months': 2,
+          'onboarding_done': 1,
+          'theme_mode': 'dark',
+        },
+        'rules': [],
+        'history': [],
+        'mileage_log': [],
+        'postponements': [],
+      });
+
+      await service.importFromJson(json);
+
+      final rules = await db.rules.getAll();
+      expect(rules, isEmpty);
+
+      // car_name и onboarding_done — из JSON.
+      final settings = await db.settings.get();
+      expect(settings.carName, 'Старая машина');
+      expect(settings.onboardingDone, isTrue);
+
+      // Остальные настройки — не тронуты.
+      expect(settings.remindDays, 30); // default, не 60
+      expect(settings.themeMode.name, 'system'); // default, не dark
+    });
+
+    test('пустые таблицы → не падает', () async {
+      final json = jsonEncode({
+        'app': 'carlog',
+        'schema_version': AppDatabase.currentVersion,
         'settings': null,
         'rules': [],
         'history': [],
@@ -136,15 +192,10 @@ void main() {
 
       final json = jsonEncode({
         'app': 'carlog',
-        'schema_version': 1,
+        'schema_version': AppDatabase.currentVersion,
         'settings': {
           'car_name': 'Новая машина',
-          'remind_enabled': 0,
-          'remind_days': 60,
-          'yellow_km': 1000,
-          'yellow_months': 2,
           'onboarding_done': 1,
-          'theme_mode': 'dark',
         },
         'rules': [
           {
@@ -171,7 +222,6 @@ void main() {
 
       final settings = await db.settings.get();
       expect(settings.carName, 'Новая машина');
-      expect(settings.remindDays, 60);
     });
 
     test('round-trip: экспорт → импорт → данные те же', () async {

@@ -474,6 +474,12 @@ abstract class AppLocalizations {
       required String current,
       required String diff});
 
+  /// No description provided for @markDoneUpdateMileageTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обновить пробег машины?'**
+  String get markDoneUpdateMileageTitle;
+
   /// No description provided for @markDoneJumpMessage.
   ///
   /// In ru, this message translates to:

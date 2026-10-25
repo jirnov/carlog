@@ -6,13 +6,8 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:carlog/data/database.dart';
 
-/// Версия схемы JSON.
-/// v1 → v2: из `settings` убраны `yellow_km`, `yellow_months`,
-/// `theme_mode`, `remind_enabled`, `remind_days`.
-/// Оставлены `car_name` (данные) и `onboarding_done` (флаг «данные введены»).
-const int _schemaVersion = 2;
-
 /// Минимальная поддерживаемая версия для конвертации.
+/// Старые файлы (v1) принимаются и конвертируются.
 const int _minSupportedVersion = 1;
 
 const String _appMarker = 'carlog';
@@ -21,6 +16,9 @@ class ExportImportService {
   ExportImportService(this._db);
 
   final AppDatabase _db;
+
+  /// Версия схемы JSON = версия схемы БД.
+  int get _schemaVersion => AppDatabase.currentVersion;
 
   /// Собрать все данные в JSON-строку.
   Future<String> exportToJson() async {
@@ -58,12 +56,6 @@ class ExportImportService {
   }
 
   /// Импортировать данные из JSON-строки.
-  /// Бросает исключение, если формат неверный или версия несовместима.
-  ///
-  /// Старые версии (v1) конвертируются: из `settings` берутся только
-  /// `car_name` и `onboarding_done`. Остальные поля
-  /// (тема, язык, напоминания, пороги) не трогаются —
-  /// остаются текущие на устройстве.
   Future<void> importFromJson(String content) async {
     final dynamic decoded;
     try {
@@ -94,15 +86,11 @@ class ExportImportService {
     final db = _db.db;
 
     await db.transaction((txn) async {
-      // 1. Очистить таблицы (кроме settings — его обновим).
       await txn.delete('history');
       await txn.delete('rules');
       await txn.delete('mileage_log');
       await txn.delete('postponements');
 
-      // 2. Settings — обновляем только car_name и onboarding_done.
-      // Остальные поля (theme_mode, locale, remind_enabled, remind_days,
-      // yellow_km, yellow_months) остаются текущие на устройстве.
       final settings = decoded['settings'];
       if (settings is Map<String, dynamic>) {
         await txn.update(
@@ -115,9 +103,7 @@ class ExportImportService {
           whereArgs: [1],
         );
       }
-      // Если settings нет — ничего не меняем. Текущие настройки остаются.
 
-      // 3. Rules.
       final rules = decoded['rules'];
       if (rules is List) {
         for (final rule in rules) {
@@ -139,7 +125,6 @@ class ExportImportService {
         }
       }
 
-      // 4. History.
       final history = decoded['history'];
       if (history is List) {
         for (final record in history) {
@@ -159,7 +144,6 @@ class ExportImportService {
         }
       }
 
-      // 5. Mileage log.
       final mileage = decoded['mileage_log'];
       if (mileage is List) {
         for (final entry in mileage) {
@@ -175,7 +159,6 @@ class ExportImportService {
         }
       }
 
-      // 6. Postponements.
       final postponements = decoded['postponements'];
       if (postponements is List) {
         for (final p in postponements) {

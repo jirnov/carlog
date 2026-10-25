@@ -13,6 +13,7 @@ import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/providers/postponements_provider.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/providers/settings_provider.dart';
+import 'package:carlog/services/backup_service.dart';
 import 'package:carlog/services/notification_service.dart';
 import 'package:carlog/services/reminder_service.dart';
 
@@ -22,9 +23,13 @@ import 'package:carlog/services/reminder_service.dart';
 /// - БД in-memory (`sqflite_common_ffi`).
 /// - Нет `WorkManager`.
 /// - Нет `NotificationService.init()` / `requestPermissions()`.
+/// - Язык принудительно `'en'` — тесты ищут английские строки.
 /// - Загрузку данных делает `SplashScreen` — как в production.
 Future<void> runTestApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Сброс существующей фабрики, чтобы избежать предупреждения sqflite
+  databaseFactoryOrNull = null;
 
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
@@ -32,6 +37,9 @@ Future<void> runTestApp() async {
   final db = AppDatabase();
   if (db.isOpen) await db.close();
   await db.openInMemory(factory: databaseFactoryFfi);
+
+  // Принудительно английский язык — тесты ищут английские строки.
+  await db.settings.setLocale('en');
 
   final settings = SettingsProvider(db);
   final mileage = MileageProvider(db);
@@ -48,7 +56,6 @@ Future<void> runTestApp() async {
     postponements: postponements,
   );
 
-  // На Linux/Android без init() все методы — no-op.
   final notifications = NotificationService();
 
   final reminder = ReminderService(
@@ -64,6 +71,7 @@ Future<void> runTestApp() async {
         Provider<AppDatabase>.value(value: db),
         Provider<NotificationService>.value(value: notifications),
         Provider<ReminderService>.value(value: reminder),
+        Provider<BackupService>(create: (_) => BackupService(db)),
         ChangeNotifierProvider<SettingsProvider>.value(value: settings),
         ChangeNotifierProvider<MileageProvider>.value(value: mileage),
         ChangeNotifierProvider<RulesProvider>.value(value: rules),

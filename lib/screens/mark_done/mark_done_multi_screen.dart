@@ -117,7 +117,7 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.actionUpdateMileage),
+        title: Text(l10n.markDoneUpdateMileageTitle),
         content: Text(
           l10n.markDoneUpdateMileageMessage(
             current: formatThousands(currentMileage, locale),

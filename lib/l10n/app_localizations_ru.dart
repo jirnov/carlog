@@ -211,6 +211,9 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get markDoneUpdateMileageTitle => 'Обновить пробег машины?';
+
+  @override
   String markDoneJumpMessage(
       {required String current,
       required String performed,

@@ -271,7 +271,7 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.actionUpdateMileage),
+        title: Text(l10n.markDoneUpdateMileageTitle),
         content: Text(
           l10n.markDoneUpdateMileageMessage(
             current: formatThousands(currentMileage, locale),
@@ -299,9 +299,16 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final mileage = _mileage!;
     final locale = Localizations.localeOf(context).languageCode;
 
+    // Захватываем Navigator и провайдер до первого await,
+    // чтобы не обращаться к context после асинхронных операций.
+    final navigator = Navigator.of(context);
+    final currentMileage = context.read<MileageProvider>().currentMileage;
+
     final confirmed = await _confirmLargeJump(mileage, locale);
     if (!confirmed) return;
-    if (!context.mounted) return;
+    // Проверка State.mounted — валидная защита для последующего
+    // использования context внутри того же State.
+    if (!mounted) return;
 
     setState(() => _isSaving = true);
 
@@ -321,7 +328,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     // больше текущего. Запись в MileageProvider — на стороне HomeScreen.
     int? updatedMileage;
     if (_strictMode) {
-      final currentMileage = context.read<MileageProvider>().currentMileage;
       if (mileage > currentMileage) {
         final confirmed = await _confirmUpdateMileage(
           mileage,
@@ -334,11 +340,13 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
       }
     }
 
-    if (!context.mounted) return;
-    Navigator.of(context).pop(MarkDoneResult(
-      record: record,
-      updatedMileage: updatedMileage,
-    ));
+    if (!mounted) return;
+    navigator.pop(
+      MarkDoneResult(
+        record: record,
+        updatedMileage: updatedMileage,
+      ),
+    );
   }
 
   @override

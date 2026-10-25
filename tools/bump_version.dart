@@ -52,9 +52,10 @@ Future<void> main() async {
     exit(1);
   }
 
-  // 4. Увеличиваем только число после "+"
+  // 4. Увеличиваем только versionCode (число после "+")
   final newBuildNumber = buildNumber + 1;
   final newVersion = '$versionName+$newBuildNumber';
+  final tagName = 'v$newVersion';
   print('Версия: $currentVersion -> $newVersion');
 
   // 5. Обновляем pubspec.yaml (сохраняя форматирование)
@@ -62,15 +63,14 @@ Future<void> main() async {
   editor.update(['version'], newVersion);
   pubspecFile.writeAsStringSync(editor.toString());
 
-  // 6. Git add и commit
+  // 6. Git add и commit с сообщением "Set version to vX.X.X+Y"
   await _runGit(['add', pubspecFile.path], pubspecFile.parent.path);
   await _runGit(
-    ['commit', '-m', 'chore: bump version to $newVersion'],
+    ['commit', '-m', 'Set version to $tagName'],
     pubspecFile.parent.path,
   );
 
-  // 7. Создаём тег в формате vX.X.X+Y
-  final tagName = 'v$newVersion';
+  // 7. Создаём тег на текущий коммит
   await _runGit(['tag', tagName], pubspecFile.parent.path);
 
   print('Готово. Создан тег: $tagName');
@@ -79,6 +79,8 @@ Future<void> main() async {
   print('Пуш в origin...');
   await _runGit(['push', 'origin', 'HEAD'], pubspecFile.parent.path);
   await _runGit(['push', 'origin', tagName], pubspecFile.parent.path);
+
+  print('Пуш завершён.');
 }
 
 /// Ищет pubspec.yaml в текущей директории и выше по дереву.

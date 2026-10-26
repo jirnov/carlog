@@ -11,61 +11,61 @@
 
   <h2 id="start">Getting started</h2>
   <p>
-    After entering the mileage, add your first work on the
+    After entering your mileage, add your first job on the
     <b>“Schedule”</b> tab — the <b>“+”</b> button at the bottom of the screen.
   </p>
   <p>
-    The <b>“Typical works”</b> screen opens: you can pick a ready-made
-    work from the list — its name and intervals will be filled in automatically,
+    The <b>“Typical jobs”</b> screen opens: you can pick a ready-made
+    job from the list — its name and intervals will be filled in automatically,
     and you only need to specify the mileage. Or tap <b>“Custom”</b> at the top
     of the list and fill in the form manually.
   </p>
   <p>
-    In the form, specify <b>what</b> to do and <b>after how much</b> —
-    by kilometers, by time, or by both conditions at once.
+    In the form, specify <b>what</b> to do and <b>how often</b> —
+    by mileage, by time, or by both at once.
   </p>
   <p>
-    Created works appear on the <b>“Work schedule”</b> tab —
+    The jobs you create appear on the <b>“Work schedule”</b> tab —
     there you can see what to do and when.
   </p>
 
   <h2 id="how">How the next maintenance is calculated</h2>
   <p>
-    Each work in the schedule stores the <b>mileage of the next maintenance</b>
-    (and, if a monthly interval is set, the <b>month of the next maintenance</b>).
-    The app compares them with the current mileage and date and shows
-    how much is left.
+    Each job in the schedule stores the <b>mileage at which the next maintenance
+    is due</b> (and, if a monthly interval is set, the <b>month of the next
+    maintenance</b>). The app compares them with the current mileage and date
+    and shows how much is left.
   </p>
   <p>
-    When you mark a work as done, the app shifts the next mileage and month
-    forward by the interval <b>from the actually entered mileage and completion
-    month</b>. The old plan is not taken into account: if you did it earlier
-    or later, the count starts from the fact.
+    When you mark a job as done, the app moves the next mileage and month
+    forward by the interval, <b>starting from the mileage and month you actually
+    entered</b>. The old plan is not taken into account: if you did it earlier
+    or later, the count starts from the actual values.
   </p>
   <p>
     If both intervals are set, the app shows whichever comes first.
   </p>
 
-  <h2 id="fields">Work form fields</h2>
+  <h2 id="fields">Job form fields</h2>
   <ul>
     <li>
-      <b>Name</b> — what this work is: “Oil change”,
+      <b>Name</b> — what this job is: “Oil change”,
       “Brake pad replacement”.
     </li>
     <li>
-      <b>At what mileage to do the next maintenance</b> — the mileage
-      at which the work should be performed. Required field.
+      <b>Mileage for the next maintenance</b> — the mileage
+      at which the job should be performed. Required field.
     </li>
     <li>
-      <b>Interval by km</b> — after how many kilometers to repeat.
+      <b>Interval (km)</b> — after how many kilometers to repeat.
     </li>
     <li>
-      <b>Interval by months</b> — after how many months to repeat.
+      <b>Interval (months)</b> — after how many months to repeat.
     </li>
     <li>
       <b>Next maintenance date</b> — the month when the next maintenance
       is planned. Shown only if a monthly interval is set. Can be left empty —
-      then the date will appear after the first completion.
+      the date will then appear after the first completion.
     </li>
     <li>
       <b>Estimated cost</b> — optional. Pre-filled in the completion form
@@ -84,48 +84,48 @@
     entering maintenance that has already been done.
   </p>
 
-  <h2 id="templates">Typical works</h2>
+  <h2 id="templates">Typical jobs</h2>
   <p>
-    The <b>“Typical works”</b> screen contains popular works:
+    The <b>“Typical jobs”</b> screen lists popular jobs:
     engine oil change, transmission oil change, Haldex, brake fluid,
     filters, spark plugs and so on.
   </p>
   <p>
-    When you pick a work from the list, a form opens with the name
+    When you pick a job from the list, a form opens with the name
     and intervals already filled in. Check them, enter the mileage —
     and save.
   </p>
   <p>
-    The intervals in typical works are approximate. If your car's
+    The intervals in the typical jobs are approximate. If your car's
     service book specifies different values, adjust them in the form
     before saving.
   </p>
 
   <h2 id="statuses">What the card color means</h2>
   <ul>
-    <li><b>Green</b> — the work is far away.</li>
-    <li><b>Yellow</b> — do it soon.</li>
+    <li><b>Green</b> — maintenance is not due yet.</li>
+    <li><b>Yellow</b> — due soon.</li>
     <li><b>Red</b> — maintenance is overdue.</li>
-    <li><b>Gray</b> — the work is postponed.</li>
+    <li><b>Gray</b> — the job is postponed.</li>
   </ul>
 
   <h2 id="postpone">Postpone</h2>
   <p>
-    The work is temporarily hidden in the “Postponed” section.
-    The reminder is postponed for the selected period: 3 days,
+    The job is temporarily hidden in the “Postponed” section.
+    The reminder is delayed for the selected period: 3 days,
     a week, a month, or a custom date.
   </p>
   <p>
     The <b>“Postpone”</b> button is available on red and yellow cards.
-    It is not available on green cards (work is far away) or on already
-    postponed works.
+    It is not available on green cards (maintenance not due yet) or on
+    already postponed jobs.
   </p>
   <p>
     When the postponement period ends, the card returns to the active
     list and looks as usual.
   </p>
 
-  <h2 id="done">Complete a work</h2>
+  <h2 id="done">Complete a job</h2>
   <p>
     Tap <b>“Complete”</b> on the card. A form opens: specify the mileage
     and month of completion, and optionally the cost and a note.
@@ -136,13 +136,13 @@
     mileage is updated.
   </p>
   <p>
-    After saving, the work goes to history, and the next maintenance
-    is shifted by the interval from the entered values.
+    After saving, the job goes to history, and the next maintenance
+    is moved forward by the interval from the entered values.
   </p>
 
-  <h2 id="multi">Complete several works at once</h2>
+  <h2 id="multi">Complete several jobs at once</h2>
   <p>
-    If you were at a service center and had several works done at once,
+    If you were at a service center and had several jobs done at once,
     you don't need to mark each one separately. On the
     <b>“Work schedule”</b> tab:
   </p>
@@ -151,7 +151,7 @@
       <b>Long-press</b> a card — this enables selection mode.
     </li>
     <li>
-      Check <b>checkboxes</b> for all works that were completed.
+      Check the <b>checkboxes</b> for all jobs that were completed.
     </li>
     <li>
       Tap the <b>“Complete (N)”</b> button at the bottom of the screen.
@@ -159,12 +159,12 @@
   </ul>
   <p>
     A single shared form opens: specify the <b>mileage</b> and <b>month</b>
-    of completion once — they will be applied to all selected works.
+    of completion once — they will be applied to all selected jobs.
     Add a note if needed.
   </p>
   <p>
-    After saving, all selected works go to history, and their next
-    maintenance is shifted by the interval from the entered values.
+    After saving, all selected jobs go to history, and their next
+    maintenance is moved forward by the interval from the entered values.
     The car's mileage is updated once.
   </p>
   <p>
@@ -190,11 +190,11 @@
 
   <h2 id="history">History records</h2>
   <p>
-    All completed works are stored here. Records can be edited and deleted.
+    All completed jobs are stored here. Records can be edited and deleted.
   </p>
   <p>
-    History records <b>do not affect</b> the work schedule — rules change
-    only when you tap “Complete” on a work card.
+    History records <b>do not affect</b> the work schedule — the schedule
+    changes only when you tap “Complete” on a job card.
   </p>
 
   <h2 id="settings">Settings</h2>

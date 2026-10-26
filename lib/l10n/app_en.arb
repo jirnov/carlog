@@ -95,9 +95,13 @@
   },
   "mileageErrorTooLarge": "Value is too large",
 
-  "mileageJumpTitle": "Mileage jumped sharply",
-  "mileageJumpMessage": "Previous mileage: {previous} km.\nNew: {current} km.\n\nDifference: {diff} km at once. Usually people don''t drive that much between updates. Check for an extra zero.",
+  "mileageJumpTitle": "Sudden mileage increase",
+  "@mileageJumpTitle": {
+    "description": "Dialog title warning about a suspiciously large mileage increase."
+  },
+  "mileageJumpMessage": "Previous mileage: {previous} km.\nNew: {current} km.\n\nDifference: {diff} km in one go. People usually don''t drive that much between updates. Check for an extra zero.",
   "@mileageJumpMessage": {
+    "description": "Warning shown when the entered mileage is suspiciously larger than the previous one.",
     "placeholders": {
       "previous": { "type": "String" },
       "current": { "type": "String" },
@@ -105,8 +109,9 @@
     }
   },
   "markDoneUpdateMileageTitle": "Update car mileage?",
-  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. Usually people don''t drive that much between updates. Check for an extra zero.",
+  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. People usually don''t drive that much between updates. Check for an extra zero.",
   "@markDoneJumpMessage": {
+    "description": "Warning shown when the mileage at which maintenance was performed is suspiciously larger than the car's current mileage.",
     "placeholders": {
       "current": { "type": "String" },
       "performed": { "type": "String" },
@@ -121,7 +126,10 @@
   "editRuleTitleNew": "New scheduled maintenance",
   "editRuleNameLabel": "Name of scheduled work",
   "editRuleNameHint": "For example, automatic transmission oil change",
-  "editRuleNextKmLabel": "At what mileage to do the next maintenance",
+  "editRuleNextKmLabel": "Next maintenance mileage",
+  "@editRuleNextKmLabel": {
+    "description": "Label for the input field where the user sets the mileage at which the next maintenance should be done."
+  },
   "editRuleNextKmWarning": "Less than current mileage ({km} km). The maintenance may already be done.",
   "@editRuleNextKmWarning": {
     "placeholders": { "km": { "type": "String" } }
@@ -169,7 +177,7 @@
     "placeholders": { "count": { "type": "int" } }
   },
   "homeEmptyTitle": "Work schedule is empty",
-  "homeEmptyMessage": "Add scheduled maintenance on the “Schedule” tab",
+  "homeEmptyMessage": "Add scheduled maintenance on the «Planning» tab",
   "howItWorks": "How does it work?",
 
   "homeDoneSelectedSnack": "{count, plural, =1{1 work} other{{count} works}} completed — {km} km, {date}",
@@ -246,7 +254,7 @@
     "placeholders": { "count": { "type": "int" } }
   },
   "markDoneMultiUpdateMileageTitle": "Update car mileage?",
-  "markDoneMultiUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nUpdate the current car mileage to {performed} km?",
+  "markDoneMultiUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nSet the car mileage to {performed} km?",
   "@markDoneMultiUpdateMileageMessage": {
     "placeholders": {
       "current": { "type": "String" },
@@ -270,7 +278,7 @@
   "mileageErrorTooSmall": "Mileage looks suspiciously small — check the value",
 
   "markDoneUpdateMileageTitle": "Update car mileage?",
-  "markDoneUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nUpdate the current car mileage to {performed} km?",
+  "markDoneUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nSet the car mileage to {performed} km?",
   "@markDoneUpdateMileageMessage": {
     "placeholders": {
       "current": { "type": "String" },
@@ -301,7 +309,7 @@
   "themeDialogTitle": "Appearance theme",
   "rulesAddTooltip": "Add rule",
   "rulesEmptyTitle": "No plans yet",
-  "rulesEmptyMessage": "Add a scheduled maintenance with an interval\nand it will appear in the work schedule",
+  "rulesEmptyMessage": "Add scheduled maintenance with an interval\nand it will appear in the work schedule",
   "rulesHowToStart": "Where to start?",
   "rulesDeleteTitle": "Delete rule “{title}”?",
   "@rulesDeleteTitle": {
@@ -356,7 +364,7 @@
   "settingsCarNameTitle": "Name",
   "settingsCarNameNotSet": "Not set",
   "settingsCarNameDialogTitle": "Car name",
-  "settingsCarNameHint": "For example, My swallow",
+  "settingsCarNameHint": "For example, My Betsy",
 
   "settingsRemindEnabled": "Remind to update mileage",
   "settingsRemindDaysTitle": "How often",
@@ -367,10 +375,10 @@
     "placeholders": { "days": { "type": "int" } }
   },
 
-  "settingsYellowKmTitle": "How many km before",
+  "settingsYellowKmTitle": "Warning distance (km)",
   "settingsYellowKmDialogTitle": "Warning threshold by km",
 
-  "settingsYellowMonthsTitle": "How many months before",
+  "settingsYellowMonthsTitle": "Warning period (months)",
   "settingsYellowMonthsDialogTitle": "Warning threshold by time",
 
   "settingsThemeTitle": "Theme",
@@ -438,13 +446,15 @@
     "placeholders": { "carName": { "type": "String" } }
   },
 
-  "notificationMileageBodyStale": "Mileage data is out of date",
-  "notificationMileageBodyOneDay": "Data is 1 day out of date",
-  "notificationMileageBodyDays": "Data is {days} {days, plural, one{day} other{days}} out of date",
-  "@notificationMileageBodyDays": {
-    "placeholders": { "days": { "type": "int" } }
+  "notificationMileageBodyStale": "Mileage data is outdated",
+  "notificationMileageBodyOneDay": "Last updated 1 day ago",
+  "notificationMileageBodyDays": "Last updated {days} {days, plural, =1{day} other{days}} ago",
+"@notificationMileageBodyDays": {
+    "description": "Notification body when mileage data was last updated the given number of days ago.",
+    "placeholders": {
+      "days": { "type": "int" }
+    }
   },
-
   "notificationActionUpdate": "Update",
   "notificationActionLater": "Later"
 }

@@ -200,14 +200,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mileageErrorTooLarge => 'Value is too large';
 
   @override
-  String get mileageJumpTitle => 'Mileage jumped sharply';
+  String get mileageJumpTitle => 'Sudden mileage increase';
 
   @override
   String mileageJumpMessage(
       {required String previous,
       required String current,
       required String diff}) {
-    return 'Previous mileage: $previous km.\nNew: $current km.\n\nDifference: $diff km at once. Usually people don\'t drive that much between updates. Check for an extra zero.';
+    return 'Previous mileage: $previous km.\nNew: $current km.\n\nDifference: $diff km in one go. People usually don\'t drive that much between updates. Check for an extra zero.';
   }
 
   @override
@@ -218,7 +218,7 @@ class AppLocalizationsEn extends AppLocalizations {
       {required String current,
       required String performed,
       required String diff}) {
-    return 'Current car mileage: $current km.\nYou marked maintenance at $performed km.\n\nDifference: $diff km. Usually people don\'t drive that much between updates. Check for an extra zero.';
+    return 'Current car mileage: $current km.\nYou marked maintenance at $performed km.\n\nDifference: $diff km. People usually don\'t drive that much between updates. Check for an extra zero.';
   }
 
   @override
@@ -244,8 +244,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'For example, automatic transmission oil change';
 
   @override
-  String get editRuleNextKmLabel =>
-      'At what mileage to do the next maintenance';
+  String get editRuleNextKmLabel => 'Next maintenance mileage';
 
   @override
   String editRuleNextKmWarning({required String km}) {
@@ -347,7 +346,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeEmptyMessage =>
-      'Add scheduled maintenance on the “Schedule” tab';
+      'Add scheduled maintenance on the «Planning» tab';
 
   @override
   String get howItWorks => 'How does it work?';
@@ -482,7 +481,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String markDoneUpdateMileageMessage(
       {required String current, required String performed}) {
-    return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nUpdate the current car mileage to $performed km?';
+    return 'Current mileage: $current km.\nCompletion mileage: $performed km.\n\nSet the car mileage to $performed km?';
   }
 
   @override
@@ -578,7 +577,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rulesEmptyMessage =>
-      'Add a scheduled maintenance with an interval\nand it will appear in the work schedule';
+      'Add scheduled maintenance with an interval\nand it will appear in the work schedule';
 
   @override
   String get rulesHowToStart => 'Where to start?';
@@ -664,7 +663,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsCarNameDialogTitle => 'Car name';
 
   @override
-  String get settingsCarNameHint => 'For example, My swallow';
+  String get settingsCarNameHint => 'For example, My Betsy';
 
   @override
   String get settingsRemindEnabled => 'Remind to update mileage';
@@ -690,13 +689,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsYellowKmTitle => 'How many km before';
+  String get settingsYellowKmTitle => 'Warning distance (km)';
 
   @override
   String get settingsYellowKmDialogTitle => 'Warning threshold by km';
 
   @override
-  String get settingsYellowMonthsTitle => 'How many months before';
+  String get settingsYellowMonthsTitle => 'Warning period (months)';
 
   @override
   String get settingsYellowMonthsDialogTitle => 'Warning threshold by time';
@@ -827,10 +826,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get notificationMileageBodyStale => 'Mileage data is out of date';
+  String get notificationMileageBodyStale => 'Mileage data is outdated';
 
   @override
-  String get notificationMileageBodyOneDay => 'Data is 1 day out of date';
+  String get notificationMileageBodyOneDay => 'Last updated 1 day ago';
 
   @override
   String notificationMileageBodyDays({required int days}) {
@@ -840,7 +839,7 @@ class AppLocalizationsEn extends AppLocalizations {
       other: 'days',
       one: 'day',
     );
-    return 'Data is $days $_temp0 out of date';
+    return 'Last updated $days $_temp0 ago';
   }
 
   @override

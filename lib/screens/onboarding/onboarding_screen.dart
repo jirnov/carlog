@@ -183,7 +183,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final current = provider.locale;
     final l10n = context.l10n;
 
-    final result = await showDialog<String?>(
+    // Оборачиваем результат в record, чтобы отличить «диалог закрыт»
+    // (result == null) от «выбран System» (result != null, locale == null).
+    final result = await showDialog<({String? locale})>(
       context: context,
       builder: (dialogContext) {
         return SimpleDialog(
@@ -191,7 +193,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             RadioGroup<String?>(
               groupValue: current,
-              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+              onChanged: (value) =>
+                  Navigator.of(dialogContext).pop((locale: value)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -216,7 +219,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
 
     if (context.mounted && result != null) {
-      await provider.setLocale(result);
+      await provider.setLocale(result.locale);
     }
   }
 

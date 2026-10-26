@@ -240,7 +240,7 @@
   "@markDoneMultiSaveButton": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "markDoneUpdateMileageMessage": "Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?",
+  "markDoneUpdateMileageMessage": "Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nУстановить пробег машины на {performed} км?",
   "@markDoneUpdateMileageMessage": {
     "placeholders": {
       "current": { "type": "String" },
@@ -353,11 +353,11 @@
     "placeholders": { "days": { "type": "int" } }
   },
 
-  "settingsYellowKmTitle": "За сколько км",
-  "settingsYellowKmDialogTitle": "Порог предупреждения по км",
+  "settingsWarnKmTitle": "Порог предупреждения (км)",
+  "settingsWarnKmDialogTitle": "Порог предупреждения по км",
 
-  "settingsYellowMonthsTitle": "За сколько месяцев",
-  "settingsYellowMonthsDialogTitle": "Порог предупреждения по сроку",
+  "settingsWarnMonthsTitle": "Порог предупреждения (мес)",
+  "settingsWarnMonthsDialogTitle": "Порог предупреждения по сроку",
 
   "settingsThemeTitle": "Тема",
 
@@ -423,8 +423,8 @@
     "placeholders": { "carName": { "type": "String" } }
   },
   "notificationMileageBodyStale": "Данные о пробеге устарели",
-  "notificationMileageBodyOneDay": "Данные устарели 1 день назад",
-  "notificationMileageBodyDays": "Данные устарели {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
+  "notificationMileageBodyOneDay": "Последнее обновление 1 день назад",
+  "notificationMileageBodyDays": "Последнее обновление {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
   "@notificationMileageBodyDays": {
     "placeholders": { "days": { "type": "int" } }
   },

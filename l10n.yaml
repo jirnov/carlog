@@ -5,4 +5,4 @@ output-localization-file: app_localizations.dart
 format: true
 nullable-getter: false
 use-named-parameters: true
-use-escaping: true
+use-escaping: false

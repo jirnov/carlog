@@ -22,7 +22,7 @@ class YellowKmTile extends StatelessWidget {
     final result = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.settingsYellowKmDialogTitle),
+        title: Text(l10n.settingsWarnKmDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -57,7 +57,7 @@ class YellowKmTile extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final km = context.select<SettingsProvider, int>((p) => p.yellowKm);
     return ListTile(
-      title: Text(l10n.settingsYellowKmTitle),
+      title: Text(l10n.settingsWarnKmTitle),
       subtitle: Text(
         l10n.kmWithValue(km: formatThousands(km, locale)),
       ),
@@ -80,7 +80,7 @@ class YellowMonthsTile extends StatelessWidget {
     final result = await showDialog<int>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.settingsYellowMonthsDialogTitle),
+        title: Text(l10n.settingsWarnMonthsDialogTitle),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -114,7 +114,7 @@ class YellowMonthsTile extends StatelessWidget {
     final l10n = context.l10n;
     final months = context.select<SettingsProvider, int>((p) => p.yellowMonths);
     return ListTile(
-      title: Text(l10n.settingsYellowMonthsTitle),
+      title: Text(l10n.settingsWarnMonthsTitle),
       subtitle: Text(l10n.monthsWithValue(months: months)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _edit(context),

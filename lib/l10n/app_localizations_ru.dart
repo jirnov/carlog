@@ -488,7 +488,7 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String markDoneUpdateMileageMessage(
       {required String current, required String performed}) {
-    return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nОбновить текущий пробег машины до $performed км?';
+    return 'Текущий пробег: $current км.\nПробег выполнения: $performed км.\n\nУстановить пробег машины на $performed км?';
   }
 
   @override
@@ -697,16 +697,16 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get settingsYellowKmTitle => 'За сколько км';
+  String get settingsWarnKmTitle => 'Порог предупреждения (км)';
 
   @override
-  String get settingsYellowKmDialogTitle => 'Порог предупреждения по км';
+  String get settingsWarnKmDialogTitle => 'Порог предупреждения по км';
 
   @override
-  String get settingsYellowMonthsTitle => 'За сколько месяцев';
+  String get settingsWarnMonthsTitle => 'Порог предупреждения (мес)';
 
   @override
-  String get settingsYellowMonthsDialogTitle => 'Порог предупреждения по сроку';
+  String get settingsWarnMonthsDialogTitle => 'Порог предупреждения по сроку';
 
   @override
   String get settingsThemeTitle => 'Тема';
@@ -837,7 +837,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notificationMileageBodyStale => 'Данные о пробеге устарели';
 
   @override
-  String get notificationMileageBodyOneDay => 'Данные устарели 1 день назад';
+  String get notificationMileageBodyOneDay =>
+      'Последнее обновление 1 день назад';
 
   @override
   String notificationMileageBodyDays({required int days}) {
@@ -849,7 +850,7 @@ class AppLocalizationsRu extends AppLocalizations {
       few: 'дня',
       one: 'день',
     );
-    return 'Данные устарели $days $_temp0 назад';
+    return 'Последнее обновление $days $_temp0 назад';
   }
 
   @override

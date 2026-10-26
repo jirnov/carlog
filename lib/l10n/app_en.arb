@@ -99,7 +99,7 @@
   "@mileageJumpTitle": {
     "description": "Dialog title warning about a suspiciously large mileage increase."
   },
-  "mileageJumpMessage": "Previous mileage: {previous} km.\nNew: {current} km.\n\nDifference: {diff} km in one go. People usually don''t drive that much between updates. Check for an extra zero.",
+  "mileageJumpMessage": "Previous mileage: {previous} km.\nNew: {current} km.\n\nDifference: {diff} km in one go. People usually don't drive that much between updates. Check for an extra zero.",
   "@mileageJumpMessage": {
     "description": "Warning shown when the entered mileage is suspiciously larger than the previous one.",
     "placeholders": {
@@ -109,7 +109,7 @@
     }
   },
   "markDoneUpdateMileageTitle": "Update car mileage?",
-  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. People usually don''t drive that much between updates. Check for an extra zero.",
+  "markDoneJumpMessage": "Current car mileage: {current} km.\nYou marked maintenance at {performed} km.\n\nDifference: {diff} km. People usually don't drive that much between updates. Check for an extra zero.",
   "@markDoneJumpMessage": {
     "description": "Warning shown when the mileage at which maintenance was performed is suspiciously larger than the car's current mileage.",
     "placeholders": {
@@ -375,11 +375,11 @@
     "placeholders": { "days": { "type": "int" } }
   },
 
-  "settingsYellowKmTitle": "Warning distance (km)",
-  "settingsYellowKmDialogTitle": "Warning threshold by km",
+  "settingsWarnKmTitle": "Warning distance (km)",
+  "settingsWarnKmDialogTitle": "Warning threshold by km",
 
-  "settingsYellowMonthsTitle": "Warning period (months)",
-  "settingsYellowMonthsDialogTitle": "Warning threshold by time",
+  "settingsWarnMonthsTitle": "Warning period (months)",
+  "settingsWarnMonthsDialogTitle": "Warning threshold by time",
 
   "settingsThemeTitle": "Theme",
 

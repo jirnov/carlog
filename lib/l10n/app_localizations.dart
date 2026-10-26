@@ -872,7 +872,7 @@ abstract class AppLocalizations {
   /// No description provided for @markDoneUpdateMileageMessage.
   ///
   /// In ru, this message translates to:
-  /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nОбновить текущий пробег машины до {performed} км?'**
+  /// **'Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nУстановить пробег машины на {performed} км?'**
   String markDoneUpdateMileageMessage(
       {required String current, required String performed});
 
@@ -1224,29 +1224,29 @@ abstract class AppLocalizations {
   /// **'{days} {days, plural, one{день} few{дня} many{дней} other{дня}}'**
   String settingsRemindDaysValue({required int days});
 
-  /// No description provided for @settingsYellowKmTitle.
+  /// No description provided for @settingsWarnKmTitle.
   ///
   /// In ru, this message translates to:
-  /// **'За сколько км'**
-  String get settingsYellowKmTitle;
+  /// **'Порог предупреждения (км)'**
+  String get settingsWarnKmTitle;
 
-  /// No description provided for @settingsYellowKmDialogTitle.
+  /// No description provided for @settingsWarnKmDialogTitle.
   ///
   /// In ru, this message translates to:
   /// **'Порог предупреждения по км'**
-  String get settingsYellowKmDialogTitle;
+  String get settingsWarnKmDialogTitle;
 
-  /// No description provided for @settingsYellowMonthsTitle.
+  /// No description provided for @settingsWarnMonthsTitle.
   ///
   /// In ru, this message translates to:
-  /// **'За сколько месяцев'**
-  String get settingsYellowMonthsTitle;
+  /// **'Порог предупреждения (мес)'**
+  String get settingsWarnMonthsTitle;
 
-  /// No description provided for @settingsYellowMonthsDialogTitle.
+  /// No description provided for @settingsWarnMonthsDialogTitle.
   ///
   /// In ru, this message translates to:
   /// **'Порог предупреждения по сроку'**
-  String get settingsYellowMonthsDialogTitle;
+  String get settingsWarnMonthsDialogTitle;
 
   /// No description provided for @settingsThemeTitle.
   ///
@@ -1479,13 +1479,13 @@ abstract class AppLocalizations {
   /// No description provided for @notificationMileageBodyOneDay.
   ///
   /// In ru, this message translates to:
-  /// **'Данные устарели 1 день назад'**
+  /// **'Последнее обновление 1 день назад'**
   String get notificationMileageBodyOneDay;
 
   /// No description provided for @notificationMileageBodyDays.
   ///
   /// In ru, this message translates to:
-  /// **'Данные устарели {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад'**
+  /// **'Последнее обновление {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад'**
   String notificationMileageBodyDays({required int days});
 
   /// No description provided for @notificationActionUpdate.

@@ -689,16 +689,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsYellowKmTitle => 'Warning distance (km)';
+  String get settingsWarnKmTitle => 'Warning distance (km)';
 
   @override
-  String get settingsYellowKmDialogTitle => 'Warning threshold by km';
+  String get settingsWarnKmDialogTitle => 'Warning threshold by km';
 
   @override
-  String get settingsYellowMonthsTitle => 'Warning period (months)';
+  String get settingsWarnMonthsTitle => 'Warning period (months)';
 
   @override
-  String get settingsYellowMonthsDialogTitle => 'Warning threshold by time';
+  String get settingsWarnMonthsDialogTitle => 'Warning threshold by time';
 
   @override
   String get settingsThemeTitle => 'Theme';

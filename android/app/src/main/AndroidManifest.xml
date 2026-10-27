@@ -8,6 +8,7 @@
     <application
         android:label="Журнал ТО"
         android:name="${applicationName}"
+        android:hasFragileUserData="true"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

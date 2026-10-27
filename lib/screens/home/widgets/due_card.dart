@@ -165,7 +165,7 @@ class DueCard extends StatelessWidget {
                                     ? theme.colorScheme.onSurfaceVariant
                                     : null,
                               ),
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 4),

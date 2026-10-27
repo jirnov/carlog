@@ -41,7 +41,7 @@ class HistoryCard extends StatelessWidget {
                     Text(
                       record.title,
                       style: theme.textTheme.titleMedium,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (record.note.isNotEmpty) ...[

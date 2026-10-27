@@ -94,7 +94,7 @@ class RuleCard extends StatelessWidget {
                     Text(
                       rule.title,
                       style: theme.textTheme.titleMedium,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 6),

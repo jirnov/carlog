@@ -1,58 +1,62 @@
 ﻿{
   "@@locale": "ru",
   "appTitle": "Журнал ТО",
-
   "languageTitle": "Язык",
   "languageDialogTitle": "Язык приложения",
   "languageSystem": "Как в системе",
   "languageRussian": "Русский",
   "languageEnglish": "English",
-
   "workCategoryEngine": "Двигатель",
   "workCategoryTransmission": "Трансмиссия",
   "workCategoryAwd": "Полный привод",
   "workCategoryBrakes": "Тормоза",
   "workCategoryInterior": "Салон",
-
   "workEngineOilChange": "Замена масла в двигателе",
   "workAirFilterReplace": "Замена воздушного фильтра",
   "workFuelFilterReplace": "Замена топливного фильтра",
   "workSparkPlugReplace": "Замена свечей зажигания",
   "workTimingBeltReplace": "Замена ГРМ",
   "workAntifreezeReplace": "Замена антифриза",
-
   "workMtmOilChange": "Замена масла в МКПП",
   "workAtmOilChange": "Замена масла в АКПП",
   "workCvtOilChange": "Замена масла в вариаторе (CVT)",
-
   "workHaldexOilChange": "Замена масла в Haldex",
   "workTransferCaseOilChange": "Замена масла в раздатке",
   "workTransferCaseOilChangeSubtitle": "xDrive / 4Matic / quattro",
   "workDifferentialOilChange": "Замена масла в редукторе",
-
   "workBrakeFluidReplace": "Замена тормозной жидкости",
   "workBrakePadReplace": "Замена тормозных колодок",
   "workBrakeDiscReplace": "Замена тормозных дисков",
   "workBrakeDrumReplace": "Замена тормозных барабанов",
-
   "workCabinFilterReplace": "Замена салонного фильтра",
-
   "templatePickerTitle": "Типовые работы",
   "templateCustom": "Своё",
   "intervalNotSet": "интервал не задан",
   "templateIntervalEveryKm": "каждые {km} км",
   "@templateIntervalEveryKm": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "templateIntervalEveryMonths": "каждые {months} мес",
   "@templateIntervalEveryMonths": {
-    "placeholders": { "months": { "type": "int" } }
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
   },
   "templateIntervalEveryKmMonths": "каждые {km} км · {months} мес",
   "@templateIntervalEveryKmMonths": {
     "placeholders": {
-      "km": { "type": "String" },
-      "months": { "type": "int" }
+      "km": {
+        "type": "String"
+      },
+      "months": {
+        "type": "int"
+      }
     }
   },
   "actionCancel": "Отмена",
@@ -76,39 +80,56 @@
   "unitKm": "км",
   "updateMileagePrevious": "Прошлый: {km} км",
   "@updateMileagePrevious": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "updateMileageDateToday": "Дата: сегодня",
-
   "requiredField": "Обязательное поле",
   "mileageErrorPositive": "Пробег должен быть больше нуля",
   "mileageErrorMin": "Не меньше {km} км",
   "@mileageErrorMin": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "mileageErrorTooLarge": "Слишком большое значение",
-
   "mileageJumpTitle": "Пробег резко вырос",
   "mileageJumpMessage": "Прошлый пробег: {previous} км.\nНовый: {current} км.\n\nРазница: {diff} км за один раз. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.",
   "@mileageJumpMessage": {
     "placeholders": {
-      "previous": { "type": "String" },
-      "current": { "type": "String" },
-      "diff": { "type": "String" }
+      "previous": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      },
+      "diff": {
+        "type": "String"
+      }
     }
   },
   "markDoneUpdateMileageTitle": "Обновить пробег машины?",
   "markDoneJumpMessage": "Текущий пробег машины: {current} км.\nВы отметили ТО на {performed} км.\n\nРазница: {diff} км. Обычно столько не проезжают между обновлениями. Проверьте, не лишний ли ноль.",
   "@markDoneJumpMessage": {
     "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" },
-      "diff": { "type": "String" }
+      "current": {
+        "type": "String"
+      },
+      "performed": {
+        "type": "String"
+      },
+      "diff": {
+        "type": "String"
+      }
     }
   },
   "mileageJumpEdit": "Изменить",
   "mileageJumpConfirm": "Да, верно",
-
   "actionSave": "Сохранить",
   "editRuleTitleEdit": "Изменить плановое ТО",
   "editRuleTitleNew": "Новое плановое ТО",
@@ -117,7 +138,11 @@
   "editRuleNextKmLabel": "На каком пробеге делать следующее ТО",
   "editRuleNextKmWarning": "Меньше текущего пробега ({km} км). Возможно, ТО уже выполнено.",
   "@editRuleNextKmWarning": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "editRuleIntervalSection": "Интервал",
   "editRuleIntervalKmLabel": "По км",
@@ -136,95 +161,158 @@
   "helpLoadError": "Не удалось загрузить справку",
   "helpMailSubject": "Предложения по Журналу ТО (версия {version})",
   "@helpMailSubject": {
-    "placeholders": { "version": { "type": "String" } }
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   },
   "historyAddTooltip": "Добавить событие",
   "historyEmptyTitle": "История пуста",
   "historyEmptyMessage": "Здесь появятся выполненные работы\nНо вы можете добавлять их самостоятельно",
   "historyDeleteTitle": "Удалить работу «{title}»?",
   "@historyDeleteTitle": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "historyDeleteMessage": "Запись будет удалена из истории.",
   "historyCardCost": "{amount} ₽",
   "@historyCardCost": {
-    "placeholders": { "amount": { "type": "String" } }
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "homeCarNameFallback": "Мой автомобиль",
   "homeSelectionCount": "Выбрано: {count}",
   "@homeSelectionCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "homePostponedSection": "Отложенные",
   "homeMarkDoneSelected": "Выполнить ({count})",
   "@homeMarkDoneSelected": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "homeEmptyTitle": "График работ пуст",
   "homeEmptyMessage": "Добавьте плановое ТО на вкладке «Планирование»",
   "howItWorks": "Как это работает?",
-
   "homeDoneSelectedSnack": "Выполнено {count, plural, =1{1 работа} few{{count} работы} many{{count} работ} other{{count} работы}} — {km} км, {date}",
   "@homeDoneSelectedSnack": {
     "placeholders": {
-      "count": { "type": "int" },
-      "km": { "type": "String" },
-      "date": { "type": "String" }
+      "count": {
+        "type": "int"
+      },
+      "km": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
     }
   },
   "homeDoneSingleSnack": "{title} выполнено — {km} км, {date}",
   "@homeDoneSingleSnack": {
     "placeholders": {
-      "title": { "type": "String" },
-      "km": { "type": "String" },
-      "date": { "type": "String" }
+      "title": {
+        "type": "String"
+      },
+      "km": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
     }
   },
   "dueCardPostponedUntil": "Отложено до {date}",
   "@dueCardPostponedUntil": {
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "dueCardNext": "Следующее: {value}",
   "@dueCardNext": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardLeft": "Осталось: {value}",
   "@dueCardLeft": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardOverdueKm": "просрочено {km} км",
   "@dueCardOverdueKm": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "dueCardOverdueDays": "просрочено {value}",
   "@dueCardOverdueDays": {
-    "placeholders": { "value": { "type": "String" } }
-  },
-  "@dueCardKmLeft": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardActionPostpone": "[Отложить]",
   "dueCardActionMarkDone": "[Выполнить]",
-
   "mileageHeaderNotSet": "Пробег не задан",
   "mileageHeaderUpdatedToday": "Обновлено сегодня",
   "mileageHeaderUpdatedYesterday": "Обновлено вчера",
   "mileageHeaderUpdatedDaysAgo": "Обновлено {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
   "@mileageHeaderUpdatedDaysAgo": {
-    "placeholders": { "days": { "type": "int" } }
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
   "mileageHeaderStaleSuffix": "обновить",
   "nearestDueOverdue": "Просрочено: {value}",
   "@nearestDueOverdue": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "nearestDueSoon": "Ближайшее ТО через {value}",
   "@nearestDueSoon": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dayShort": "{count, plural, one{{count} день} few{{count} дня} many{{count} дней} other{{count} дня}}",
   "@dayShort": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "navSchedule": "График работ",
   "navPlanning": "Планирование",
@@ -232,19 +320,31 @@
   "exitConfirmMessage": "Нажмите ещё раз для выхода",
   "markDoneMultiTitle": "Выполнить {count, plural, one{{count} работу} few{{count} работы} many{{count} работ} other{{count} работы}}",
   "@markDoneMultiTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "markDoneMultiWorksSection": "Работы",
   "markDoneMultiNoteHint": "Например, сервис на Ленина",
   "markDoneMultiSaveButton": "Выполнить {count}",
   "@markDoneMultiSaveButton": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "markDoneUpdateMileageMessage": "Текущий пробег: {current} км.\nПробег выполнения: {performed} км.\n\nУстановить пробег машины на {performed} км?",
   "@markDoneUpdateMileageMessage": {
     "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" }
+      "current": {
+        "type": "String"
+      },
+      "performed": {
+        "type": "String"
+      }
     }
   },
   "actionNo": "Нет",
@@ -252,7 +352,6 @@
   "markDoneTitleEdit": "Изменить событие",
   "markDoneTitleRule": "Выполнить работу",
   "markDoneTitleAdd": "Добавить событие",
-
   "markDoneWorkLabel": "Работа",
   "markDoneWorkHint": "Например, поменял лампочку",
   "markDoneMileageLabel": "Пробег выполнения",
@@ -260,27 +359,24 @@
   "markDoneCostLabel": "Стоимость",
   "markDoneCostHint": "Необязательно",
   "markDoneNoteHint": "Например, синтетическое масло",
-
   "mileageErrorTooSmall": "Пробег подозрительно мал — проверьте значение",
-
   "onboardingWelcomeTitle": "Добро пожаловать",
   "onboardingWelcomeSubtitle": "Пара вопросов, чтобы приложение\nсразу считало сроки ТО",
-
   "onboardingCarNameLabel": "Название машины",
   "onboardingCarNameHint": "Например, Моя ласточка",
   "onboardingCarNameHelper": "Необязательно",
-
   "onboardingMileageLabel": "Текущий пробег",
-
   "onboardingThemeTitle": "Тема",
   "onboardingThemeHint": "Можно изменить позже в настройках",
-
   "onboardingContinue": "Продолжить",
   "onboardingSaveError": "Не удалось сохранить: {error}",
   "@onboardingSaveError": {
-    "placeholders": { "error": { "type": "String" } }
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   },
-
   "themeSystem": "Как в системе",
   "themeLight": "Светлая",
   "themeDark": "Тёмная",
@@ -291,46 +387,77 @@
   "rulesHowToStart": "С чего начать?",
   "rulesDeleteTitle": "Удалить правило «{title}»?",
   "@rulesDeleteTitle": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "rulesDeleteMessage": "История выполненных работ не изменится.",
   "kmWithValue": "{km} км",
   "@kmWithValue": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "monthsWithValue": "{months} мес",
   "@monthsWithValue": {
-    "placeholders": { "months": { "type": "int" } }
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
   },
   "ruleCardEveryOne": "Каждые {value}",
   "@ruleCardEveryOne": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "ruleCardEveryTwo": "Каждые {first} или {second}",
   "@ruleCardEveryTwo": {
     "placeholders": {
-      "first": { "type": "String" },
-      "second": { "type": "String" }
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
     }
   },
   "ruleCardNextOne": "Следующее: {value}",
   "@ruleCardNextOne": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "ruleCardNextTwo": "Следующее: {first} · {second}",
   "@ruleCardNextTwo": {
     "placeholders": {
-      "first": { "type": "String" },
-      "second": { "type": "String" }
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
     }
   },
   "ruleCardNextNotSet": "Следующее ТО не задано",
   "ruleCardCost": "~{amount} ₽",
   "@ruleCardCost": {
-    "placeholders": { "amount": { "type": "String" } }
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "settingsTitle": "Настройки",
-
   "settingsSectionCar": "Автомобиль",
   "settingsSectionReminders": "Напоминания о пробеге",
   "settingsSectionThresholds": "Пороги предупреждения",
@@ -338,38 +465,39 @@
   "settingsSectionData": "Данные",
   "settingsSectionSupport": "Помощь и поддержка",
   "settingsSectionAbout": "О приложении",
-
   "settingsCarNameTitle": "Название",
   "settingsCarNameNotSet": "Не задано",
   "settingsCarNameDialogTitle": "Название машины",
   "settingsCarNameHint": "Например, Моя ласточка",
-
   "settingsRemindEnabled": "Напоминать об обновлении пробега",
   "settingsRemindDaysTitle": "Как часто",
   "settingsRemindDaysDialogTitle": "Напоминать каждые",
   "settingsRemindDaysUnit": "дней",
   "settingsRemindDaysValue": "{days} {days, plural, one{день} few{дня} many{дней} other{дня}}",
   "@settingsRemindDaysValue": {
-    "placeholders": { "days": { "type": "int" } }
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
-
   "settingsWarnKmTitle": "Порог предупреждения (км)",
   "settingsWarnKmDialogTitle": "Порог предупреждения по км",
-
   "settingsWarnMonthsTitle": "Порог предупреждения (мес)",
   "settingsWarnMonthsDialogTitle": "Порог предупреждения по сроку",
-
   "settingsThemeTitle": "Тема",
-
   "settingsExportTitle": "Экспорт данных",
   "settingsExportSubtitle": "Сохранить всё в JSON-файл",
   "settingsExportSubject": "Журнал ТО — резервная копия",
   "settingsExportFailed": "Не удалось сохранить файл",
   "settingsExportSaved": "Файл сохранён: {path}",
   "@settingsExportSaved": {
-    "placeholders": { "path": { "type": "String" } }
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
   },
-
   "settingsImportTitle": "Импорт данных",
   "settingsImportSubtitle": "Загрузить из JSON-файла",
   "settingsImportConfirmTitle": "Импортировать данные?",
@@ -378,7 +506,6 @@
   "settingsImportWrongExtension": "Выберите файл с расширением .json",
   "settingsImportFailed": "Не удалось импортировать файл",
   "settingsImportSuccess": "Данные импортированы",
-
   "settingsRestoreTitle": "Восстановить из архива",
   "settingsRestoreSubtitle": "Автоматические резервные копии",
   "settingsRestoreConfirmTitle": "Восстановить из архива?",
@@ -387,31 +514,38 @@
   "settingsRestoreFailed": "Не удалось восстановить архив",
   "settingsRestoreSuccess": "Данные восстановлены из архива",
   "settingsRestoreEmpty": "Архивных копий пока нет",
-
   "settingsBackupSizeBytes": "{size} Б",
   "@settingsBackupSizeBytes": {
-    "placeholders": { "size": { "type": "int" } }
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
   },
   "settingsBackupSizeKb": "{size} КБ",
   "@settingsBackupSizeKb": {
-    "placeholders": { "size": { "type": "String" } }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
-
   "settingsHelpSubtitle": "Как пользоваться приложением",
-
   "settingsShareTitle": "Поделиться приложением",
   "settingsShareSubtitle": "Отправить ссылку на магазин",
   "settingsShareText": "Попробуй приложение «{appTitle}» — дневник обслуживания автомобиля.\n\n{url}",
   "@settingsShareText": {
     "placeholders": {
-      "appTitle": { "type": "String" },
-      "url": { "type": "String" }
+      "appTitle": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
     }
   },
-
   "settingsCoffeeTitle": "Угостить автора бокалом кофе",
   "settingsCoffeeSubtitle": "Поддержать разработку",
-
   "settingsVersionTitle": "Версия",
   "splashLoadError": "Не удалось загрузить данные",
   "splashRetry": "Повторить",
@@ -420,14 +554,25 @@
   "notificationMileageTitle": "Пора обновить пробег",
   "notificationMileageTitleWithCar": "{carName}: пора обновить пробег",
   "@notificationMileageTitleWithCar": {
-    "placeholders": { "carName": { "type": "String" } }
+    "placeholders": {
+      "carName": {
+        "type": "String"
+      }
+    }
   },
   "notificationMileageBodyStale": "Данные о пробеге устарели",
   "notificationMileageBodyOneDay": "Последнее обновление 1 день назад",
   "notificationMileageBodyDays": "Последнее обновление {days} {days, plural, one{день} few{дня} many{дней} other{дня}} назад",
   "@notificationMileageBodyDays": {
-    "placeholders": { "days": { "type": "int" } }
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
   "notificationActionUpdate": "Обновить",
-  "notificationActionLater": "Позже"
+  "notificationActionLater": "Позже",
+  "notificationsPermissionTitle": "Уведомления",
+  "notificationsPermissionMessage": "Приложение будет напоминать об обновлении пробега. Разрешить уведомления?",
+  "settingsNotificationsDisabled": "Уведомления отключены в системе"
 }

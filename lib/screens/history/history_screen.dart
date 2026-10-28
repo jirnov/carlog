@@ -14,12 +14,28 @@ import 'package:carlog/screens/templates/template_picker_screen.dart';
 import 'package:carlog/services/history_service.dart';
 import 'widgets/history_card.dart';
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
   static const _historyService = HistoryService();
 
-  Future<void> _openTemplates(BuildContext context) async {
+  Object? _expandedId;
+
+  /// [canExpand] == false → карточка не может разворачиваться,
+  /// экран ничего не делает (открытая карточка остаётся открытой).
+  void _toggleExpanded(HistoryRecord record, {required bool canExpand}) {
+    if (!canExpand) return;
+    setState(() {
+      _expandedId = _expandedId == record.id ? null : record.id;
+    });
+  }
+
+  Future<void> _openTemplates() async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const TemplatePickerScreen(
@@ -29,10 +45,10 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _openEdit(BuildContext context, HistoryRecord record) async {
+  Future<void> _openEdit(HistoryRecord record) async {
     final result = await showMarkDoneScreen(context, record: record);
     if (result == null) return;
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     await _historyService.applyHistoryUpdate(
       result: result,
@@ -40,8 +56,7 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _confirmDelete(
-      BuildContext context, HistoryRecord record) async {
+  Future<void> _confirmDelete(HistoryRecord record) async {
     final l10n = context.l10n;
 
     final confirmed = await showConfirmDeleteDialog(
@@ -50,7 +65,7 @@ class HistoryScreen extends StatelessWidget {
       message: l10n.historyDeleteMessage,
     );
     if (!confirmed) return;
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     await context.read<HistoryProvider>().remove(record.id!);
   }
@@ -69,12 +84,14 @@ class HistoryScreen extends StatelessWidget {
           ? const _EmptyState()
           : _GroupedList(
               records: records,
-              onTap: (record) => _openEdit(context, record),
-              onDelete: (record) => _confirmDelete(context, record),
+              expandedId: _expandedId,
+              onToggle: _toggleExpanded,
+              onEdit: _openEdit,
+              onDelete: _confirmDelete,
             ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'fab_add_history',
-        onPressed: () => _openTemplates(context),
+        onPressed: _openTemplates,
         tooltip: l10n.historyAddTooltip,
         child: const Icon(Icons.add),
       ),
@@ -85,12 +102,16 @@ class HistoryScreen extends StatelessWidget {
 class _GroupedList extends StatelessWidget {
   const _GroupedList({
     required this.records,
-    required this.onTap,
+    required this.expandedId,
+    required this.onToggle,
+    required this.onEdit,
     required this.onDelete,
   });
 
   final List<HistoryRecord> records;
-  final void Function(HistoryRecord) onTap;
+  final Object? expandedId;
+  final void Function(HistoryRecord, {required bool canExpand}) onToggle;
+  final void Function(HistoryRecord) onEdit;
   final void Function(HistoryRecord) onDelete;
 
   @override
@@ -126,7 +147,10 @@ class _GroupedList extends StatelessWidget {
               if (i > 0) const SizedBox(height: 12),
               HistoryCard(
                 record: items[i],
-                onTap: () => onTap(items[i]),
+                expanded: items[i].id == expandedId,
+                onToggle: (canExpand) =>
+                    onToggle(items[i], canExpand: canExpand),
+                onEdit: () => onEdit(items[i]),
                 onDelete: () => onDelete(items[i]),
               ),
             ],

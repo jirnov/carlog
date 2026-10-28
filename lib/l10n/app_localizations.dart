@@ -1499,6 +1499,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Позже'**
   String get notificationActionLater;
+
+  /// No description provided for @notificationsPermissionTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления'**
+  String get notificationsPermissionTitle;
+
+  /// No description provided for @notificationsPermissionMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Приложение будет напоминать об обновлении пробега. Разрешить уведомления?'**
+  String get notificationsPermissionMessage;
+
+  /// No description provided for @settingsNotificationsDisabled.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления отключены в системе'**
+  String get settingsNotificationsDisabled;
 }
 
 class _AppLocalizationsDelegate

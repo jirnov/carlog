@@ -37,8 +37,6 @@ class NotificationService {
   bool _initialized = false;
 
   /// Имя и описание канала, заданные при [init].
-  /// Нужны, чтобы `_notificationDetails` мог построить AndroidNotificationDetails
-  /// без повторной передачи строк.
   String _channelName = '';
   String _channelDescription = '';
 
@@ -50,9 +48,6 @@ class NotificationService {
 
   static bool get _isSupported => Platform.isAndroid || Platform.isIOS;
 
-  /// Инициализация. [channelName]/[channelDescription] нужны только на Android
-  /// и только при первом создании канала. В фоновом изоляте канал уже создан
-  /// основным приложением, поэтому там можно передать пустые строки.
   Future<void> init({
     required String channelName,
     required String channelDescription,
@@ -97,13 +92,33 @@ class NotificationService {
     }
   }
 
-  /// Инициализация в фоновом изоляте.
-  /// Канал уже создан основным приложением, поэтому строки не нужны.
   static Future<NotificationService> initForBackground() async {
     final service = NotificationService();
     service._initialized = false;
     await service.init(channelName: '', channelDescription: '');
     return service;
+  }
+
+  /// Проверить, выдано ли разрешение на уведомления (без показа диалога).
+  Future<bool> hasPermission() async {
+    if (!_isSupported) return true;
+
+    if (Platform.isAndroid) {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      if (android == null) return false;
+      return await android.areNotificationsEnabled() ?? false;
+    }
+
+    if (Platform.isIOS) {
+      final ios = _plugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+      if (ios == null) return false;
+      final permissions = await ios.checkPermissions();
+      return permissions?.isEnabled ?? false;
+    }
+
+    return true;
   }
 
   Future<bool> requestPermissions() async {

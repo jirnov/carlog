@@ -847,4 +847,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationActionLater => 'Later';
+
+  @override
+  String get notificationsPermissionTitle => 'Notifications';
+
+  @override
+  String get notificationsPermissionMessage =>
+      'The app will remind you to update mileage. Allow notifications?';
+
+  @override
+  String get settingsNotificationsDisabled =>
+      'Notifications are disabled in the system';
 }

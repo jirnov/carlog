@@ -39,7 +39,8 @@ Future<void> main() async {
       channelName: l10n.notificationChannelName,
       channelDescription: l10n.notificationChannelDescription,
     );
-    await notifications.requestPermissions();
+    // requestPermissions() перенесён в SplashScreen — там показывается
+    // свой диалог перед системным.
   }
 
   if (Platform.isAndroid || Platform.isIOS) {

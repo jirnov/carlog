@@ -13,10 +13,26 @@ import 'package:carlog/screens/main/widgets/settings_action.dart';
 import 'package:carlog/screens/templates/template_picker_screen.dart';
 import 'widgets/rule_card.dart';
 
-class RulesScreen extends StatelessWidget {
+class RulesScreen extends StatefulWidget {
   const RulesScreen({super.key});
 
-  Future<void> _openTemplates(BuildContext context) async {
+  @override
+  State<RulesScreen> createState() => _RulesScreenState();
+}
+
+class _RulesScreenState extends State<RulesScreen> {
+  Object? _expandedId;
+
+  /// [canExpand] == false → карточка не может разворачиваться,
+  /// экран ничего не делает (открытая карточка остаётся открытой).
+  void _toggleExpanded(Rule rule, {required bool canExpand}) {
+    if (!canExpand) return;
+    setState(() {
+      _expandedId = _expandedId == rule.id ? null : rule.id;
+    });
+  }
+
+  Future<void> _openTemplates() async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const TemplatePickerScreen(
@@ -26,15 +42,15 @@ class RulesScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _openEdit(BuildContext context, Rule rule) async {
+  Future<void> _openEdit(Rule rule) async {
     final result = await showEditRuleScreen(context, rule: rule);
     if (result == null) return;
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     await context.read<RulesProvider>().update(result);
   }
 
-  Future<void> _confirmDelete(BuildContext context, Rule rule) async {
+  Future<void> _confirmDelete(Rule rule) async {
     final l10n = context.l10n;
 
     final confirmed = await showConfirmDeleteDialog(
@@ -43,7 +59,7 @@ class RulesScreen extends StatelessWidget {
       message: l10n.rulesDeleteMessage,
     );
     if (!confirmed) return;
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     await context.read<RulesProvider>().remove(rule.id!);
   }
@@ -68,14 +84,17 @@ class RulesScreen extends StatelessWidget {
                 final rule = rules[index];
                 return RuleCard(
                   rule: rule,
-                  onTap: () => _openEdit(context, rule),
-                  onDelete: () => _confirmDelete(context, rule),
+                  expanded: rule.id == _expandedId,
+                  onToggle: (canExpand) =>
+                      _toggleExpanded(rule, canExpand: canExpand),
+                  onEdit: () => _openEdit(rule),
+                  onDelete: () => _confirmDelete(rule),
                 );
               },
             ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'fab_add_rule',
-        onPressed: () => _openTemplates(context),
+        onPressed: _openTemplates,
         tooltip: l10n.rulesAddTooltip,
         child: const Icon(Icons.add),
       ),

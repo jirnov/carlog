@@ -858,4 +858,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get notificationActionLater => 'Позже';
+
+  @override
+  String get notificationsPermissionTitle => 'Уведомления';
+
+  @override
+  String get notificationsPermissionMessage =>
+      'Приложение будет напоминать об обновлении пробега. Разрешить уведомления?';
+
+  @override
+  String get settingsNotificationsDisabled => 'Уведомления отключены в системе';
 }

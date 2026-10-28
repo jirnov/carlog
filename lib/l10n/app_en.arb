@@ -456,5 +456,8 @@
     }
   },
   "notificationActionUpdate": "Update",
-  "notificationActionLater": "Later"
+  "notificationActionLater": "Later",
+  "notificationsPermissionTitle": "Notifications",
+  "notificationsPermissionMessage": "The app will remind you to update mileage. Allow notifications?",
+  "settingsNotificationsDisabled": "Notifications are disabled in the system"
 }

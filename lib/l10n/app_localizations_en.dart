@@ -858,4 +858,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsNotificationsDisabled =>
       'Notifications are disabled in the system';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Notifications are disabled. Enable them in app settings.';
+
+  @override
+  String get openSettings => 'Open settings';
 }

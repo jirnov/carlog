@@ -2,6 +2,7 @@
 
 import 'dart:io' show Platform;
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -145,6 +146,19 @@ class NotificationService {
     }
 
     return true;
+  }
+
+  /// Открыть системные настройки уведомлений приложения (Android).
+  Future<void> openAppNotificationSettings() async {
+    if (!Platform.isAndroid) return;
+
+    final intent = AndroidIntent(
+      action: 'android.settings.APP_NOTIFICATION_SETTINGS',
+      arguments: {
+        'android.provider.extra.APP_PACKAGE': 'ru.blog2k.carlog',
+      },
+    );
+    await intent.launch();
   }
 
   Future<void> showMileageReminder({

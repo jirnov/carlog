@@ -868,4 +868,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsNotificationsDisabled => 'Уведомления отключены в системе';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Уведомления отключены. Включите их в настройках приложения.';
+
+  @override
+  String get openSettings => 'Открыть настройки';
 }

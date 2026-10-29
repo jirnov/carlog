@@ -1517,6 +1517,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Уведомления отключены в системе'**
   String get settingsNotificationsDisabled;
+
+  /// No description provided for @notificationsDisabledMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления отключены. Включите их в настройках приложения.'**
+  String get notificationsDisabledMessage;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открыть настройки'**
+  String get openSettings;
 }
 
 class _AppLocalizationsDelegate

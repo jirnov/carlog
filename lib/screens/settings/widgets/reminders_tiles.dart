@@ -1,5 +1,6 @@
 ﻿// lib/screens/settings/widgets/reminders_tiles.dart
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -48,10 +49,23 @@ class _RemindEnabledTileState extends State<RemindEnabledTile> {
 
     if (granted) {
       await provider.setRemindEnabled(true);
+      setState(() => _hasPermission = true);
       return;
     }
 
-    // Нет разрешения — свой диалог → системный.
+    // Разрешения нет — проверяем версию Android.
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    final sdkInt = androidInfo.version.sdkInt;
+    if (!mounted) return;
+
+    if (sdkInt < 33) {
+      // Android < 13: системный диалог не покажется.
+      // Предлагаем открыть настройки приложения.
+      await _showOpenSettingsDialog();
+      return;
+    }
+
+    // Android 13+: свой диалог → системный.
     final shouldAsk = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -81,6 +95,34 @@ class _RemindEnabledTileState extends State<RemindEnabledTile> {
     }
 
     setState(() => _hasPermission = grantedBySystem);
+  }
+
+  /// Диалог «Уведомления отключены. Включите в настройках» (Android < 13).
+  Future<void> _showOpenSettingsDialog() async {
+    final l10n = context.l10n;
+    final notifications = context.read<NotificationService>();
+
+    final shouldOpen = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.notificationsPermissionTitle),
+        content: Text(l10n.notificationsDisabledMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.actionCancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.openSettings),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldOpen == true) {
+      await notifications.openAppNotificationSettings();
+    }
   }
 
   @override

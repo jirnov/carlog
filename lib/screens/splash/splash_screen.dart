@@ -2,6 +2,7 @@
 
 import 'dart:io' show Platform;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
 
       // Свой диалог перед системным запросом разрешения — только при
-      // первом запуске (флаг notifications_asked).
+      // первом запуске (флаг notifications_asked) и только на Android 13+.
       await _maybeAskNotificationsPermission();
 
       if (!mounted) return;
@@ -74,8 +75,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   /// Спросить разрешение на уведомления один раз (при первом запуске).
-  /// Если пользователь отказал — больше не спрашиваем; включить можно
-  /// через настройки (тумблер «Напоминать»).
   Future<void> _maybeAskNotificationsPermission() async {
     if (!Platform.isAndroid) return;
 
@@ -84,11 +83,19 @@ class _SplashScreenState extends State<SplashScreen> {
     // Уже спрашивали — не спрашиваем.
     if (settings.notificationsAsked) return;
 
+    // На Android < 13 системного диалога нет — не показываем свой.
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (androidInfo.version.sdkInt < 33) {
+      await settings.setNotificationsAsked(true);
+      return;
+    }
+
     final notifications = context.read<NotificationService>();
     final l10n = context.l10n;
 
-    // Если разрешение уже выдано (например, пользователь выдал вручную
-    // в системных настройках) — просто помечаем, что спросили.
+    if (!mounted) return;
+
+    // Если разрешение уже выдано — просто помечаем, что спросили.
     if (await notifications.hasPermission()) {
       await settings.setNotificationsAsked(true);
       return;

@@ -2,65 +2,70 @@
   "@@locale": "en",
   "appTitle": "Vehicle Maintenance Log",
   "onboardingWelcome": "Welcome",
-
   "languageTitle": "Language",
   "languageDialogTitle": "App language",
   "languageSystem": "System",
   "languageRussian": "Русский",
   "languageEnglish": "English",
-
   "workCategoryEngine": "Engine",
   "workCategoryTransmission": "Transmission",
   "workCategoryAwd": "All-wheel drive",
   "workCategoryBrakes": "Brakes",
   "workCategoryInterior": "Interior",
-
   "workEngineOilChange": "Engine oil change",
   "workAirFilterReplace": "Air filter replacement",
   "workFuelFilterReplace": "Fuel filter replacement",
   "workSparkPlugReplace": "Spark plug replacement",
   "workTimingBeltReplace": "Timing belt replacement",
   "workAntifreezeReplace": "Antifreeze replacement",
-
   "workMtmOilChange": "Manual transmission oil change",
   "workAtmOilChange": "Automatic transmission oil change",
   "workCvtOilChange": "CVT transmission oil change",
-
   "workHaldexOilChange": "Haldex oil change",
   "workTransferCaseOilChange": "Transfer case oil change",
   "workTransferCaseOilChangeSubtitle": "xDrive / 4Matic / quattro",
   "workDifferentialOilChange": "Differential oil change",
-
   "workBrakeFluidReplace": "Brake fluid replacement",
   "workBrakePadReplace": "Brake pad replacement",
   "workBrakeDiscReplace": "Brake disc replacement",
   "workBrakeDrumReplace": "Brake drum replacement",
-
   "workCabinFilterReplace": "Cabin filter replacement",
-
   "templatePickerTitle": "Typical works",
   "templateCustom": "Custom",
   "intervalNotSet": "interval not set",
   "templateIntervalEveryKm": "every {km} km",
   "@templateIntervalEveryKm": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "templateIntervalEveryMonths": "every {months} mo",
   "@templateIntervalEveryMonths": {
-    "placeholders": { "months": { "type": "int" } }
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
   },
   "templateIntervalEveryKmMonths": "every {km} km · {months} mo",
   "@templateIntervalEveryKmMonths": {
     "placeholders": {
-      "km": { "type": "String" },
-      "months": { "type": "int" }
+      "km": {
+        "type": "String"
+      },
+      "months": {
+        "type": "int"
+      }
     }
   },
-
   "confirmCancelMessage": "Work “{ruleTitle}” will be marked as cancelled. It will appear in history with a cancellation icon and will not be counted as completed. The next maintenance will be shifted to the current mileage.",
   "@confirmCancelMessage": {
     "placeholders": {
-      "ruleTitle": { "type": "String" }
+      "ruleTitle": {
+        "type": "String"
+      }
     }
   },
   "actionCancel": "Cancel",
@@ -84,17 +89,23 @@
   "unitKm": "km",
   "updateMileagePrevious": "Previous: {km} km",
   "@updateMileagePrevious": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "updateMileageDateToday": "Date: today",
-
   "mileageErrorPositive": "Mileage must be greater than zero",
   "mileageErrorMin": "Not less than {km} km",
   "@mileageErrorMin": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "mileageErrorTooLarge": "Value is too large",
-
   "mileageJumpTitle": "Sudden mileage increase",
   "@mileageJumpTitle": {
     "description": "Dialog title warning about a suspiciously large mileage increase."
@@ -103,9 +114,15 @@
   "@mileageJumpMessage": {
     "description": "Warning shown when the entered mileage is suspiciously larger than the previous one.",
     "placeholders": {
-      "previous": { "type": "String" },
-      "current": { "type": "String" },
-      "diff": { "type": "String" }
+      "previous": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      },
+      "diff": {
+        "type": "String"
+      }
     }
   },
   "markDoneUpdateMileageTitle": "Update car mileage?",
@@ -113,14 +130,19 @@
   "@markDoneJumpMessage": {
     "description": "Warning shown when the mileage at which maintenance was performed is suspiciously larger than the car's current mileage.",
     "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" },
-      "diff": { "type": "String" }
+      "current": {
+        "type": "String"
+      },
+      "performed": {
+        "type": "String"
+      },
+      "diff": {
+        "type": "String"
+      }
     }
   },
   "mileageJumpEdit": "Edit",
   "mileageJumpConfirm": "Yes, correct",
-
   "actionSave": "Save",
   "editRuleTitleEdit": "Edit scheduled maintenance",
   "editRuleTitleNew": "New scheduled maintenance",
@@ -132,7 +154,11 @@
   },
   "editRuleNextKmWarning": "Less than current mileage ({km} km). The maintenance may already be done.",
   "@editRuleNextKmWarning": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "editRuleIntervalSection": "Interval",
   "editRuleIntervalKmLabel": "By km",
@@ -152,92 +178,158 @@
   "helpLoadError": "Failed to load help",
   "helpMailSubject": "Suggestions for the Maintenance Log (version {version})",
   "@helpMailSubject": {
-    "placeholders": { "version": { "type": "String" } }
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   },
   "historyAddTooltip": "Add event",
   "historyEmptyTitle": "History is empty",
   "historyEmptyMessage": "Completed works will appear here\nBut you can add them manually",
   "historyDeleteTitle": "Delete work “{title}”?",
   "@historyDeleteTitle": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "historyDeleteMessage": "The record will be deleted from history.",
   "historyCardCost": "{amount} ₽",
   "@historyCardCost": {
-    "placeholders": { "amount": { "type": "String" } }
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "homeCarNameFallback": "My car",
   "homeSelectionCount": "Selected: {count}",
   "@homeSelectionCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "homePostponedSection": "Postponed",
   "homeMarkDoneSelected": "Complete ({count})",
   "@homeMarkDoneSelected": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "homeEmptyTitle": "Work schedule is empty",
   "homeEmptyMessage": "Add scheduled maintenance on the «Planning» tab",
   "howItWorks": "How does it work?",
-
   "homeDoneSelectedSnack": "{count, plural, =1{1 work} other{{count} works}} completed — {km} km, {date}",
   "@homeDoneSelectedSnack": {
     "placeholders": {
-      "count": { "type": "int" },
-      "km": { "type": "String" },
-      "date": { "type": "String" }
+      "count": {
+        "type": "int"
+      },
+      "km": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
     }
   },
   "homeDoneSingleSnack": "{title} completed — {km} km, {date}",
   "@homeDoneSingleSnack": {
     "placeholders": {
-      "title": { "type": "String" },
-      "km": { "type": "String" },
-      "date": { "type": "String" }
+      "title": {
+        "type": "String"
+      },
+      "km": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
     }
   },
   "dueCardPostponedUntil": "Postponed until {date}",
   "@dueCardPostponedUntil": {
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "dueCardNext": "Next: {value}",
   "@dueCardNext": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardLeft": "Left: {value}",
   "@dueCardLeft": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardOverdueKm": "overdue by {km} km",
   "@dueCardOverdueKm": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "dueCardOverdueDays": "overdue by {value}",
   "@dueCardOverdueDays": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dueCardActionPostpone": "[Postpone]",
   "dueCardActionMarkDone": "[Complete]",
-
   "mileageHeaderNotSet": "Mileage not set",
   "mileageHeaderUpdatedToday": "Updated today",
   "mileageHeaderUpdatedYesterday": "Updated yesterday",
   "mileageHeaderUpdatedDaysAgo": "Updated {days} {days, plural, one{day} other{days}} ago",
   "@mileageHeaderUpdatedDaysAgo": {
-    "placeholders": { "days": { "type": "int" } }
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
   "mileageHeaderStaleSuffix": "update",
   "nearestDueOverdue": "Overdue: {value}",
   "@nearestDueOverdue": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "nearestDueSoon": "Next maintenance in {value}",
   "@nearestDueSoon": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "dayShort": "{count, plural, one{{count} day} other{{count} days}}",
   "@dayShort": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "navSchedule": "Work schedule",
   "navPlanning": "Planning",
@@ -245,20 +337,32 @@
   "exitConfirmMessage": "Press again to exit",
   "markDoneMultiTitle": "Complete {count, plural, one{{count} work} other{{count} works}}",
   "@markDoneMultiTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "markDoneMultiWorksSection": "Works",
   "markDoneMultiNoteHint": "For example, service on Lenin St.",
   "markDoneMultiSaveButton": "Complete {count}",
   "@markDoneMultiSaveButton": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "markDoneMultiUpdateMileageTitle": "Update car mileage?",
   "markDoneMultiUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nSet the car mileage to {performed} km?",
   "@markDoneMultiUpdateMileageMessage": {
     "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" }
+      "current": {
+        "type": "String"
+      },
+      "performed": {
+        "type": "String"
+      }
     }
   },
   "actionNo": "No",
@@ -266,7 +370,6 @@
   "markDoneTitleEdit": "Edit event",
   "markDoneTitleRule": "Complete work",
   "markDoneTitleAdd": "Add event",
-
   "markDoneWorkLabel": "Work",
   "markDoneWorkHint": "For example, replaced a bulb",
   "markDoneMileageLabel": "Completion mileage",
@@ -274,35 +377,36 @@
   "markDoneCostLabel": "Cost",
   "markDoneCostHint": "Optional",
   "markDoneNoteHint": "For example, synthetic oil",
-
   "mileageErrorTooSmall": "Mileage looks suspiciously small — check the value",
-
   "markDoneUpdateMileageTitle": "Update car mileage?",
   "markDoneUpdateMileageMessage": "Current mileage: {current} km.\nCompletion mileage: {performed} km.\n\nSet the car mileage to {performed} km?",
   "@markDoneUpdateMileageMessage": {
     "placeholders": {
-      "current": { "type": "String" },
-      "performed": { "type": "String" }
+      "current": {
+        "type": "String"
+      },
+      "performed": {
+        "type": "String"
+      }
     }
   },
   "onboardingWelcomeTitle": "Welcome",
   "onboardingWelcomeSubtitle": "A couple of questions so the app\ncan calculate maintenance intervals right away",
-
   "onboardingCarNameLabel": "Car name",
   "onboardingCarNameHint": "For example, My Betsy",
   "onboardingCarNameHelper": "Optional",
-
   "onboardingMileageLabel": "Current mileage",
-
   "onboardingThemeTitle": "Theme",
   "onboardingThemeHint": "You can change it later in settings",
-
   "onboardingContinue": "Continue",
   "onboardingSaveError": "Failed to save: {error}",
   "@onboardingSaveError": {
-    "placeholders": { "error": { "type": "String" } }
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   },
-
   "themeSystem": "System",
   "themeLight": "Light",
   "themeDark": "Dark",
@@ -313,46 +417,77 @@
   "rulesHowToStart": "Where to start?",
   "rulesDeleteTitle": "Delete rule “{title}”?",
   "@rulesDeleteTitle": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "rulesDeleteMessage": "The history of completed works will not change.",
   "kmWithValue": "{km} km",
   "@kmWithValue": {
-    "placeholders": { "km": { "type": "String" } }
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
   },
   "monthsWithValue": "{months} mo",
   "@monthsWithValue": {
-    "placeholders": { "months": { "type": "int" } }
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
   },
   "ruleCardEveryOne": "Every {value}",
   "@ruleCardEveryOne": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "ruleCardEveryTwo": "Every {first} or {second}",
   "@ruleCardEveryTwo": {
     "placeholders": {
-      "first": { "type": "String" },
-      "second": { "type": "String" }
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
     }
   },
   "ruleCardNextOne": "Next: {value}",
   "@ruleCardNextOne": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "ruleCardNextTwo": "Next: {first} · {second}",
   "@ruleCardNextTwo": {
     "placeholders": {
-      "first": { "type": "String" },
-      "second": { "type": "String" }
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
     }
   },
   "ruleCardNextNotSet": "Next maintenance not set",
   "ruleCardCost": "~{amount} ₽",
   "@ruleCardCost": {
-    "placeholders": { "amount": { "type": "String" } }
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "settingsTitle": "Settings",
-
   "settingsSectionCar": "Car",
   "settingsSectionReminders": "Mileage reminders",
   "settingsSectionThresholds": "Warning thresholds",
@@ -360,38 +495,39 @@
   "settingsSectionData": "Data",
   "settingsSectionSupport": "Help and support",
   "settingsSectionAbout": "About",
-
   "settingsCarNameTitle": "Name",
   "settingsCarNameNotSet": "Not set",
   "settingsCarNameDialogTitle": "Car name",
   "settingsCarNameHint": "For example, My Betsy",
-
   "settingsRemindEnabled": "Remind to update mileage",
   "settingsRemindDaysTitle": "How often",
   "settingsRemindDaysDialogTitle": "Remind every",
   "settingsRemindDaysUnit": "days",
   "settingsRemindDaysValue": "{days} {days, plural, one{day} other{days}}",
   "@settingsRemindDaysValue": {
-    "placeholders": { "days": { "type": "int" } }
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
-
   "settingsWarnKmTitle": "Warning distance (km)",
   "settingsWarnKmDialogTitle": "Warning threshold by km",
-
   "settingsWarnMonthsTitle": "Warning period (months)",
   "settingsWarnMonthsDialogTitle": "Warning threshold by time",
-
   "settingsThemeTitle": "Theme",
-
   "settingsExportTitle": "Export data",
   "settingsExportSubtitle": "Save everything to a JSON file",
   "settingsExportSubject": "Maintenance Log — backup",
   "settingsExportFailed": "Failed to save file",
   "settingsExportSaved": "File saved: {path}",
   "@settingsExportSaved": {
-    "placeholders": { "path": { "type": "String" } }
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
   },
-
   "settingsImportTitle": "Import data",
   "settingsImportSubtitle": "Load from a JSON file",
   "settingsImportConfirmTitle": "Import data?",
@@ -400,7 +536,6 @@
   "settingsImportWrongExtension": "Choose a file with the .json extension",
   "settingsImportFailed": "Failed to import file",
   "settingsImportSuccess": "Data imported",
-
   "settingsRestoreTitle": "Restore from backup",
   "settingsRestoreSubtitle": "Automatic backups",
   "settingsRestoreConfirmTitle": "Restore from backup?",
@@ -409,55 +544,68 @@
   "settingsRestoreFailed": "Failed to restore backup",
   "settingsRestoreSuccess": "Data restored from backup",
   "settingsRestoreEmpty": "No backups yet",
-
   "settingsBackupSizeBytes": "{size} B",
   "@settingsBackupSizeBytes": {
-    "placeholders": { "size": { "type": "int" } }
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
   },
   "settingsBackupSizeKb": "{size} KB",
   "@settingsBackupSizeKb": {
-    "placeholders": { "size": { "type": "String" } }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
-
   "settingsHelpSubtitle": "How to use the app",
-
   "settingsShareTitle": "Share the app",
   "settingsShareSubtitle": "Send a store link",
   "settingsShareText": "Try the “{appTitle}” app — a car maintenance diary.\n\n{url}",
   "@settingsShareText": {
     "placeholders": {
-      "appTitle": { "type": "String" },
-      "url": { "type": "String" }
+      "appTitle": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
     }
   },
-
   "settingsCoffeeTitle": "Buy the author a coffee",
   "settingsCoffeeSubtitle": "Support development",
-
   "settingsVersionTitle": "Version",
   "splashLoadError": "Failed to load data",
   "splashRetry": "Retry",
   "notificationChannelName": "Mileage reminder",
   "notificationChannelDescription": "The app asks you to update your car mileage",
-
   "notificationMileageTitle": "Time to update mileage",
   "notificationMileageTitleWithCar": "{carName}: time to update mileage",
   "@notificationMileageTitleWithCar": {
-    "placeholders": { "carName": { "type": "String" } }
+    "placeholders": {
+      "carName": {
+        "type": "String"
+      }
+    }
   },
-
   "notificationMileageBodyStale": "Mileage data is outdated",
   "notificationMileageBodyOneDay": "Last updated 1 day ago",
   "notificationMileageBodyDays": "Last updated {days} {days, plural, =1{day} other{days}} ago",
-"@notificationMileageBodyDays": {
+  "@notificationMileageBodyDays": {
     "description": "Notification body when mileage data was last updated the given number of days ago.",
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationActionUpdate": "Update",
   "notificationActionLater": "Later",
   "notificationsPermissionTitle": "Notifications",
   "notificationsPermissionMessage": "The app will remind you to update mileage. Allow notifications?",
-  "settingsNotificationsDisabled": "Notifications are disabled in the system"
+  "settingsNotificationsDisabled": "Notifications are disabled in the system",
+  "notificationsDisabledMessage": "Notifications are disabled. Enable them in app settings.",
+  "openSettings": "Open settings"
 }

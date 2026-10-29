@@ -47,4 +47,7 @@ class SettingsDao {
       update({'theme_mode': value.name});
 
   Future<void> setLocale(String? value) => update({'locale': value});
+
+  Future<void> setNotificationsAsked(bool value) =>
+      update({'notifications_asked': value ? 1 : 0});
 }

@@ -15,6 +15,7 @@ class Settings {
     required this.onboardingDone,
     required this.themeMode,
     required this.locale,
+    required this.notificationsAsked,
   });
 
   final String carName;
@@ -28,6 +29,9 @@ class Settings {
   /// Язык приложения: `'ru'`, `'en'` или `null` — «как в системе».
   final String? locale;
 
+  /// Спрашивали ли уже разрешение на уведомления при запуске.
+  final bool notificationsAsked;
+
   static const defaults = Settings(
     carName: '',
     remindEnabled: true,
@@ -37,6 +41,7 @@ class Settings {
     onboardingDone: false,
     themeMode: ThemeModePreference.system,
     locale: null,
+    notificationsAsked: false,
   );
 
   factory Settings.fromMap(Map<String, Object?> map) {
@@ -51,6 +56,7 @@ class Settings {
         (map['theme_mode'] as String?) ?? 'system',
       ),
       locale: map['locale'] as String?,
+      notificationsAsked: (map['notifications_asked'] as int? ?? 0) == 1,
     );
   }
 
@@ -64,6 +70,7 @@ class Settings {
       'onboarding_done': onboardingDone ? 1 : 0,
       'theme_mode': themeMode.name,
       'locale': locale,
+      'notifications_asked': notificationsAsked ? 1 : 0,
     };
   }
 
@@ -76,6 +83,7 @@ class Settings {
     bool? onboardingDone,
     ThemeModePreference? themeMode,
     Object? locale = _unset,
+    bool? notificationsAsked,
   }) {
     return Settings(
       carName: carName ?? this.carName,
@@ -86,6 +94,7 @@ class Settings {
       onboardingDone: onboardingDone ?? this.onboardingDone,
       themeMode: themeMode ?? this.themeMode,
       locale: identical(locale, _unset) ? this.locale : locale as String?,
+      notificationsAsked: notificationsAsked ?? this.notificationsAsked,
     );
   }
 
@@ -94,7 +103,7 @@ class Settings {
       'remindEnabled: $remindEnabled, remindDays: $remindDays, '
       'yellowKm: $yellowKm, yellowMonths: $yellowMonths, '
       'onboardingDone: $onboardingDone, themeMode: $themeMode, '
-      'locale: $locale)';
+      'locale: $locale, notificationsAsked: $notificationsAsked)';
 
   @override
   bool operator ==(Object other) {
@@ -107,7 +116,8 @@ class Settings {
         other.yellowMonths == yellowMonths &&
         other.onboardingDone == onboardingDone &&
         other.themeMode == themeMode &&
-        other.locale == locale;
+        other.locale == locale &&
+        other.notificationsAsked == notificationsAsked;
   }
 
   @override
@@ -120,5 +130,6 @@ class Settings {
         onboardingDone,
         themeMode,
         locale,
+        notificationsAsked,
       );
 }

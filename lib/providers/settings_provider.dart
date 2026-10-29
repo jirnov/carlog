@@ -30,6 +30,9 @@ class SettingsProvider extends ChangeNotifier {
   /// Язык приложения: `'ru'`, `'en'` или `null` — «как в системе».
   String? get locale => _settings.locale;
 
+  /// Спрашивали ли уже разрешение на уведомления при запуске.
+  bool get notificationsAsked => _settings.notificationsAsked;
+
   Future<void> load() async {
     _settings = await _db.settings.get();
     _notify();
@@ -90,6 +93,13 @@ class SettingsProvider extends ChangeNotifier {
     if (_settings.locale == value) return;
     await _db.settings.setLocale(value);
     _settings = _settings.copyWith(locale: value);
+    _notify();
+  }
+
+  Future<void> setNotificationsAsked(bool value) async {
+    if (_settings.notificationsAsked == value) return;
+    await _db.settings.setNotificationsAsked(value);
+    _settings = _settings.copyWith(notificationsAsked: value);
     _notify();
   }
 

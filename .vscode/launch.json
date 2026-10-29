@@ -5,11 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "carlog",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
             "name": "carlog (RuStore)",
             "request": "launch",
             "type": "dart",

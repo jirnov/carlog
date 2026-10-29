@@ -21,7 +21,7 @@ class AppDatabase {
 
   /// Текущая версия схемы БД.
   /// Используется и в `ExportImportService` для `schema_version` в JSON.
-  static const int currentVersion = 2;
+  static const int currentVersion = 3;
 
   Database? _db;
 
@@ -91,7 +91,8 @@ class AppDatabase {
         yellow_months         INTEGER NOT NULL DEFAULT 1,
         onboarding_done       INTEGER NOT NULL DEFAULT 0,
         theme_mode            TEXT    NOT NULL DEFAULT 'system',
-        locale                TEXT
+        locale                TEXT,
+        notifications_asked   INTEGER NOT NULL DEFAULT 0
       )
     ''');
 
@@ -151,6 +152,7 @@ class AppDatabase {
       'onboarding_done': 0,
       'theme_mode': 'system',
       'locale': null,
+      'notifications_asked': 0,
     });
 
     await batch.commit(noResult: true);
@@ -158,6 +160,7 @@ class AppDatabase {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
+      // v1 → v2: колонка locale.
       await db.execute('ALTER TABLE settings ADD COLUMN locale TEXT');
 
       final systemLang =
@@ -169,6 +172,14 @@ class AppDatabase {
         {'locale': initialLocale},
         where: 'id = ?',
         whereArgs: [1],
+      );
+    }
+
+    if (oldVersion < 3) {
+      // v2 → v3: флаг «уже спрашивали разрешение на уведомления».
+      await db.execute(
+        'ALTER TABLE settings ADD COLUMN '
+        'notifications_asked INTEGER NOT NULL DEFAULT 0',
       );
     }
   }

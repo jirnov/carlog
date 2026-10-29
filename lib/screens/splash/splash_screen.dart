@@ -60,8 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (!mounted) return;
 
-      // Свой диалог перед системным запросом разрешения (только если
-      // разрешение ещё не выдано).
+      // Свой диалог перед системным запросом разрешения — только при
+      // первом запуске (флаг notifications_asked).
       await _maybeAskNotificationsPermission();
 
       if (!mounted) return;
@@ -73,19 +73,27 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  /// Показать свой диалог и, если пользователь согласился,
-  /// вызвать системный запрос разрешения на уведомления.
-  ///
-  /// Если разрешение уже выдано — ничего не показывает.
+  /// Спросить разрешение на уведомления один раз (при первом запуске).
+  /// Если пользователь отказал — больше не спрашиваем; включить можно
+  /// через настройки (тумблер «Напоминать»).
   Future<void> _maybeAskNotificationsPermission() async {
-    // На не-Android системный диалог не нужен.
     if (!Platform.isAndroid) return;
+
+    final settings = context.read<SettingsProvider>();
+
+    // Уже спрашивали — не спрашиваем.
+    if (settings.notificationsAsked) return;
 
     final notifications = context.read<NotificationService>();
     final l10n = context.l10n;
 
-    // Уже выдано — не спрашиваем.
-    if (await notifications.hasPermission()) return;
+    // Если разрешение уже выдано (например, пользователь выдал вручную
+    // в системных настройках) — просто помечаем, что спросили.
+    if (await notifications.hasPermission()) {
+      await settings.setNotificationsAsked(true);
+      return;
+    }
+
     if (!mounted) return;
 
     final shouldAsk = await showDialog<bool>(
@@ -109,6 +117,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (shouldAsk == true) {
       await notifications.requestPermissions();
     }
+
+    // Помечаем, что спросили — больше не будем.
+    await settings.setNotificationsAsked(true);
   }
 
   @override

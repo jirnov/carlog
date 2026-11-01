@@ -42,7 +42,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get workCategoryInterior => 'Салон';
 
   @override
-  String get workEngineOilChange => 'Замена масла в двигателе';
+  String get workEngineOilChange =>
+      'Замена масла и масляного фильтра в двигателе';
 
   @override
   String get workAirFilterReplace => 'Замена воздушного фильтра';

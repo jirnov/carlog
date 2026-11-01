@@ -42,7 +42,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workCategoryInterior => 'Interior';
 
   @override
-  String get workEngineOilChange => 'Engine oil change';
+  String get workEngineOilChange => 'Engine oil and oil filter change';
 
   @override
   String get workAirFilterReplace => 'Air filter replacement';

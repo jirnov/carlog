@@ -167,7 +167,7 @@ abstract class AppLocalizations {
   /// No description provided for @workEngineOilChange.
   ///
   /// In ru, this message translates to:
-  /// **'Замена масла в двигателе'**
+  /// **'Замена масла и масляного фильтра в двигателе'**
   String get workEngineOilChange;
 
   /// No description provided for @workAirFilterReplace.

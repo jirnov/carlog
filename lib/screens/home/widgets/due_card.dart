@@ -60,10 +60,18 @@ class DueCard extends StatelessWidget {
         '${date.month.toString().padLeft(2, '0')}.${date.year}';
   }
 
+  /// Срок в человекочитаемом виде:
+  /// - `< 30` дней → «N дней»;
+  /// - `< 365` дней → «~N месяцев»;
+  /// - `>= 365` дней → «больше года».
   String _daysShort(int value, AppLocalizations l10n) {
     final abs = value.abs();
     if (abs < 30) return l10n.dayShort(count: abs);
-    return l10n.dayShort(count: (abs / 30).round());
+    if (abs < 365) {
+      final months = (abs / 30).round();
+      return l10n.monthsShort(count: months);
+    }
+    return l10n.moreThanYear;
   }
 
   String _intervalText(AppLocalizations l10n, String locale) {
@@ -192,14 +200,6 @@ class DueCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                             ],
-                            Text(
-                              l10n.dueCardNext(
-                                value: _nextText(l10n, locale),
-                              ),
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant,
-                              ),
-                            ),
                             const SizedBox(height: 4),
                             Text(
                               hasAnyOverdue

@@ -876,4 +876,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get openSettings => 'Открыть настройки';
+
+  @override
+  String monthsShort({required num count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count месяца',
+      many: '$count месяцев',
+      few: '$count месяца',
+      one: '$count месяц',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get moreThanYear => 'больше года';
 }

@@ -576,5 +576,7 @@
   "notificationsPermissionMessage": "Приложение будет напоминать об обновлении пробега. Разрешить уведомления?",
   "settingsNotificationsDisabled": "Уведомления отключены в системе",
   "notificationsDisabledMessage": "Уведомления отключены. Включите их в настройках приложения.",
-  "openSettings": "Открыть настройки"
+  "openSettings": "Открыть настройки",
+  "monthsShort": "{count, plural, one{{count} месяц} few{{count} месяца} many{{count} месяцев} other{{count} месяца}}",
+  "moreThanYear": "больше года"
 }

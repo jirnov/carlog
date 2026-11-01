@@ -607,5 +607,7 @@
   "notificationsPermissionMessage": "The app will remind you to update mileage. Allow notifications?",
   "settingsNotificationsDisabled": "Notifications are disabled in the system",
   "notificationsDisabledMessage": "Notifications are disabled. Enable them in app settings.",
-  "openSettings": "Open settings"
+  "openSettings": "Open settings",
+  "monthsShort": "{count, plural, one{{count} month} other{{count} months}}",
+  "moreThanYear": "more than a year"
 }

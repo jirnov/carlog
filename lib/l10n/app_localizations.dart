@@ -1529,6 +1529,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Открыть настройки'**
   String get openSettings;
+
+  /// No description provided for @monthsShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, one{{count} месяц} few{{count} месяца} many{{count} месяцев} other{{count} месяца}}'**
+  String monthsShort({required num count});
+
+  /// No description provided for @moreThanYear.
+  ///
+  /// In ru, this message translates to:
+  /// **'больше года'**
+  String get moreThanYear;
 }
 
 class _AppLocalizationsDelegate

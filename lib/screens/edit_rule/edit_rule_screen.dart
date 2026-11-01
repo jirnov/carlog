@@ -8,7 +8,7 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
-import 'package:carlog/dialogs/confirm_exit_dialog.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
@@ -162,7 +162,15 @@ class _EditRuleScreenState extends State<EditRuleScreen> {
 
   Future<bool> _confirmExit() async {
     if (!_hasChanges) return true;
-    return showConfirmExitDialog(context);
+    final l10n = context.l10n;
+    return showConfirmDialog(
+      context,
+      title: l10n.confirmExitTitle,
+      message: l10n.confirmExitMessage,
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
+    );
   }
 
   bool _validate() {

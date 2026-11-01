@@ -1,7 +1,10 @@
 // lib/dialogs/update_mileage_dialog.dart
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/utils/formatting.dart';
 
@@ -81,30 +84,19 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).languageCode;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.mileageJumpTitle),
-        content: Text(
-          l10n.mileageJumpMessage(
-            previous: formatThousands(widget.previousMileage, locale),
-            current: formatThousands(value, locale),
-            diff: formatThousands(diff, locale),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.mileageJumpEdit),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.mileageJumpConfirm),
-          ),
-        ],
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.mileageJumpTitle,
+      message: l10n.mileageJumpMessage(
+        previous: formatThousands(widget.previousMileage, locale),
+        current: formatThousands(value, locale),
+        diff: formatThousands(diff, locale),
       ),
+      confirmText: l10n.mileageJumpConfirm,
+      cancelText: l10n.mileageJumpEdit,
+      isDestructive: false,
     );
-    return confirmed ?? false;
+    return confirmed;
   }
 
   Future<void> _onSave() async {
@@ -130,60 +122,83 @@ class _UpdateMileageDialogState extends State<_UpdateMileageDialog> {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).languageCode;
 
-    return AlertDialog(
-      scrollable: true,
-      title: Text(l10n.actionUpdateMileage),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            controller: _controller,
-            focusNode: _focusNode,
-            autofocus: true,
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              ThousandsSeparatorFormatter(locale: locale),
+    final dialogWidth = math.min(
+      MediaQuery.sizeOf(context).width * 0.8,
+      400.0,
+    );
+
+    // ВАЖНО: Dialog вместо AlertDialog — иначе FilledButton в actions
+    // падает с "BoxConstraints forces an infinite width".
+    return Dialog(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: dialogWidth),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.actionUpdateMileage,
+                style: theme.textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _controller,
+                focusNode: _focusNode,
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  ThousandsSeparatorFormatter(locale: locale),
+                ],
+                onChanged: _onChanged,
+                onSubmitted: (_) {
+                  if (_canSave) _onSave();
+                },
+                decoration: InputDecoration(
+                  labelText: l10n.updateMileageFieldLabel,
+                  suffixText: l10n.unitKm,
+                  errorText: _errorText,
+                ),
+                style: theme.textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                l10n.updateMileagePrevious(
+                  km: formatThousands(widget.previousMileage, locale),
+                ),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                l10n.updateMileageDateToday,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(l10n.actionCancel),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: FilledButton(
+                      onPressed: _canSave ? _onSave : null,
+                      child: Text(l10n.actionSave),
+                    ),
+                  ),
+                ],
+              ),
             ],
-            onChanged: _onChanged,
-            onSubmitted: (_) {
-              if (_canSave) _onSave();
-            },
-            decoration: InputDecoration(
-              labelText: l10n.updateMileageFieldLabel,
-              suffixText: l10n.unitKm,
-              errorText: _errorText,
-            ),
-            style: theme.textTheme.headlineSmall,
           ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.updateMileagePrevious(
-              km: formatThousands(widget.previousMileage, locale),
-            ),
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            l10n.updateMileageDateToday,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.actionCancel),
-        ),
-        FilledButton(
-          onPressed: _canSave ? _onSave : null,
-          child: Text(l10n.actionSave),
-        ),
-      ],
     );
   }
 }

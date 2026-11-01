@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/settings_provider.dart';
 import 'package:carlog/services/notification_service.dart';
@@ -66,25 +67,16 @@ class _RemindEnabledTileState extends State<RemindEnabledTile> {
     }
 
     // Android 13+: свой диалог → системный.
-    final shouldAsk = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.notificationsPermissionTitle),
-        content: Text(l10n.notificationsPermissionMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.actionNo),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.actionYes),
-          ),
-        ],
-      ),
+    final shouldAsk = await showConfirmDialog(
+      context,
+      title: l10n.notificationsPermissionTitle,
+      message: l10n.notificationsPermissionMessage,
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
     );
 
-    if (shouldAsk != true) return;
+    if (!shouldAsk) return;
     if (!mounted) return;
 
     final grantedBySystem = await notifications.requestPermissions();
@@ -102,25 +94,16 @@ class _RemindEnabledTileState extends State<RemindEnabledTile> {
     final l10n = context.l10n;
     final notifications = context.read<NotificationService>();
 
-    final shouldOpen = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.notificationsPermissionTitle),
-        content: Text(l10n.notificationsDisabledMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.actionCancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.openSettings),
-          ),
-        ],
-      ),
+    final shouldOpen = await showConfirmDialog(
+      context,
+      title: l10n.notificationsPermissionTitle,
+      message: l10n.notificationsDisabledMessage,
+      confirmText: l10n.openSettings,
+      cancelText: l10n.actionCancel,
+      isDestructive: false,
     );
 
-    if (shouldOpen == true) {
+    if (shouldOpen) {
       await notifications.openAppNotificationSettings();
     }
   }

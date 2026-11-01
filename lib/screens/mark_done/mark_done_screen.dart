@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/history_record.dart';
 import 'package:carlog/data/models/rule.dart';
-import 'package:carlog/dialogs/confirm_exit_dialog.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
@@ -92,7 +92,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     return l10n.markDoneTitleAdd;
   }
 
-  /// Привести дату к 15-му числу её месяца.
   static DateTime _day15(DateTime date) {
     return DateTime(date.year, date.month, 15);
   }
@@ -125,7 +124,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
       _mileageController = TextEditingController(
         text: formatThousands(currentMileage, locale),
       );
-      // Стоимость берём из правила, если она там задана.
       _costController = TextEditingController(
         text: (rule.cost != null && rule.cost! > 0)
             ? formatThousands(rule.cost!.round(), locale)
@@ -222,7 +220,15 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
 
   Future<bool> _confirmExit() async {
     if (!_hasChanges) return true;
-    return showConfirmExitDialog(context);
+    final l10n = context.l10n;
+    return showConfirmDialog(
+      context,
+      title: l10n.confirmExitTitle,
+      message: l10n.confirmExitMessage,
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
+    );
   }
 
   Future<bool> _confirmLargeJump(int value, String locale) async {
@@ -236,30 +242,19 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     if (diff <= _suspiciousJumpKm) return true;
 
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.mileageJumpTitle),
-        content: Text(
-          l10n.markDoneJumpMessage(
-            current: formatThousands(currentMileage, locale),
-            performed: formatThousands(value, locale),
-            diff: formatThousands(diff, locale),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.mileageJumpEdit),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.mileageJumpConfirm),
-          ),
-        ],
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.mileageJumpTitle,
+      message: l10n.markDoneJumpMessage(
+        current: formatThousands(currentMileage, locale),
+        performed: formatThousands(value, locale),
+        diff: formatThousands(diff, locale),
       ),
+      confirmText: l10n.mileageJumpConfirm,
+      cancelText: l10n.mileageJumpEdit,
+      isDestructive: false,
     );
-    return confirmed ?? false;
+    return confirmed;
   }
 
   Future<bool> _confirmUpdateMileage(
@@ -268,29 +263,18 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     String locale,
   ) async {
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.markDoneUpdateMileageTitle),
-        content: Text(
-          l10n.markDoneUpdateMileageMessage(
-            current: formatThousands(currentMileage, locale),
-            performed: formatThousands(newMileage, locale),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.actionNo),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.actionYes),
-          ),
-        ],
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.markDoneUpdateMileageTitle,
+      message: l10n.markDoneUpdateMileageMessage(
+        current: formatThousands(currentMileage, locale),
+        performed: formatThousands(newMileage, locale),
       ),
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
     );
-    return confirmed ?? false;
+    return confirmed;
   }
 
   Future<void> _onSave() async {
@@ -299,15 +283,11 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
     final mileage = _mileage!;
     final locale = Localizations.localeOf(context).languageCode;
 
-    // Захватываем Navigator и провайдер до первого await,
-    // чтобы не обращаться к context после асинхронных операций.
     final navigator = Navigator.of(context);
     final currentMileage = context.read<MileageProvider>().currentMileage;
 
     final confirmed = await _confirmLargeJump(mileage, locale);
     if (!confirmed) return;
-    // Проверка State.mounted — валидная защита для последующего
-    // использования context внутри того же State.
     if (!mounted) return;
 
     setState(() => _isSaving = true);
@@ -324,8 +304,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
       cost: cost,
     );
 
-    // Спросить про обновление пробега машины, если введённый пробег
-    // больше текущего. Запись в MileageProvider — на стороне HomeScreen.
     int? updatedMileage;
     if (_strictMode) {
       if (mileage > currentMileage) {
@@ -381,7 +359,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Работа
               if (_isRuleFixed)
                 InputDecorator(
                   decoration:
@@ -403,8 +380,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                   ),
                 ),
               const SizedBox(height: 16),
-
-              // Пробег
               TextField(
                 controller: _mileageController,
                 keyboardType: TextInputType.number,
@@ -419,8 +394,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Месяц
               InkWell(
                 onTap: _pickDate,
                 child: InputDecorator(
@@ -432,8 +405,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Стоимость
               TextField(
                 controller: _costController,
                 keyboardType: TextInputType.number,
@@ -447,8 +418,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Заметка
               TextField(
                 controller: _noteController,
                 maxLines: 3,
@@ -459,8 +428,6 @@ class _MarkDoneScreenState extends State<MarkDoneScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Кнопка
               FilledButton(
                 onPressed: _canSave ? _onSave : null,
                 child: _isSaving

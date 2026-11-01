@@ -7,6 +7,7 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/mileage_provider.dart';
 import 'package:carlog/utils/formatting.dart';
@@ -114,29 +115,18 @@ class _MarkDoneMultiScreenState extends State<MarkDoneMultiScreen> {
     String locale,
   ) async {
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.markDoneUpdateMileageTitle),
-        content: Text(
-          l10n.markDoneUpdateMileageMessage(
-            current: formatThousands(currentMileage, locale),
-            performed: formatThousands(mileage, locale),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.actionNo),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.actionYes),
-          ),
-        ],
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.markDoneUpdateMileageTitle,
+      message: l10n.markDoneUpdateMileageMessage(
+        current: formatThousands(currentMileage, locale),
+        performed: formatThousands(mileage, locale),
       ),
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
     );
-    return confirmed ?? false;
+    return confirmed;
   }
 
   Future<void> _onSave() async {

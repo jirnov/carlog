@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/history_record.dart';
-import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/screens/help/help_screen.dart';
@@ -59,10 +59,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Future<void> _confirmDelete(HistoryRecord record) async {
     final l10n = context.l10n;
 
-    final confirmed = await showConfirmDeleteDialog(
+    final confirmed = await showConfirmDialog(
       context,
       title: l10n.historyDeleteTitle(title: record.title),
       message: l10n.historyDeleteMessage,
+      confirmText: l10n.actionDelete,
+      cancelText: l10n.actionCancel,
+      isDestructive: true,
     );
     if (!confirmed) return;
     if (!mounted) return;

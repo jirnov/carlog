@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/history_provider.dart';
 import 'package:carlog/providers/mileage_provider.dart';
@@ -103,25 +104,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    final shouldAsk = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.notificationsPermissionTitle),
-        content: Text(l10n.notificationsPermissionMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.actionNo),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.actionYes),
-          ),
-        ],
-      ),
+    final shouldAsk = await showConfirmDialog(
+      context,
+      title: l10n.notificationsPermissionTitle,
+      message: l10n.notificationsPermissionMessage,
+      confirmText: l10n.actionYes,
+      cancelText: l10n.actionNo,
+      isDestructive: false,
     );
 
-    if (shouldAsk == true) {
+    if (shouldAsk) {
       await notifications.requestPermissions();
     }
 

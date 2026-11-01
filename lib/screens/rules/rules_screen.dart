@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:carlog/data/models/rule.dart';
-import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/rules_provider.dart';
 import 'package:carlog/screens/edit_rule/edit_rule_screen.dart';
@@ -53,10 +53,13 @@ class _RulesScreenState extends State<RulesScreen> {
   Future<void> _confirmDelete(Rule rule) async {
     final l10n = context.l10n;
 
-    final confirmed = await showConfirmDeleteDialog(
+    final confirmed = await showConfirmDialog(
       context,
       title: l10n.rulesDeleteTitle(title: rule.title),
       message: l10n.rulesDeleteMessage,
+      confirmText: l10n.actionDelete,
+      cancelText: l10n.actionCancel,
+      isDestructive: true,
     );
     if (!confirmed) return;
     if (!mounted) return;

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:carlog/dialogs/confirm_delete_dialog.dart';
+import 'package:carlog/dialogs/confirm_dialog.dart';
 import 'package:carlog/l10n/context_l10n.dart';
 import 'package:carlog/providers/due_list_provider.dart';
 import 'package:carlog/providers/export_import_provider.dart';
@@ -83,7 +83,7 @@ class ImportTile extends StatelessWidget {
   Future<void> _import(BuildContext context) async {
     final l10n = context.l10n;
 
-    final confirmed = await showConfirmDeleteDialog(
+    final confirmed = await showConfirmDialog(
       context,
       title: l10n.settingsImportConfirmTitle,
       message: l10n.settingsImportConfirmMessage,
@@ -161,12 +161,13 @@ class RestoreBackupTile extends StatelessWidget {
     if (path == null) return;
     if (!context.mounted) return;
 
-    final confirmed = await showConfirmDeleteDialog(
+    final confirmed = await showConfirmDialog(
       context,
       title: l10n.settingsRestoreConfirmTitle,
       message: l10n.settingsRestoreConfirmMessage,
       confirmText: l10n.settingsRestoreConfirmAction,
       cancelText: l10n.actionCancel,
+      isDestructive: false,
     );
     if (!confirmed) return;
     if (!context.mounted) return;

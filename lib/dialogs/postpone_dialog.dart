@@ -74,92 +74,118 @@ class _PostponeDialogState extends State<_PostponeDialog> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    return AlertDialog(
-      title: Text(l10n.postponeTitle),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.ruleTitle,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+    return Dialog(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 400),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.postponeTitle,
+                style: theme.textTheme.headlineSmall,
               ),
-            ),
-            const SizedBox(height: 16),
-            const Divider(height: 1),
-            const SizedBox(height: 8),
-            Text(l10n.postponePeriodQuestion,
-                style: theme.textTheme.labelLarge),
-            const SizedBox(height: 8),
-            RadioGroup<_PostponeOption>(
-              groupValue: _option,
-              onChanged: (value) {
-                if (value == null) return;
-                setState(() => _option = value);
-              },
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              const SizedBox(height: 16),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.ruleTitle,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(height: 1),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.postponePeriodQuestion,
+                      style: theme.textTheme.labelLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    RadioGroup<_PostponeOption>(
+                      groupValue: _option,
+                      onChanged: (value) {
+                        if (value == null) return;
+                        setState(() => _option = value);
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RadioListTile<_PostponeOption>(
+                            value: _PostponeOption.threeDays,
+                            title: Text(l10n.postponeThreeDays),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                          ),
+                          RadioListTile<_PostponeOption>(
+                            value: _PostponeOption.oneWeek,
+                            title: Text(l10n.postponeOneWeek),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                          ),
+                          RadioListTile<_PostponeOption>(
+                            value: _PostponeOption.oneMonth,
+                            title: Text(l10n.postponeOneMonth),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                          ),
+                          RadioListTile<_PostponeOption>(
+                            value: _PostponeOption.custom,
+                            title: Text(l10n.postponeCustom),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (_option == _PostponeOption.custom) ...[
+                      const SizedBox(height: 8),
+                      InkWell(
+                        onTap: _pickCustomDate,
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: l10n.postponeDateLabel,
+                            suffixIcon: const Icon(Icons.calendar_today),
+                          ),
+                          child: Text(
+                            _customDate != null
+                                ? _formatDate(_customDate!)
+                                : l10n.postponePickDate,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  RadioListTile<_PostponeOption>(
-                    value: _PostponeOption.threeDays,
-                    title: Text(l10n.postponeThreeDays),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(l10n.actionCancel),
                   ),
-                  RadioListTile<_PostponeOption>(
-                    value: _PostponeOption.oneWeek,
-                    title: Text(l10n.postponeOneWeek),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                  ),
-                  RadioListTile<_PostponeOption>(
-                    value: _PostponeOption.oneMonth,
-                    title: Text(l10n.postponeOneMonth),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                  ),
-                  RadioListTile<_PostponeOption>(
-                    value: _PostponeOption.custom,
-                    title: Text(l10n.postponeCustom),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: FilledButton(
+                      onPressed: _canSubmit
+                          ? () => Navigator.of(context).pop(_resultDate)
+                          : null,
+                      child: Text(l10n.actionPostpone),
+                    ),
                   ),
                 ],
               ),
-            ),
-            if (_option == _PostponeOption.custom) ...[
-              const SizedBox(height: 8),
-              InkWell(
-                onTap: _pickCustomDate,
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: l10n.postponeDateLabel,
-                    suffixIcon: const Icon(Icons.calendar_today),
-                  ),
-                  child: Text(
-                    _customDate != null
-                        ? _formatDate(_customDate!)
-                        : l10n.postponePickDate,
-                  ),
-                ),
-              ),
             ],
-          ],
+          ),
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.actionCancel),
-        ),
-        FilledButton(
-          onPressed:
-              _canSubmit ? () => Navigator.of(context).pop(_resultDate) : null,
-          child: Text(l10n.actionPostpone),
-        ),
-      ],
     );
   }
 }

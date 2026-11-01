@@ -85,22 +85,32 @@ Future<void> createRuleIfNeeded(
   await tester.pumpAndSettle();
 
   await waitFor(tester, find.text('New scheduled maintenance'));
+  await tester.pumpAndSettle();
 
-  await tester.enterText(
-    find.widgetWithText(TextField, 'Name of scheduled work'),
-    name,
+  // Дожидаемся реального появления полей — заголовок мог отрисоваться
+  // раньше, чем TextField'ы.
+  final nameField = find.widgetWithText(TextField, 'Name of scheduled work');
+  await waitFor(tester, nameField);
+  await tester.pumpAndSettle();
+
+  await tester.enterText(nameField, name);
+  await tester.pump();
+
+  final nextKmField = find.widgetWithText(
+    TextField,
+    'Next maintenance mileage',
   );
-  await tester.enterText(
-    find.widgetWithText(
-      TextField,
-      'At what mileage to do the next maintenance',
-    ),
-    nextKm,
-  );
-  await tester.enterText(
-    find.widgetWithText(TextField, 'By km'),
-    intervalKm,
-  );
+  await waitFor(tester, nextKmField);
+  await tester.pumpAndSettle();
+
+  await tester.enterText(nextKmField, nextKm);
+  await tester.pump();
+
+  final intervalKmField = find.widgetWithText(TextField, 'By km');
+  await waitFor(tester, intervalKmField);
+  await tester.pumpAndSettle();
+
+  await tester.enterText(intervalKmField, intervalKm);
   await tester.pump();
 
   await hideKeyboard(tester);

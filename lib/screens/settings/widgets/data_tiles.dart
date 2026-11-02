@@ -89,6 +89,7 @@ class ImportTile extends StatelessWidget {
       message: l10n.settingsImportConfirmMessage,
       confirmText: l10n.settingsImportConfirmAction,
       cancelText: l10n.actionCancel,
+      isDestructive: true,
     );
     if (!confirmed) return;
     if (!context.mounted) return;

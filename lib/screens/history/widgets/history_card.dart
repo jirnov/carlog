@@ -28,7 +28,7 @@ class HistoryCard extends StatelessWidget {
 
   static const _animDuration = Duration(milliseconds: 240);
   static const _animCurve = Curves.easeInOutCubic;
-  static const _collapsedMaxLines = 1;
+  static const _collapsedMaxLines = 2;
 
   bool _willOverflow(
     BuildContext context,

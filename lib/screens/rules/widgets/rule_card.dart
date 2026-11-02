@@ -28,7 +28,7 @@ class RuleCard extends StatelessWidget {
 
   static const _animDuration = Duration(milliseconds: 240);
   static const _animCurve = Curves.easeInOutCubic;
-  static const _collapsedMaxLines = 1;
+  static const _collapsedMaxLines = 2;
 
   String _intervalLabel(BuildContext context) {
     final l10n = context.l10n;

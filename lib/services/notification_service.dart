@@ -3,8 +3,10 @@
 import 'dart:io' show Platform;
 
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -122,6 +124,19 @@ class NotificationService {
     return true;
   }
 
+  /// Покажет ли система диалог POST_NOTIFICATIONS при [requestPermissions].
+  ///
+  /// - Android 13+ (API 33+): да, системный диалог будет показан.
+  /// - Android < 13 (API < 33): нет, разрешение выдаётся при установке /
+  ///   через настройки; [requestPermissions] вернёт текущий статус.
+  /// - iOS: да (один раз, при первом запросе).
+  Future<bool> canRequestSystemPermission() async {
+    if (!Platform.isAndroid) return true;
+
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    return androidInfo.version.sdkInt >= 33;
+  }
+
   Future<bool> requestPermissions() async {
     if (!_isSupported) return true;
 
@@ -149,16 +164,31 @@ class NotificationService {
   }
 
   /// Открыть системные настройки уведомлений приложения (Android).
+  ///
+  /// На API 26+ открывает экран «Уведомления» приложения напрямую.
+  /// На старых прошивках, где `APP_NOTIFICATION_SETTINGS` не поддерживается,
+  /// откатывается на общие настройки приложения.
   Future<void> openAppNotificationSettings() async {
     if (!Platform.isAndroid) return;
+
+    final info = await PackageInfo.fromPlatform();
 
     final intent = AndroidIntent(
       action: 'android.settings.APP_NOTIFICATION_SETTINGS',
       arguments: {
-        'android.provider.extra.APP_PACKAGE': 'ru.blog2k.carlog',
+        'android.provider.extra.APP_PACKAGE': info.packageName,
       },
     );
-    await intent.launch();
+
+    try {
+      await intent.launch();
+    } catch (_) {
+      final fallback = AndroidIntent(
+        action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
+        data: 'package:${info.packageName}',
+      );
+      await fallback.launch();
+    }
   }
 
   Future<void> showMileageReminder({

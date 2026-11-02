@@ -578,5 +578,7 @@
   "notificationsDisabledMessage": "Уведомления отключены. Включите их в настройках приложения.",
   "openSettings": "Открыть настройки",
   "monthsShort": "{count, plural, one{{count} месяц} few{{count} месяца} many{{count} месяцев} other{{count} месяца}}",
-  "moreThanYear": "больше года"
+  "moreThanYear": "больше года",
+  "notificationsPermissionMessageSystem": "В следующем диалоге разрешите уведомления, чтобы вовремя получать напоминания.",
+  "notificationsPermissionMessageSettings": "Чтобы получать напоминания, включите уведомления в настройках приложения."
 }

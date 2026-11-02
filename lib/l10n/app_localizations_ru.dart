@@ -892,4 +892,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get moreThanYear => 'больше года';
+
+  @override
+  String get notificationsPermissionMessageSystem =>
+      'В следующем диалоге разрешите уведомления, чтобы вовремя получать напоминания.';
+
+  @override
+  String get notificationsPermissionMessageSettings =>
+      'Чтобы получать напоминания, включите уведомления в настройках приложения.';
 }

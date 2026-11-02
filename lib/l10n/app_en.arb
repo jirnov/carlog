@@ -609,5 +609,13 @@
   "notificationsDisabledMessage": "Notifications are disabled. Enable them in app settings.",
   "openSettings": "Open settings",
   "monthsShort": "{count, plural, one{{count} month} other{{count} months}}",
-  "moreThanYear": "more than a year"
+  "moreThanYear": "more than a year",
+  "notificationsPermissionMessageSystem": "In the next dialog, allow notifications so we can remind you about maintenance on time.",
+  "@notificationsPermissionMessageSystem": {
+    "description": "Shown before the system POST_NOTIFICATIONS dialog on Android 13+ and iOS."
+  },
+  "notificationsPermissionMessageSettings": "To receive reminders, please enable notifications for this app in the system settings.",
+  "@notificationsPermissionMessageSettings": {
+    "description": "Shown on Android < 13 where there is no system permission dialog; user is sent to app notification settings."
+  }
 }

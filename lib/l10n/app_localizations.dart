@@ -1541,6 +1541,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'больше года'**
   String get moreThanYear;
+
+  /// No description provided for @notificationsPermissionMessageSystem.
+  ///
+  /// In ru, this message translates to:
+  /// **'В следующем диалоге разрешите уведомления, чтобы вовремя получать напоминания.'**
+  String get notificationsPermissionMessageSystem;
+
+  /// No description provided for @notificationsPermissionMessageSettings.
+  ///
+  /// In ru, this message translates to:
+  /// **'Чтобы получать напоминания, включите уведомления в настройках приложения.'**
+  String get notificationsPermissionMessageSettings;
 }
 
 class _AppLocalizationsDelegate

@@ -879,4 +879,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moreThanYear => 'more than a year';
+
+  @override
+  String get notificationsPermissionMessageSystem =>
+      'In the next dialog, allow notifications so we can remind you about maintenance on time.';
+
+  @override
+  String get notificationsPermissionMessageSettings =>
+      'To receive reminders, please enable notifications for this app in the system settings.';
 }

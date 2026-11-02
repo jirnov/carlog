@@ -2,7 +2,6 @@
 
 import 'dart:io' show Platform;
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,8 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (!mounted) return;
 
-      // Свой диалог перед системным запросом разрешения — только при
-      // первом запуске (флаг notifications_asked) и только на Android 13+.
+      // Свой диалог перед запросом разрешения на уведомления.
       await _maybeAskNotificationsPermission();
 
       if (!mounted) return;
@@ -76,25 +74,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   /// Спросить разрешение на уведомления один раз (при первом запуске).
+  ///
+  /// - Android 13+: свой диалог-прелюдия, затем системный диалог.
+  /// - Android < 13: своего системного диалога нет, показываем свой
+  ///   и при согласии открываем настройки уведомлений приложения.
+  /// - iOS: свой диалог-прелюдия, затем системный диалог.
   Future<void> _maybeAskNotificationsPermission() async {
-    if (!Platform.isAndroid) return;
+    if (!Platform.isAndroid && !Platform.isIOS) return;
 
     final settings = context.read<SettingsProvider>();
 
     // Уже спрашивали — не спрашиваем.
     if (settings.notificationsAsked) return;
 
-    // На Android < 13 системного диалога нет — не показываем свой.
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    if (androidInfo.version.sdkInt < 33) {
-      await settings.setNotificationsAsked(true);
-      return;
-    }
-
     final notifications = context.read<NotificationService>();
     final l10n = context.l10n;
-
-    if (!mounted) return;
 
     // Если разрешение уже выдано — просто помечаем, что спросили.
     if (await notifications.hasPermission()) {
@@ -104,17 +98,32 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    final shouldAsk = await showConfirmDialog(
+    final canShowSystemDialog =
+        await notifications.canRequestSystemPermission();
+
+    if (!mounted) return;
+
+    final agreed = await showConfirmDialog(
       context,
       title: l10n.notificationsPermissionTitle,
-      message: l10n.notificationsPermissionMessage,
+      message: canShowSystemDialog
+          ? l10n.notificationsPermissionMessageSystem
+          : l10n.notificationsPermissionMessageSettings,
       confirmText: l10n.actionYes,
       cancelText: l10n.actionNo,
       isDestructive: false,
     );
 
-    if (shouldAsk) {
-      await notifications.requestPermissions();
+    if (!mounted) return;
+
+    if (agreed) {
+      if (canShowSystemDialog) {
+        // Android 13+ / iOS — покажет системный диалог.
+        await notifications.requestPermissions();
+      } else {
+        // Android < 13 — системного диалога нет, ведём в настройки.
+        await notifications.openAppNotificationSettings();
+      }
     }
 
     // Помечаем, что спросили — больше не будем.

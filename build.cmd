@@ -24,9 +24,9 @@ echo === Flutter pub get ===
 call fvm flutter pub get
 if errorlevel 1 goto :fail
 
-echo === Google Play (AAB) ===
-call fvm flutter build appbundle --release --flavor googleplay
-if errorlevel 1 goto :fail
+rem echo === Google Play (AAB) ===
+rem call fvm flutter build appbundle --release --flavor googleplay
+rem if errorlevel 1 goto :fail
 
 echo === RuStore (APK) ===
 call fvm flutter build apk --release --flavor rustore

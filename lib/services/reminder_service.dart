@@ -39,7 +39,17 @@ class ReminderService {
 
     final days = _daysSinceUpdate;
     if (days == null) return false;
-    return days >= _settings.remindDays;
+    if (days < _settings.remindDays) return false;
+
+    // Не чаще, чем раз в remindDays с последнего показа.
+    final lastNotified = _settings.lastNotifiedAt;
+    if (lastNotified != null) {
+      final sinceNotified =
+          dateOnly(DateTime.now()).difference(dateOnly(lastNotified)).inDays;
+      if (sinceNotified < _settings.remindDays) return false;
+    }
+
+    return true;
   }
 
   /// Сколько календарных дней прошло с последнего обновления.
@@ -52,14 +62,18 @@ class ReminderService {
   }
 
   /// Локаль для текстов уведомления.
-  /// Берём системную; если хотите следовать языку приложения —
-  /// сохраняйте выбранную локаль в настройках и читайте здесь.
   Locale get _locale => WidgetsBinding.instance.platformDispatcher.locale;
 
   /// Запланировать следующую проверку на завтра в 10:00.
   /// Вызывается после каждой успешной проверки.
   Future<void> scheduleNextCheck() async {
     if (!_settings.remindEnabled) {
+      await _notifications.cancelMileageReminder();
+      return;
+    }
+
+    // Если ещё рано — не планируем показ, только отменяем старый.
+    if (!shouldRemind) {
       await _notifications.cancelMileageReminder();
       return;
     }
@@ -85,11 +99,15 @@ class ReminderService {
       when: when,
       texts: texts,
     );
+
+    // Запоминаем факт планирования — считаем это «показом» для троттлинга.
+    await _settings.setLastNotifiedAt(DateTime.now());
   }
 
   /// Сбросить напоминания — например, после обновления пробега.
   Future<void> reset() async {
     await _notifications.cancelMileageReminder();
+    await _settings.setLastNotifiedAt(null);
     await scheduleNextCheck();
   }
 }

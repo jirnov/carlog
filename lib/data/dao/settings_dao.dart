@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:carlog/data/models/settings.dart';
 import 'package:carlog/data/models/theme_mode_preference.dart';
+import 'package:carlog/utils/formatting.dart';
 
 class SettingsDao {
   SettingsDao(this._db);
@@ -50,4 +51,8 @@ class SettingsDao {
 
   Future<void> setNotificationsAsked(bool value) =>
       update({'notifications_asked': value ? 1 : 0});
+
+  Future<void> setLastNotifiedAt(DateTime? value) => update({
+        'last_notified_at': value == null ? null : formatDateOnly(value),
+      });
 }

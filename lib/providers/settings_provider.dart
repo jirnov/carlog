@@ -33,6 +33,9 @@ class SettingsProvider extends ChangeNotifier {
   /// Спрашивали ли уже разрешение на уведомления при запуске.
   bool get notificationsAsked => _settings.notificationsAsked;
 
+  /// Когда последний раз показывали напоминание.
+  DateTime? get lastNotifiedAt => _settings.lastNotifiedAt;
+
   Future<void> load() async {
     _settings = await _db.settings.get();
     _notify();
@@ -100,6 +103,13 @@ class SettingsProvider extends ChangeNotifier {
     if (_settings.notificationsAsked == value) return;
     await _db.settings.setNotificationsAsked(value);
     _settings = _settings.copyWith(notificationsAsked: value);
+    _notify();
+  }
+
+  Future<void> setLastNotifiedAt(DateTime? value) async {
+    if (_settings.lastNotifiedAt == value) return;
+    await _db.settings.setLastNotifiedAt(value);
+    _settings = _settings.copyWith(lastNotifiedAt: value);
     _notify();
   }
 

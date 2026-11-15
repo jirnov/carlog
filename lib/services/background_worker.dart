@@ -45,7 +45,14 @@ Future<void> _checkMileageReminder() async {
     final days = today.difference(updated).inDays;
     if (days < settings.remindDays) return;
 
-    // Локаль для уведомления. Можно взять системную или сохранённую.
+    // Не показываем чаще, чем раз в remindDays с последнего показа.
+    final lastNotified = settings.lastNotifiedAt;
+    if (lastNotified != null) {
+      final sinceNotified = today.difference(dateOnly(lastNotified)).inDays;
+      if (sinceNotified < settings.remindDays) return;
+    }
+
+    // Локаль для уведомления.
     final locale = WidgetsBinding.instance.platformDispatcher.locale;
     final l10n = await AppLocalizations.delegate.load(locale);
 
@@ -57,6 +64,9 @@ Future<void> _checkMileageReminder() async {
 
     final notifications = await NotificationService.initForBackground();
     await notifications.showMileageReminder(texts: texts);
+
+    // Запоминаем, когда показали, чтобы не показывать чаще remindDays.
+    await db.settings.setLastNotifiedAt(DateTime.now());
   } catch (e) {
     debugPrint('Background task error: $e');
   }

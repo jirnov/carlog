@@ -1,6 +1,7 @@
 // lib/data/models/settings.dart
 
 import 'package:carlog/data/models/theme_mode_preference.dart';
+import 'package:carlog/utils/formatting.dart';
 
 /// Sentinel для `copyWith`, чтобы отличать «не передали» от «передали null».
 const Object _unset = Object();
@@ -16,6 +17,7 @@ class Settings {
     required this.themeMode,
     required this.locale,
     required this.notificationsAsked,
+    required this.lastNotifiedAt,
   });
 
   final String carName;
@@ -32,6 +34,10 @@ class Settings {
   /// Спрашивали ли уже разрешение на уведомления при запуске.
   final bool notificationsAsked;
 
+  /// Когда последний раз показывали напоминание.
+  /// Нужно для троттлинга: не чаще, чем раз в `remindDays`.
+  final DateTime? lastNotifiedAt;
+
   static const defaults = Settings(
     carName: '',
     remindEnabled: true,
@@ -42,6 +48,7 @@ class Settings {
     themeMode: ThemeModePreference.system,
     locale: null,
     notificationsAsked: false,
+    lastNotifiedAt: null,
   );
 
   factory Settings.fromMap(Map<String, Object?> map) {
@@ -57,6 +64,7 @@ class Settings {
       ),
       locale: map['locale'] as String?,
       notificationsAsked: (map['notifications_asked'] as int? ?? 0) == 1,
+      lastNotifiedAt: parseDateOnly(map['last_notified_at'] as String?),
     );
   }
 
@@ -71,6 +79,8 @@ class Settings {
       'theme_mode': themeMode.name,
       'locale': locale,
       'notifications_asked': notificationsAsked ? 1 : 0,
+      'last_notified_at':
+          lastNotifiedAt == null ? null : formatDateOnly(lastNotifiedAt!),
     };
   }
 
@@ -84,6 +94,7 @@ class Settings {
     ThemeModePreference? themeMode,
     Object? locale = _unset,
     bool? notificationsAsked,
+    Object? lastNotifiedAt = _unset,
   }) {
     return Settings(
       carName: carName ?? this.carName,
@@ -95,6 +106,9 @@ class Settings {
       themeMode: themeMode ?? this.themeMode,
       locale: identical(locale, _unset) ? this.locale : locale as String?,
       notificationsAsked: notificationsAsked ?? this.notificationsAsked,
+      lastNotifiedAt: identical(lastNotifiedAt, _unset)
+          ? this.lastNotifiedAt
+          : lastNotifiedAt as DateTime?,
     );
   }
 
@@ -103,7 +117,8 @@ class Settings {
       'remindEnabled: $remindEnabled, remindDays: $remindDays, '
       'yellowKm: $yellowKm, yellowMonths: $yellowMonths, '
       'onboardingDone: $onboardingDone, themeMode: $themeMode, '
-      'locale: $locale, notificationsAsked: $notificationsAsked)';
+      'locale: $locale, notificationsAsked: $notificationsAsked, '
+      'lastNotifiedAt: $lastNotifiedAt)';
 
   @override
   bool operator ==(Object other) {
@@ -117,7 +132,8 @@ class Settings {
         other.onboardingDone == onboardingDone &&
         other.themeMode == themeMode &&
         other.locale == locale &&
-        other.notificationsAsked == notificationsAsked;
+        other.notificationsAsked == notificationsAsked &&
+        other.lastNotifiedAt == lastNotifiedAt;
   }
 
   @override
@@ -131,5 +147,6 @@ class Settings {
         themeMode,
         locale,
         notificationsAsked,
+        lastNotifiedAt,
       );
 }

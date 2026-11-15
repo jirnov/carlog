@@ -21,7 +21,7 @@ class AppDatabase {
 
   /// Текущая версия схемы БД.
   /// Используется и в `ExportImportService` для `schema_version` в JSON.
-  static const int currentVersion = 3;
+  static const int currentVersion = 4;
 
   Database? _db;
 
@@ -92,7 +92,8 @@ class AppDatabase {
         onboarding_done       INTEGER NOT NULL DEFAULT 0,
         theme_mode            TEXT    NOT NULL DEFAULT 'system',
         locale                TEXT,
-        notifications_asked   INTEGER NOT NULL DEFAULT 0
+        notifications_asked   INTEGER NOT NULL DEFAULT 0,
+        last_notified_at      TEXT
       )
     ''');
 
@@ -153,6 +154,7 @@ class AppDatabase {
       'theme_mode': 'system',
       'locale': null,
       'notifications_asked': 0,
+      'last_notified_at': null,
     });
 
     await batch.commit(noResult: true);
@@ -180,6 +182,13 @@ class AppDatabase {
       await db.execute(
         'ALTER TABLE settings ADD COLUMN '
         'notifications_asked INTEGER NOT NULL DEFAULT 0',
+      );
+    }
+
+    if (oldVersion < 4) {
+      // v3 → v4: дата последнего показа напоминания (для троттлинга).
+      await db.execute(
+        'ALTER TABLE settings ADD COLUMN last_notified_at TEXT',
       );
     }
   }
